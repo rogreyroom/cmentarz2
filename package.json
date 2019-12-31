@@ -12,7 +12,9 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@hapi/joi": "^16.1.8",
     "@quasar/extras": "^1.0.0",
+    "nedb": "^1.8.0",
     "quasar": "^1.0.0"
   },
   "devDependencies": {
