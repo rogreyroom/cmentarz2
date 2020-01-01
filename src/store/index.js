@@ -1,7 +1,9 @@
+/* eslint-disable prettier/prettier */
 import Vue from "vue";
 import Vuex from "vuex";
 
 // import example from './module-example'
+import cm from "./cm";
 
 Vue.use(Vuex);
 
@@ -17,7 +19,7 @@ Vue.use(Vuex);
 export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      // example
+      cm
     },
 
     // enable strict mode (adds overhead!)
