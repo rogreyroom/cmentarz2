@@ -36,7 +36,10 @@ module.exports = {
   // add your custom rules here
   rules: {
     'prefer-promise-reject-errors': 'off',
-    'prettier/prettier': 'warn',
+    'prettier/prettier': 'warn', {
+      'htmlWhitespaceSensitivity': 'ignore',
+      'parse': 'vue'
+    }
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }
