@@ -13,7 +13,9 @@ module.exports = {
   extends: [
     // https://eslint.vuejs.org/rules/#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-    'plugin:vue/essential',
+    // 'plugin:vue/essential',
+    'eslint:recommended',
+    'plugin:vue/recommended',
     '@vue/prettier'
   ],
 
@@ -34,12 +36,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     'prefer-promise-reject-errors': 'off',
-    'prettier/prettier': [
-          'error',
-        {
-          'singleQuote': true
-        }
-        ]
+    'prettier/prettier': 'warn',
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }
