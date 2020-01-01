@@ -38,8 +38,16 @@ module.exports = {
     'prefer-promise-reject-errors': 'off',
     'prettier/prettier': ['warn', {
       'htmlWhitespaceSensitivity': 'ignore',
-      'parse': 'vue'
+      'parse': 'vue',
+      'vueIndentScriptAndStyle': true
     }],
+    "vue/max-attributes-per-line": ["warn", {
+    "singleline": 1,
+    "multiline": {
+      "max": 1,
+      "allowFirstLine": true
+    }
+  }],
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }
