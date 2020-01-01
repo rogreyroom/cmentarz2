@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import db from "../../api";
+import { db } from "../../api";
 
 // CEMETERIES
 export async function FETCH_CEMETERIES({ commit }) {
