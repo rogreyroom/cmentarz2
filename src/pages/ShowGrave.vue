@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md">
-    map
+    show grave
   </div>
 </template>
 
