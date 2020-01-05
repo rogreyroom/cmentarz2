@@ -15,14 +15,15 @@
     "@hapi/joi": "^16.1.8",
     "@quasar/extras": "^1.0.0",
     "nedb": "^1.8.0",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "vue-print-qj": "^1.0.8"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",
     "@vue/eslint-config-prettier": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "devtron": "^1.4.0",
-    "electron": "^7.0.0",
+    "electron": "6.1.7",
     "electron-debug": "^3.0.0",
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^5.10.0",
