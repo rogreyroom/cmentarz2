@@ -4,7 +4,6 @@
       <q-tr slot="body" slot-scope="props" class="text-center" :props="props">
         <q-td key="desc" :props="props">
           <span class="text-italic">{{ props.row.parcela.nrGrobu }}</span>
-          <q-tooltip>I'd like to eat "{{ props.row.name }}"</q-tooltip>
         </q-td>
         <q-td key="opcje" :props="props">
           <div class="row items-center justify-between no-wrap">
