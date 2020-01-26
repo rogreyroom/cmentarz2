@@ -1,11 +1,27 @@
 <template>
   <div class="q-pa-md">
-    <q-table :data="graves" :columns="columns" :pagination.sync="pagination" row-key="name">
-      <q-tr slot="body" slot-scope="props" class="text-center" :props="props">
-        <q-td key="desc" :props="props">
+    <q-table
+      :data="graves"
+      :columns="columns"
+      :pagination.sync="pagination"
+      row-key="name"
+    >
+      <q-tr
+        slot="body"
+        slot-scope="props"
+        class="text-center"
+        :props="props"
+      >
+        <q-td
+          key="desc"
+          :props="props"
+        >
           <span class="text-italic">{{ props.row.parcela.nrGrobu }}</span>
         </q-td>
-        <q-td key="opcje" :props="props">
+        <q-td
+          key="opcje"
+          :props="props"
+        >
           <div class="row items-center justify-between no-wrap">
             <q-btn
               size="sm"
@@ -60,13 +76,30 @@
             </q-btn>
           </div>
         </q-td>
-        <q-td key="numerGrobu" :props="props">{{ props.row.parcela.nrGrobu }}</q-td>
-        <q-td key="rodzajGrobu" :props="props">{{ props.row.parcela.rodzaj }}</q-td>
-        <q-td key="statusGrobu" :props="props">
+        <q-td
+          key="numerGrobu"
+          :props="props"
+        >{{ props.row.parcela.nrGrobu }}</q-td>
+        <q-td
+          key="rodzajGrobu"
+          :props="props"
+        >{{ props.row.parcela.rodzaj }}</q-td>
+        <q-td
+          key="statusGrobu"
+          :props="props"
+        >
           <span v-if="props.row.parcela.status !== 'Nie opłacony'">{{ props.row.parcela.status }}</span>
-          <q-chip v-else small square color="red-2">{{ props.row.parcela.status }}</q-chip>
+          <q-chip
+            v-else
+            small
+            square
+            color="red-2"
+          >{{ props.row.parcela.status }}</q-chip>
         </q-td>
-        <q-td key="dataZaplatyGrobu" :props="props">{{ props.row.parcela.dtZaplaty }}</q-td>
+        <q-td
+          key="dataZaplatyGrobu"
+          :props="props"
+        >{{ props.row.parcela.dtZaplaty }}</q-td>
       </q-tr>
     </q-table>
   </div>
@@ -77,7 +110,7 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   name: "PageIndex",
-  data() {
+  data () {
     return {
       pagination: {
         sortBy: "numerGrobu",
@@ -133,11 +166,13 @@ export default {
   computed: {
     ...mapState("cm", ["graves"])
   },
-  created() {
+  created () {
     this["FETCH_GRAVES"]();
+    this["FETCH_USERS"]();
+    this["FETCH_TAKERS"]();
   },
   methods: {
-    ...mapActions("cm", ["FETCH_GRAVES"])
+    ...mapActions("cm", ["FETCH_GRAVES", "FETCH_USERS", "FETCH_TAKERS"])
   }
 };
 </script>
