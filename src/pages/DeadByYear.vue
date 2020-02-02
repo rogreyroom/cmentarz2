@@ -189,7 +189,7 @@ export default {
           sortable: true
         }
       ],
-      filter: '2019',
+      filter: new Date().getFullYear().toString(),
       loading: false,
       notPrinting: true
     };
