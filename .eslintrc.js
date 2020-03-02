@@ -16,7 +16,7 @@ module.exports = {
     // 'plugin:vue/essential',
     'eslint:recommended',
     'plugin:vue/recommended',
-    '@vue/prettier'
+    // '@vue/prettier'  - wyłączyłem ręcznie
   ],
 
   // required to lint *.vue files
@@ -35,19 +35,20 @@ module.exports = {
 
   // add your custom rules here
   rules: {
-    'prefer-promise-reject-errors': 'off',
-    'prettier/prettier': ['warn', {
-      'htmlWhitespaceSensitivity': 'ignore',
-      'parse': 'vue',
-      'vueIndentScriptAndStyle': true
-    }],
-    "vue/max-attributes-per-line": ["warn", {
-    "singleline": 1,
-    "multiline": {
-      "max": 1,
-      "allowFirstLine": true
-    }
-  }],
+    // 'prefer-promise-reject-errors': 'off',
+    // 'prettier/prettier': ['warn', {
+    //   'htmlWhitespaceSensitivity': 'ignore',
+    //   'parse': 'vue',
+    //   'vueIndentScriptAndStyle': true
+    // }],
+    // 'fix': true,
+    // "vue/max-attributes-per-line": ["warn", {
+    // "singleline": 1,
+    // "multiline": {
+    //   "max": 1,
+    //   "allowFirstLine": true
+    // }
+  // }],
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }
