@@ -21,7 +21,7 @@
           text-color="light-blue-13"
         />
       </div>
-      <hr class="row q-gutter-xs">
+      <hr>
       <div class="row q-pa-sm q-gutter-sm">
         <div class="col">
           <q-img
@@ -59,7 +59,7 @@
       <div class="row q-pa-sm q-gutter-sm">
         <p><strong>Uwagi:</strong> {{ graveData.uwagi }}</p>
       </div>
-      <hr class="row q-gutter-xs">
+      <hr>
 
       <!-- Grave taker -->
       <div class="row q-pa-sm q-gutter-sm">
@@ -74,24 +74,63 @@
           text-color="light-blue-13"
         />
       </div>
-
-      <hr class="row q-gutter-xs">
-
-      <!-- Grave users -->
       <div class="row q-pa-sm q-gutter-sm">
-        <h5>
-          Dane osoby zmarłej
-        </h5>
-        <q-btn
-          :to="{ name: 'grave-edit', params: {id: id} }"
-          flat
-          icon="edit"
-          class="q-ml-md"
-          text-color="light-blue-13"
-        />
+        <div class="col">
+          <p><strong>Imię:</strong> {{ graveData.rzad }}</p>
+          <p><strong>Nazwisko:</strong> {{ graveData.rzad }}</p>
+          <p><strong>Telefon:</strong> {{ graveData.rzad }}</p>
+          <p><strong>Email:</strong> {{ graveData.rzad }}</p>
+        </div>
+        <div class="col">
+          <p><strong>Adres:</strong> {{ graveData.rzad }}</p>
+          <p><strong>Uwagi dodatkowe:</strong> {{ graveData.rzad }}</p>
+        </div>
       </div>
 
-      <hr class="row q-gutter-xs">
+      <hr>
+
+      <!-- Grave users -->
+      <q-card
+        flat
+        class="my-card bg-grey-1"
+      >
+        <q-card-section>
+          <div class="row q-pa-sm q-gutter-sm">
+            <h5>
+              Dane osoby zmarłej
+            </h5>
+            <q-btn
+              :to="{ name: 'grave-edit', params: {id: id} }"
+              flat
+              icon="edit"
+              class="q-ml-md"
+              text-color="light-blue-13"
+            />
+          </div>
+          <div class="row q-pa-sm q-gutter-sm">
+            <div class="col">
+              <p><strong>Imię:</strong> {{ graveData.rzad }}</p>
+              <p><strong>Nazwisko:</strong> {{ graveData.rzad }}</p>
+              <p><strong>Wiek:</strong> {{ graveData.rzad }}</p>
+              <p><strong>Stan cywilny:</strong> {{ graveData.rzad }}</p>
+              <hr>
+              <p><strong>Ojciec:</strong> {{ graveData.rzad }}</p>
+              <p><strong>Matka:</strong> {{ graveData.rzad }}</p>
+            </div>
+            <div class="col">
+              <p><strong>Data urodzenia:</strong> {{ graveData.rzad }}</p>
+              <p><strong>Miejsce urodzenia:</strong> {{ graveData.rzad }}</p>
+              <hr>
+              <p><strong>Data zgonu:</strong> {{ graveData.rzad }}</p>
+              <p><strong>Miejsce zgonu:</strong> {{ graveData.rzad }}</p>
+              <hr class="row q-gutter-xs inset">
+              <p><strong>Data pochówku:</strong> {{ graveData.rzad }}</p>
+              <p><strong>Miejsce pochówku:</strong> {{ graveData.rzad }}</p>
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+      <hr>
 
       {{ graveData }}
     </q-page>
@@ -344,31 +383,22 @@ export default {
     ...mapGetters({ grave: "cm/GET_GRAVE" }),
   },
   mounted () {
-    // this.data = this.grave(this.id)
-    // const { parcela, rzad, grob, rodzaj, status, ext } = this.grave(this.id)
-    // const parcela = JSON.stringify(this.data.parcela)
-
     const { parcela } = this.grave(this.id)[0]
-
     this.graveData = parcela
-
-    // this.graveData = { parcela, rzad }
-
-    // this.parcela = parcela
-    // this.parcela = parcela
-    // eslint-disable-next-line no-console
-    // console.log(parcela)
   },
   methods: {
-    // readData () {
-    //   const res = this.data[0].parcela
-
-    //   // eslint-disable-next-line no-console
-    //   console.log(res)
-    //   return res
-    // }
   },
 };
 </script>
 
-<style></style>
+<style>
+hr {
+  display: block;
+  border: 0;
+  height: 0;
+  width: 96%;
+  margin: 1rem auto;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+</style>
