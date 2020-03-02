@@ -1,13 +1,17 @@
 <template>
   <div class="q-pa-md">
-    edit grave
+    edit grave - {{ id }}
   </div>
 </template>
 
 <script>
-  export default {
-
-  };
+export default {
+  data () {
+    return {
+      id: this.$route.params.id,
+    };
+  },
+};
 </script>
 
 <style></style>
