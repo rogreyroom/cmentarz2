@@ -76,21 +76,44 @@
       </div>
       <div class="row q-pa-sm q-gutter-sm">
         <div class="col">
-          <p><strong>Imię:</strong> {{ graveData.rzad }}</p>
-          <p><strong>Nazwisko:</strong> {{ graveData.rzad }}</p>
-          <p><strong>Telefon:</strong> {{ graveData.rzad }}</p>
-          <p><strong>Email:</strong> {{ graveData.rzad }}</p>
+          <p><strong>Imię:</strong> {{ takerData.imie }}</p>
+          <p><strong>Nazwisko:</strong> {{ takerData.nazwisko }}</p>
+          <p><strong>Telefon:</strong> {{ takerData.tel }}</p>
+          <p><strong>Email:</strong> {{ takerData.email }}</p>
         </div>
         <div class="col">
-          <p><strong>Adres:</strong> {{ graveData.rzad }}</p>
-          <p><strong>Uwagi dodatkowe:</strong> {{ graveData.rzad }}</p>
+          <p><strong>Adres:</strong> {{ takerData.adres }}</p>
+          <p><strong>Uwagi dodatkowe:</strong> {{ takerData.uwagi }}</p>
         </div>
       </div>
 
       <hr>
 
       <!-- Grave users -->
-      <q-card
+      <div class="row q-pa-sm q-gutter-sm">
+        <h5>
+          Dane osoby zmarłej
+        </h5>
+        <q-btn
+          :to="{ name: 'grave-edit', params: {id: id} }"
+          flat
+          icon="edit"
+          class="q-ml-md"
+          text-color="light-blue-13"
+        />
+      </div>
+      <div
+        v-for="{_id, user} in usersData"
+        :key="_id"
+        class="row q-pa-sm q-gutter-sm"
+      >
+        <!-- {{user}} -->
+        <grave-user
+          :id="_id"
+          :user="user"
+        />
+      </div>
+      <!-- <q-card
         flat
         class="my-card bg-grey-1"
       >
@@ -129,9 +152,10 @@
             </div>
           </div>
         </q-card-section>
-      </q-card>
+      </q-card> -->
       <hr>
-
+      {{ usersData }}
+      {{ takerData }}
       {{ graveData }}
     </q-page>
   </div>
@@ -371,20 +395,33 @@
 
 <script>
 import { mapGetters } from "vuex";
+import GraveUser from '../components/GraveUser'
 
 export default {
+  components: {
+    'grave-user': GraveUser
+  },
   data () {
     return {
       id: this.$route.params.id,
       graveData: {},
+      takerData: {},
+      usersData: []
     };
   },
   computed: {
     ...mapGetters({ grave: "cm/GET_GRAVE" }),
+    ...mapGetters({ taker: "cm/GET_GRAVE_TAKER" }),
+    ...mapGetters({ users: "cm/GET_GRAVE_USERS" }),
   },
   mounted () {
     const { parcela } = this.grave(this.id)[0]
     this.graveData = parcela
+
+    const { taker } = this.taker(this.id)[0]
+    this.takerData = taker
+
+    this.usersData = this.users(this.id)
   },
   methods: {
   },
