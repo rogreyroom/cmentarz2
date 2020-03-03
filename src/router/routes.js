@@ -55,6 +55,18 @@ const routes = [
 				name: 'grave-delete',
 				component: () => import('pages/ShowGrave.vue'),
 				props: true
+			},
+			{
+				path: '/user-edit/',
+				name: 'user-edit',
+				component: () => import('pages/ShowGrave.vue'),
+				props: true
+			},
+			{
+				path: '/user-delete/',
+				name: 'user-delete',
+				component: () => import('pages/ShowGrave.vue'),
+				props: true
 			}
 		]
 	}
