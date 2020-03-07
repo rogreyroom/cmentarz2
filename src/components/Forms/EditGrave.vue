@@ -11,6 +11,7 @@
           url="http://localhost:4444/upload"
           class="full-width"
           flat
+          color="light-blue-13"
         />
       </div>
       <div class="row q-ma-md">
