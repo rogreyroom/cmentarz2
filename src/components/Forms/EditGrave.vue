@@ -25,13 +25,38 @@
         <p><strong>Data opłaty:</strong></p>
       </div>
       <div class="row q-ma-md">
-        <q-date
+        <!-- <q-date
           v-model="graveData.dtOplaty"
           minimal
           name="dtOplaty"
           class="full-width"
           flat
-        />
+        /> -->
+        <q-input
+          name="dtOplaty"
+          outlined
+          v-model="graveData.dtOplaty"
+          mask="date"
+          :rules="['date']"
+        >
+          <template v-slot:append>
+            <q-icon
+              name="event"
+              class="cursor-pointer"
+            >
+              <q-popup-proxy
+                ref="qDateProxy"
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date
+                  v-model="graveData.dtOplaty"
+                  @input="() => $refs.qDateProxy.hide()"
+                />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
       </div>
     </div>
     <div class="col q-ml-lg">
