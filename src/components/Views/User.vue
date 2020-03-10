@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import SingleUser from '../components/Views/SingleUser'
+import SingleUser from './SingleUser'
 
 export default {
   components: {
