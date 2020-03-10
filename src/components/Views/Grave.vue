@@ -13,7 +13,7 @@
         text-color="light-blue-13"
       />
       <q-btn
-        :to="{ name: 'grave-edit', params: { id: graveId }}"
+        :to="{ name: 'grave-edit', params: { id: id }}"
         flat
         icon="map"
         class="q-ml-md"
