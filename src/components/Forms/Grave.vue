@@ -70,7 +70,6 @@
           <q-input
             v-model="grave.parcela"
             outlined
-            label="5"
             name="parcela"
             class="full-width"
           />
@@ -83,7 +82,6 @@
           <q-input
             v-model="grave.rzad"
             outlined
-            label="5"
             name="rzad"
             class="full-width"
           />
@@ -96,7 +94,6 @@
           <q-input
             v-model="grave.grob"
             outlined
-            label="5"
             name="grob"
             class="full-width"
           />
@@ -153,7 +150,6 @@
           <q-input
             v-model="grave.okres"
             outlined
-            label="5"
             name="okres"
             class="full-width"
           />
