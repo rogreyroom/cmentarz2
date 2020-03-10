@@ -45,29 +45,29 @@ const routes = [
 				props: true
 			},
 			{
-				path: '/grave-edit/',
+				path: '/grave-edit/:id',
 				name: 'grave-edit',
 				component: () => import('pages/EditGrave.vue'),
 				props: true
-			},
-			{
-				path: '/grave-delete/',
-				name: 'grave-delete',
-				component: () => import('pages/ShowGrave.vue'),
-				props: true
-			},
-			{
-				path: '/user-edit/',
-				name: 'user-edit',
-				component: () => import('pages/ShowGrave.vue'),
-				props: true
-			},
-			{
-				path: '/user-delete/',
-				name: 'user-delete',
-				component: () => import('pages/ShowGrave.vue'),
-				props: true
 			}
+			// {
+			// 	path: '/grave-delete/',
+			// 	name: 'grave-delete',
+			// 	component: () => import('pages/ShowGrave.vue'),
+			// 	props: true
+			// },
+			// {
+			// 	path: '/user-edit/',
+			// 	name: 'user-edit',
+			// 	component: () => import('pages/ShowGrave.vue'),
+			// 	props: true
+			// },
+			// {
+			// 	path: '/user-delete/',
+			// 	name: 'user-delete',
+			// 	component: () => import('pages/ShowGrave.vue'),
+			// 	props: true
+			// }
 		]
 	}
 ];
