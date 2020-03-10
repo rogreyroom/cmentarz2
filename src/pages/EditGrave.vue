@@ -1,67 +1,87 @@
 <template>
   <div class="q-pa-md">
     <q-page padding>
-      <div class="row q-pa-sm q-gutter-sm">
-        <h5>
-          Edytuj grób:
-          <strong class="q-ml-sm">{{ id }}</strong>
-          (Cmantarz dolny)
-        </h5>
-      </div>
-      <hr>
-      <edit-grave-form :id="id" />
+      <section>
+        <header class="row q-pa-sm q-gutter-sm">
+          <h5>
+            Edytuj grób:
+            <strong class="q-ml-sm">{{ id }}</strong>
+            (Cmantarz dolny)
+          </h5>
+          <hr>
+        </header>
+        <grave-form
+          :id="id"
+          :grave="graveData"
+          flag="edit"
+        />
+      </section>
       <hr>
       <!-- edit-grave-taker-form -->
-      <div class="row q-pa-sm q-gutter-sm">
-        <h5>
-          Dane opiekuna grobu:
-        </h5>
-      </div>
-      <edit-grave-taker-form :id="id" />
+      <section>
+        <div class="row q-pa-sm q-gutter-sm">
+          <h5>
+            Dane opiekuna grobu:
+          </h5>
+        </div>
+        <taker-form
+          :id="id"
+          :taker="takerData"
+          flag="edit"
+        />
+      </section>
       <hr>
       <!-- list-grave-users -->
-      <div class="row q-pa-sm q-gutter-sm">
-        <h5>
-          Dane osoby zmarłej:
-        </h5>
-        <q-btn
-          :to="{ name: 'grave-edit', params: {id: id} }"
-          flat
-          icon="add"
-          class="q-ml-md"
-          text-color="light-blue-13"
-        />
-      </div>
-      <div
-        v-for="{_id, user} in usersData"
-        :key="_id"
-        class="row q-pa-sm q-gutter-sm"
-      >
-        <!-- {{user}} -->
-        <grave-user
-          :id="_id"
-          :user="user"
-        />
-      </div>
+      <section>
+        <div class="row q-pa-sm q-gutter-sm">
+          <h5>
+            Dane osoby zmarłej:
+          </h5>
+          <q-btn
+            :to="{ name: 'grave-edit', params: {id: id} }"
+            flat
+            icon="add"
+            class="q-ml-md"
+            text-color="light-blue-13"
+          />
+        </div>
+        <div
+          v-for="{_id, user} in usersData"
+          :key="_id"
+          class="row q-pa-sm q-gutter-sm"
+        >
+          <!-- {{user}} -->
+          <single-user
+            :id="_id"
+            :user="user"
+          />
+        </div>
+      </section>
     </q-page>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import EditGrave from '../components/Forms/EditGrave'
-import EditGraveTaker from '../components/Forms/EditGraveTaker'
-import GraveUser from '../components/GraveUser'
+import Grave from '../components/Forms/Grave'
+import Taker from '../components/Forms/Taker'
+import SingleUser from '../components/SingleUser'
 
 export default {
   components: {
-    'edit-grave-form': EditGrave,
-    'edit-grave-taker-form': EditGraveTaker,
-    'grave-user': GraveUser
+    'grave-form': Grave,
+    'taker-form': Taker,
+    'single-user': SingleUser
+  },
+  props: {
+    id: {
+      type: String,
+      default: ''
+    },
   },
   data () {
     return {
-      id: this.$route.params.id,
+      // id: this.$route.params.id,
       graveData: {},
       takerData: {},
       usersData: []

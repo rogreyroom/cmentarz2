@@ -8,10 +8,10 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.okres"
+            v-model="user.imie"
             outlined
             label="5"
-            name="okres"
+            name="imie"
             class="full-width"
           />
         </div>
@@ -23,10 +23,10 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.okres"
+            v-model="user.nazwisko"
             outlined
             label="5"
-            name="okres"
+            name="nazwisko"
             class="full-width"
           />
         </div>
@@ -39,9 +39,9 @@
         </div>
         <div class="row full-width">
           <q-input
-            name="dtOplaty"
+            name="dtUrodzenia"
             outlined
-            v-model="graveData.dtOplaty"
+            v-model="user.dtUrodzenia"
             mask="date"
             :rules="['date']"
           >
@@ -56,7 +56,7 @@
                   transition-hide="scale"
                 >
                   <q-date
-                    v-model="graveData.dtOplaty"
+                    v-model="user.dtUrodzenia"
                     @input="() => $refs.qDateProxy.hide()"
                   />
                 </q-popup-proxy>
@@ -72,10 +72,10 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.okres"
+            v-model="user.miejsceUrodzenia"
             outlined
             label="5"
-            name="okres"
+            name="miejsceUrodzenia"
             class="full-width"
           />
         </div>
@@ -88,10 +88,10 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.okres"
+            v-model="user.nazwiskoRodowe"
             outlined
             label="5"
-            name="okres"
+            name="nazwiskoRodowe"
             class="full-width"
           />
         </div>
@@ -103,11 +103,11 @@
         </div>
         <div class="row full-width">
           <q-select
-            v-model="graveData.rodzaj"
+            v-model="user.stanCywilny"
             outlined
-            :options="graveOptions"
+            :options="stanCywilnyOptions"
             label="Wybierz"
-            name="rodzaj"
+            name="stanCywilny"
             class="full-width"
           />
         </div>
@@ -123,9 +123,9 @@
         </div>
         <div class="row full-width">
           <q-input
-            name="dtOplaty"
+            name="dtZgonu"
             outlined
-            v-model="graveData.dtOplaty"
+            v-model="user.dtZgonu"
             mask="date"
             :rules="['date']"
           >
@@ -140,7 +140,7 @@
                   transition-hide="scale"
                 >
                   <q-date
-                    v-model="graveData.dtOplaty"
+                    v-model="user.dtZgonu"
                     @input="() => $refs.qDateProxy.hide()"
                   />
                 </q-popup-proxy>
@@ -155,10 +155,10 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.okres"
+            v-model="user.miejsceZgonu"
             outlined
             label="5"
-            name="okres"
+            name="miejsceZgonu"
             class="full-width"
           />
         </div>
@@ -169,9 +169,9 @@
         </div>
         <div class="row full-width">
           <q-input
-            name="dtOplaty"
+            name="dtPochowku"
             outlined
-            v-model="graveData.dtOplaty"
+            v-model="user.dtPochowku"
             mask="date"
             :rules="['date']"
           >
@@ -186,7 +186,7 @@
                   transition-hide="scale"
                 >
                   <q-date
-                    v-model="graveData.dtOplaty"
+                    v-model="user.dtPochowku"
                     @input="() => $refs.qDateProxy.hide()"
                   />
                 </q-popup-proxy>
@@ -201,10 +201,10 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.okres"
+            v-model="user.miejscePochowku"
             outlined
             label="5"
-            name="okres"
+            name="miejscePochowku"
             class="full-width"
           />
         </div>
@@ -220,10 +220,10 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.okres"
+            v-model="user.imieMatki"
             outlined
             label="5"
-            name="okres"
+            name="imieMatki"
             class="full-width"
           />
         </div>
@@ -234,10 +234,10 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.okres"
+            v-model="user.nazwiskoMatki"
             outlined
             label="5"
-            name="okres"
+            name="nazwiskoMatki"
             class="full-width"
           />
         </div>
@@ -248,10 +248,10 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.okres"
+            v-model="user.imieOjca"
             outlined
             label="5"
-            name="okres"
+            name="imieOjca"
             class="full-width"
           />
         </div>
@@ -262,10 +262,10 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.okres"
+            v-model="user.nazwiskoOjca"
             outlined
             label="5"
-            name="okres"
+            name="nazwiskoOjca"
             class="full-width"
           />
         </div>
@@ -280,55 +280,35 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-// import GraveUser from '../components/GraveUser'
 
 export default {
   components: {
-    // 'grave-user': GraveUser
+  },
+  props: {
+    id: {
+      type: String,
+      default: ''
+    },
+    flag: {
+      type: String,
+      default: 'add'
+    },
+    taker: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    }
   },
   data () {
     return {
-      id: this.$route.params.id,
-      graveData: {},
-      takerData: {},
-      usersData: [],
-      graveOptions: [
-        'Zwykły', 'Murowany', 'Rodzinny', 'Katakumba', 'Głębinowy'
-      ],
-      graveStatus: [
-        'Nie opłacony', 'Opłacony', 'Puste'
-      ],
-
     };
   },
   computed: {
-    ...mapGetters({ grave: "cm/GET_GRAVE" }),
-    ...mapGetters({ taker: "cm/GET_GRAVE_TAKER" }),
-    ...mapGetters({ users: "cm/GET_GRAVE_USERS" }),
   },
   mounted () {
-    const { parcela } = this.grave(this.id)[0]
-    this.graveData = parcela
-
-    const { taker } = this.taker(this.id)[0]
-    this.takerData = taker
-
-    this.usersData = this.users(this.id)
   },
   methods: {
   },
 };
 </script>
-
-<style>
-hr {
-  display: block;
-  border: 0;
-  height: 0;
-  width: 96%;
-  margin: 1rem auto;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-</style>

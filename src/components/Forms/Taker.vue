@@ -8,7 +8,7 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.imie"
+            v-model="taker.imie"
             outlined
             name="imie"
             class="full-width"
@@ -22,9 +22,9 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.imie"
+            v-model="taker.nazwisko"
             outlined
-            name="imie"
+            name="nazwisko"
             class="full-width"
           />
         </div>
@@ -36,7 +36,7 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.imie"
+            v-model="taker.adres"
             autogrow
             outlined
             name="adres"
@@ -53,7 +53,7 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.imie"
+            v-model="taker.telefon"
             outlined
             name="telefon"
             class="full-width"
@@ -67,7 +67,7 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.imie"
+            v-model="taker.email"
             outlined
             name="email"
             class="full-width"
@@ -81,7 +81,7 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="graveData.imie"
+            v-model="taker.uwagi"
             filled
             autogrow
             outlined
@@ -94,41 +94,34 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-// import GraveUser from '../components/GraveUser'
+// Flag determines if data is added as new or edited
 
 export default {
   components: {
-    // 'grave-user': GraveUser
+  },
+  props: {
+    id: {
+      type: String,
+      default: ''
+    },
+    flag: {
+      type: String,
+      default: 'add'
+    },
+    taker: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    }
   },
   data () {
     return {
-      id: this.$route.params.id,
-      graveData: {},
-      takerData: {},
-      usersData: [],
-      graveOptions: [
-        'Zwykły', 'Murowany', 'Rodzinny', 'Katakumba', 'Głębinowy'
-      ],
-      graveStatus: [
-        'Nie opłacony', 'Opłacony', 'Puste'
-      ],
-
     };
   },
   computed: {
-    ...mapGetters({ grave: "cm/GET_GRAVE" }),
-    ...mapGetters({ taker: "cm/GET_GRAVE_TAKER" }),
-    ...mapGetters({ users: "cm/GET_GRAVE_USERS" }),
   },
   mounted () {
-    const { parcela } = this.grave(this.id)[0]
-    this.graveData = parcela
-
-    const { taker } = this.taker(this.id)[0]
-    this.takerData = taker
-
-    this.usersData = this.users(this.id)
   },
   methods: {
   },
