@@ -5,7 +5,7 @@
         Dane opiekuna grobu
       </h5>
       <q-btn
-        :to="{ name: 'taker-edit', params: { id: graveId } }"
+        :to="{ name: 'taker-edit', params: { id: id } }"
         flat
         icon="edit"
         class="q-ml-md"
@@ -31,7 +31,7 @@
 
 export default {
   props: {
-    graveId: {
+    id: {
       type: String,
       default: ''
     },

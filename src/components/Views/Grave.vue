@@ -3,10 +3,10 @@
     <div class="row q-pa-sm q-gutter-sm">
       <h5>
         Dane grobu:
-        <strong class="q-ml-sm">{{ graveId }}</strong>
+        <strong class="q-ml-sm">{{ id }}</strong>
       </h5>
       <q-btn
-        :to="{ name: 'grave-edit', params: { id: graveId }}"
+        :to="{ name: 'grave-edit', params: { id: id }}"
         flat
         icon="edit"
         class="q-ml-md"
@@ -64,7 +64,7 @@
 <script>
 export default {
   props: {
-    graveId: {
+    id: {
       type: String,
       default: ''
     },
@@ -74,6 +74,9 @@ export default {
         return {}
       }
     }
+  },
+  mounted () {
+
   },
 };
 </script>

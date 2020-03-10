@@ -5,7 +5,7 @@
         Dane osoby zmarłej
       </h5>
       <q-btn
-        :to="{ name: 'grave-add-user', params: { id: graveId } }"
+        :to="{ name: 'grave-add-user', params: { id: id } }"
         flat
         icon="add"
         class="q-ml-md"
@@ -33,7 +33,7 @@ export default {
     'single-user': SingleUser
   },
   props: {
-    graveId: {
+    id: {
       type: String,
       default: ''
     },

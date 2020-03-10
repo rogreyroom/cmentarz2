@@ -2,17 +2,17 @@
   <div class="q-pa-md">
     <q-page padding>
       <grave
-        graveId="id"
+        :id="id"
         :grave="graveData"
       />
       <hr>
       <taker
-        graveId="id"
+        :id="id"
         :taker="takerData"
       />
       <hr>
       <user
-        graveId="id"
+        :id="id"
         :users="usersData"
       />
       <hr>
@@ -49,8 +49,13 @@ export default {
     ...mapGetters({ grave: "cm/GET_GRAVE" }),
     ...mapGetters({ taker: "cm/GET_GRAVE_TAKER" }),
     ...mapGetters({ users: "cm/GET_GRAVE_USERS" }),
+
+
   },
   mounted () {
+    // eslint-disable-next-line no-console
+    console.log(this.id)
+
     const { parcela } = this.grave(this.id)[0]
     this.graveData = parcela
 
