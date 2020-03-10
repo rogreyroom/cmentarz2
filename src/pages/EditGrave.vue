@@ -65,7 +65,7 @@
 import { mapGetters } from "vuex";
 import Grave from '../components/Forms/Grave'
 import Taker from '../components/Forms/Taker'
-import SingleUser from '../components/SingleUser'
+import SingleUser from '../components/Views/SingleUser'
 
 export default {
   components: {
