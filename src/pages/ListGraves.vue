@@ -18,7 +18,7 @@
       </div>
       <div id="printMe">
         <q-table
-          :data="all"
+          :data="gravesDetails"
           :columns="columns"
           :rows-per-page-options="[5, 10, 15, 20, 25, 30, 35, 50, 0]"
           :pagination.sync="pagination"
@@ -197,13 +197,15 @@ export default {
     };
   },
   computed: {
-    ...mapState("cm", ["all"]),
+    ...mapState("cm", ["gravesDetails"]),
   },
   created: function () {
-    this["COMBINE_ALL"]();
+    if (this.gravesDetails.length === 0) {
+      this["FETCH_ALL"]()
+    }
   },
   methods: {
-    ...mapActions("cm", ["COMBINE_ALL"]),
+    ...mapActions("cm", ["FETCH_ALL"]),
 
     dateFormat (myDate) {
       return date.formatDate(myDate, "YYYY-MM-DD")
@@ -217,15 +219,12 @@ export default {
             return !isUndefined(val.user.imie) && !isUndefined(val.user.nazwisko) ? `${val.user.imie} ${val.user.nazwisko}` : 'brak danych'
           case 'userBirthday':
             return !isUndefined(val.user.dtUrodzenia) ? this.dateFormat(`${val.user.dtUrodzenia}`) : 'brak danych'
-          // return this.dateFormat(`${val.user.dtUrodzenia}`) || null;
           case 'userDead':
             return !isUndefined(val.user.dtZgonu) ? this.dateFormat(`${val.user.dtZgonu}`) : 'brak danych'
-          // return this.dateFormat(`${val.user.dtZgonu}`) || null;
           case 'userAge':
             return !isUndefined(val.user.wiek) ? `${val.user.wiek}` : 'bd';
           case 'takerName':
             return !isUndefined(val.taker.imie) && !isUndefined(val.taker.nazwisko) ? `${val.taker.imie} ${val.taker.nazwisko}` : null
-          // return `${val.taker.imie} ${val.taker.nazwisko}` || null;
           default:
             return []
         }
