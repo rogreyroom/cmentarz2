@@ -16,9 +16,9 @@ export function SET_TAKERS(state, payload) {
 }
 
 export function SET_ALL(state, payload) {
-	const all = payload.graves.map((grave) => {
-		let graveUsers = payload.users.filter((user) => user.user.nrGrobu === grave.parcela.nrGrobu);
-		let graveTakers = payload.takers.filter((taker) => taker.taker.nrGrobu === grave.parcela.nrGrobu);
+	const all = payload.graves.map(grave => {
+		const graveUsers = payload.users.filter(user => user.user.nrGrobu === grave.parcela.nrGrobu);
+		const graveTakers = payload.takers.filter(taker => taker.taker.nrGrobu === grave.parcela.nrGrobu);
 
 		return (grave = { ...grave, graveUsers, graveTakers });
 	});

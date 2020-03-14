@@ -1,55 +1,49 @@
 /* eslint-disable no-console */
 import { db } from '../../api';
 
-// CEMETERIES
-export async function FETCH_CEMETERIES({ commit }) {
-	await db.find({ doc: 'cm' }, (err, data) => {
+const GET_DB_DATA = async () => {
+	const cemeteries = db.asyncFind({ doc: 'cm' }, (err, data) => {
 		err ? console.error(err) : '';
-		commit('SET_CEMETERIES', data);
+		return data;
 	});
-}
 
-// USERS
-export async function FETCH_USERS({ commit }) {
-	await db.find({ doc: 'users' }, (err, data) => {
+	const graves = db.asyncFind({ doc: 'graves' }, (err, data) => {
 		err ? console.error(err) : '';
-		commit('SET_USERS', data);
+		return data;
 	});
-}
 
-// GRAVES
-export async function FETCH_GRAVES({ commit }) {
-	await db.find({ doc: 'graves' }, (err, data) => {
+	const users = db.asyncFind({ doc: 'users' }, (err, data) => {
 		err ? console.error(err) : '';
-		commit('SET_GRAVES', data);
+		return data;
 	});
-}
 
-// TAKERS
-export async function FETCH_TAKERS({ commit }) {
-	await db.find({ doc: 'takers' }, (err, data) => {
+	const takers = db.asyncFind({ doc: 'takers' }, (err, data) => {
 		err ? console.error(err) : '';
-		commit('SET_TAKERS', data);
+		return data;
 	});
-}
 
-// STORE
-export async function COMBINE_ALL({ commit, dispatch, state }) {
-	if (state.graves.length === 0) {
-		await dispatch('FETCH_GRAVES');
-	}
+	const results = await Promise.all([
+		cemeteries,
+		graves,
+		users,
+		takers
+	]);
+	return results;
+};
 
-	if (state.users.length === 0) {
-		await dispatch('FETCH_USERS');
-	}
+export const FETCH_ALL = async ({ commit }) => {
+	await GET_DB_DATA({ commit }).then(result => {
+		const [
+			cemeteries,
+			graves,
+			users,
+			takers
+		] = result;
 
-	if (state.takers.length === 0) {
-		await dispatch('FETCH_TAKERS');
-	}
-	console.log(`G: ${state.graves.length}, U: ${state.users.length}, T: ${state.takers.length}`);
-
-	if (state.graves.length > 0 && state.users.length > 0 && state.takers.length > 0) {
-		console.log('go');
-		await commit('SET_ALL', { graves: state.graves, users: state.users, takers: state.takers });
-	}
-}
+		commit('SET_CEMETERIES', cemeteries);
+		commit('SET_GRAVES', graves);
+		commit('SET_USERS', users);
+		commit('SET_TAKERS', takers);
+		commit('SET_ALL', { graves, users, takers });
+	});
+};

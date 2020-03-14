@@ -167,12 +167,10 @@ export default {
     ...mapState("cm", ["graves"])
   },
   created () {
-    this["FETCH_GRAVES"]();
-    this["FETCH_USERS"]();
-    this["FETCH_TAKERS"]();
+    this["FETCH_ALL"]()
   },
   methods: {
-    ...mapActions("cm", ["FETCH_GRAVES", "FETCH_USERS", "FETCH_TAKERS"])
+    ...mapActions("cm", ["FETCH_ALL"])
   }
 };
 </script>
