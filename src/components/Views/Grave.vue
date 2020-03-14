@@ -12,8 +12,9 @@
         class="q-ml-md"
         text-color="light-blue-13"
       />
+      <!-- :to show-map - is it posible to show params -->
       <q-btn
-        :to="{ name: 'grave-edit', params: { id: id }}"
+        :to="{ name: 'cemetery-map', params: { id: id }}"
         flat
         icon="map"
         class="q-ml-md"
