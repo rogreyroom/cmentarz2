@@ -91,6 +91,13 @@
         </div>
       </div>
     </div>
+
+    <q-btn
+      flat
+      class="q-ml-md"
+      text-color="light-blue-13"
+      @click="updateTaker(taker)"
+    />
   </div>
 </template>
 <script>
