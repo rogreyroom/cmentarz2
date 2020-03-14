@@ -14,7 +14,7 @@
   "dependencies": {
     "@hapi/joi": "^16.1.8",
     "@quasar/extras": "^1.0.0",
-    "nedb": "^1.8.0",
+    "nedb-async": "^0.1.3",
     "quasar": "^1.0.0",
     "vue-print-qj": "^1.0.8"
   },
