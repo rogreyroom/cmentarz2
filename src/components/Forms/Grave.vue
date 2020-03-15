@@ -60,7 +60,7 @@
       </div>
     </div>
     <div class="col q-ml-lg">
-      <div v-if="flag === 'edit'">
+      <div v-if="flag !== 'edit'">
 
         <!-- TODO: check if parcela is no a list of options -->
         <div class="row">
@@ -101,7 +101,7 @@
       </div>
       <div v-else>
         <div class="row q-ma-md">
-          <p><strong>Parcela:</strong> {{ grave.parcela }}</p>
+          <p><strong>Parcela:</strong> {{ parcelaName() }}</p>
         </div>
 
         <div class="row q-ma-md">
@@ -171,9 +171,12 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   components: {
   },
@@ -201,18 +204,22 @@ export default {
       graveStatus: [
         'Nie opłacony', 'Opłacony', 'Puste'
       ],
-
     };
   },
   computed: {
+    ...mapGetters({ parcela: "cm/GET_PARCELA" }),
+  },
+  created () {
+
   },
   mounted () {
   },
   methods: {
-
-    // How to emit submit data into parent
-    // Form validation goes here
-
+    parcelaName () {
+      const cemetery = this.parcela(this.grave.parcela)
+      if (cemetery) return cemetery.thecm.cmFullName
+      return ''
+    }
   },
 };
 </script>

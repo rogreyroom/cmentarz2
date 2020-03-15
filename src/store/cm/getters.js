@@ -21,3 +21,9 @@ export function GET_GRAVE_USERS(state) {
 		return state.users.filter(({ user }) => user.nrGrobu === graveID);
 	};
 }
+
+export function GET_PARCELA(state) {
+	return name => {
+		return state.cemeteries.find(({ thecm: { cName } }) => cName === name);
+	};
+}

@@ -6,7 +6,7 @@
         <strong class="q-ml-sm">{{ id }}</strong>
       </h5>
       <q-btn
-        :to="{ name: 'grave-edit', params: { id: id }}"
+        :to="{ name: 'grave-edit', params: { id: id, flag: 'edit' }}"
         flat
         icon="edit"
         class="q-ml-md"
@@ -32,7 +32,7 @@
       </div>
       <div class="col q-ml-lg justify-start">
         <div class="row">
-          <p><strong>Parcela:</strong> {{ grave.parcela }}</p>
+          <p><strong>Parcela:</strong> {{ parcelaName() }}</p>
         </div>
         <div class="row">
           <p><strong>Rząd:</strong> {{ grave.rzad }}</p>
@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   props: {
     id: {
@@ -76,8 +78,24 @@ export default {
       }
     }
   },
-  mounted () {
+  data () {
+    return {
+    }
 
+  },
+  computed: {
+    ...mapGetters({ parcela: "cm/GET_PARCELA" }),
+  },
+  created () {
+  },
+  mounted () {
+  },
+  methods: {
+    parcelaName () {
+      const cemetery = this.parcela(this.grave.parcela)
+      if (cemetery) return cemetery.thecm.cmFullName
+      return ''
+    }
   },
 };
 </script>
