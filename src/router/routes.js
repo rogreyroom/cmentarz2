@@ -49,6 +49,12 @@ const routes = [
 				name: 'grave-edit',
 				component: () => import('pages/EditGrave.vue'),
 				props: true
+			},
+			{
+				path: '/taker-edit/:id',
+				name: 'taker-edit',
+				component: () => import('pages/EditTaker.vue'),
+				props: true
 			}
 			// {
 			// 	path: '/grave-delete/',
