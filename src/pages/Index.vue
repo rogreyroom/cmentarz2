@@ -30,7 +30,7 @@
               color="blue"
               icon="visibility"
               class="q-mr-xs"
-              @click="props.row.calories--"
+              :to="{ name: 'grave-show', params: { id: props.row.parcela.nrGrobu } }"
             >
               <q-tooltip
                 anchor="top middle"
@@ -47,7 +47,7 @@
               color="green"
               icon="edit"
               class="q-mr-sm"
-              @click="props.row.calories++"
+              :to="{ name: 'grave-edit', params: { id: props.row.parcela.nrGrobu } }"
             >
               <q-tooltip
                 anchor="top middle"
@@ -64,7 +64,7 @@
               color="red"
               icon="remove"
               class="q-mr-xs"
-              @click="props.row.calories--"
+              @click="removeGrave(props.row.parcela.nrGrobu)"
             >
               <q-tooltip
                 anchor="top middle"
@@ -170,7 +170,10 @@ export default {
     this["FETCH_ALL"]()
   },
   methods: {
-    ...mapActions("cm", ["FETCH_ALL"])
+    ...mapActions("cm", ["FETCH_ALL"]),
+    removeGrave (id) {
+      alert(`Chcesz usunąć grób ${id}?`)
+    }
   }
 };
 </script>
