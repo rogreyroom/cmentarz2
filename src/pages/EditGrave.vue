@@ -93,9 +93,6 @@ export default {
     ...mapGetters({ users: "cm/GET_GRAVE_USERS" }),
   },
   mounted () {
-
-    // eslint-disable-next-line no-console
-    console.log(this.id)
     const { parcela } = this.grave(this.id)[0]
     this.graveData = parcela
 
