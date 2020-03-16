@@ -92,12 +92,16 @@
       </div>
     </div>
 
-    <q-btn
-      flat
-      class="q-ml-md"
-      text-color="light-blue-13"
-      @click="updateTaker(taker)"
-    />
+    <div class="row full-width">
+      <q-btn
+        unelevated
+        label="Zmień"
+        size="md"
+        class="q-ml-md"
+        text-color="light-blue-13"
+        @click="updateTaker(1)"
+      />
+    </div>
   </div>
 </template>
 <script>
@@ -128,9 +132,19 @@ export default {
   },
   computed: {
   },
+  created () {
+    // eslint-disable-next-line no-console
+    // console.log('Taker Form:');
+    // eslint-disable-next-line no-console
+    // console.log(this.taker);
+  },
   mounted () {
   },
   methods: {
+    updateTaker (id) {
+      // eslint-disable-next-line no-console
+      console.log(id);
+    }
   },
 };
 </script>
