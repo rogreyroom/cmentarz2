@@ -5,7 +5,7 @@
         Dane opiekuna grobu
       </h5>
       <q-btn
-        :to="{ name: 'taker-edit', params: { id: id } }"
+        :to="{ name: 'taker-edit', params: { id: id, taker: taker } }"
         flat
         icon="edit"
         class="q-ml-md"
