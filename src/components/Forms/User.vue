@@ -1,6 +1,5 @@
 <template>
   <div class="row q-pa-sm q-gutter-sm">
-
     <div class="row q-ma-md  full-width">
       <div class="col q-ma-md">
         <div class="row">
@@ -120,9 +119,9 @@
         </div>
         <div class="row full-width">
           <q-input
+            v-model="user.dtZgonu"
             name="dtZgonu"
             outlined
-            v-model="user.dtZgonu"
             mask="date"
             :rules="['date']"
           >
@@ -165,9 +164,9 @@
         </div>
         <div class="row full-width">
           <q-input
+            v-model="user.dtPochowku"
             name="dtPochowku"
             outlined
-            v-model="user.dtPochowku"
             mask="date"
             :rules="['date']"
           >
@@ -274,7 +273,6 @@
         @click="addUser()"
       />
     </div>
-
   </div>
 </template>
 

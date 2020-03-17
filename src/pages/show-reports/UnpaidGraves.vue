@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   data () {
@@ -188,9 +188,17 @@ export default {
     };
   },
   computed: {
+    ...mapState("cm", ["graves"]),
     ...mapGetters({ graves: "cm/GET_UNPAID_GRAVES" })
   },
-  methods: {}
+  created: function () {
+    if (this.graves.length === 0) {
+      this["FETCH_ALL"]()
+    }
+  },
+  methods: {
+    ...mapActions("cm", ["FETCH_ALL"]),
+  }
 };
 </script>
 

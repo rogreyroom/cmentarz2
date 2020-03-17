@@ -38,7 +38,9 @@
                 transition-show="scale"
                 transition-hide="scale"
                 content-class="bg-blue-4"
-              >Pokaz</q-tooltip>
+              >
+                Pokaz
+              </q-tooltip>
             </q-btn>
             <q-btn
               size="sm"
@@ -55,7 +57,9 @@
                 transition-show="scale"
                 transition-hide="scale"
                 content-class="bg-green-4"
-              >Edytuj</q-tooltip>
+              >
+                Edytuj
+              </q-tooltip>
             </q-btn>
             <q-btn
               size="sm"
@@ -72,18 +76,24 @@
                 transition-show="scale"
                 transition-hide="scale"
                 content-class="bg-red-4"
-              >Usuń</q-tooltip>
+              >
+                Usuń
+              </q-tooltip>
             </q-btn>
           </div>
         </q-td>
         <q-td
           key="numerGrobu"
           :props="props"
-        >{{ props.row.parcela.nrGrobu }}</q-td>
+        >
+          {{ props.row.parcela.nrGrobu }}
+        </q-td>
         <q-td
           key="rodzajGrobu"
           :props="props"
-        >{{ props.row.parcela.rodzaj }}</q-td>
+        >
+          {{ props.row.parcela.rodzaj }}
+        </q-td>
         <q-td
           key="statusGrobu"
           :props="props"
@@ -94,12 +104,16 @@
             small
             square
             color="red-2"
-          >{{ props.row.parcela.status }}</q-chip>
+          >
+            {{ props.row.parcela.status }}
+          </q-chip>
         </q-td>
         <q-td
           key="dataZaplatyGrobu"
           :props="props"
-        >{{ props.row.parcela.dtZaplaty }}</q-td>
+        >
+          {{ props.row.parcela.dtZaplaty }}
+        </q-td>
       </q-tr>
     </q-table>
   </div>

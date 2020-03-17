@@ -198,10 +198,13 @@ export default {
     ...mapState("cm", ["users"])
   },
   created () {
-    this["FETCH_USERS"]();
+    if (this.users.length === 0) {
+      this["FETCH_ALL"]()
+    }
+
   },
   methods: {
-    ...mapActions("cm", ["FETCH_USERS"]),
+    ...mapActions("cm", ["FETCH_ALL"]),
 
     dateFormat (myDate) {
       return date.formatDate(myDate, "YYYY-MM-DD")

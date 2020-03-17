@@ -31,6 +31,11 @@ const routes = [
 			},
 
 			{
+				path: '/cemeteries/',
+				name: 'cemeteries',
+				component: () => import('pages/show-view/Cemetery.vue')
+			},
+			{
 				path: '/cemetery-map/:id',
 				name: 'cemetery-map',
 				component: () => import('pages/show-view/Cemetery.vue')

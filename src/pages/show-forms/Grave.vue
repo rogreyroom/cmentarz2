@@ -38,7 +38,7 @@
             Dane osoby zmarłej:
           </h5>
           <q-btn
-            :to="{ name: 'grave-edit', params: { id: id, flag: 'add' } }"
+            :to="{ name: 'user-add-edit', params: { id: id, flag: 'add' } }"
             flat
             icon="add"
             class="q-ml-md"

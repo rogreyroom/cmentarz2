@@ -1,6 +1,9 @@
 <template>
   <q-page class="flex flex-center">
-    <img alt="Quasar logo" src="~assets/quasar-logo-full.svg" />
+    <img
+      alt="Quasar logo"
+      src="~assets/quasar-logo-full.svg"
+    >
   </q-page>
 </template>
 
@@ -15,7 +18,7 @@ export default {
     ...mapState("cm", ["users"]),
     ...mapState("cm", ["takers"])
   },
-  created() {
+  created () {
     this["FETCH_GRAVES"]();
     this["FETCH_CEMETERIES"]();
     this["FETCH_USERS"]();

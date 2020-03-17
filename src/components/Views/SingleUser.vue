@@ -12,11 +12,11 @@
         text-color="light-blue-13"
       />
       <q-btn
-        @click="deleteUser(id)"
         flat
         icon="delete"
         class="q-ml-sm"
         text-color="light-blue-13"
+        @click="deleteUser(id)"
       />
     </q-card-section>
     <q-card-section class="row q-gutter-md fit">

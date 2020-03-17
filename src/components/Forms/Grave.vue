@@ -33,9 +33,9 @@
           flat
         /> -->
         <q-input
+          v-model="grave.dtOplaty"
           name="dtOplaty"
           outlined
-          v-model="grave.dtOplaty"
           mask="date"
           :rules="['date']"
         >
@@ -61,7 +61,6 @@
     </div>
     <div class="col q-ml-lg">
       <div v-if="flag !== 'edit'">
-
         <!-- TODO: check if parcela is no a list of options -->
         <div class="row">
           <p><strong>Parcela:</strong></p>
@@ -171,7 +170,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>

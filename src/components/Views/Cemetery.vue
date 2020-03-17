@@ -4,7 +4,6 @@
       <h5>
         Cmentarz nazwa
       </h5>
-
       <!-- Tu będzie mapa cmentarza, pwinna też przyjmować id grobu i go zaznaczać  -->
     </div>
   </section>
