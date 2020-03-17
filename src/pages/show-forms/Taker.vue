@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Taker from '../components/Forms/Taker'
+import Taker from '../../components/Forms/Taker'
 
 export default {
   components: {

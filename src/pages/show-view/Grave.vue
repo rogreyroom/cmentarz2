@@ -22,9 +22,9 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Grave from '../components/Views/Grave'
-import User from '../components/Views/User'
-import Taker from '../components/Views/Taker'
+import Grave from '../../components/Views/Grave'
+import User from '../../components/Views/User'
+import Taker from '../../components/Views/Taker'
 
 export default {
   components: {
@@ -49,13 +49,8 @@ export default {
     ...mapGetters({ grave: "cm/GET_GRAVE" }),
     ...mapGetters({ taker: "cm/GET_GRAVE_TAKER" }),
     ...mapGetters({ users: "cm/GET_GRAVE_USERS" }),
-
-
   },
   mounted () {
-    // eslint-disable-next-line no-console
-    console.log(this.id)
-
     const { parcela } = this.grave(this.id)[0]
     this.graveData = parcela
 

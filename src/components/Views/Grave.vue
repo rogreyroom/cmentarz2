@@ -6,7 +6,7 @@
         <strong class="q-ml-sm">{{ id }}</strong>
       </h5>
       <q-btn
-        :to="{ name: 'grave-edit', params: { id: id, flag: 'edit' }}"
+        :to="{ name: 'grave-add-edit', params: { id: id, flag: 'edit' }}"
         flat
         icon="edit"
         class="q-ml-md"
@@ -14,7 +14,7 @@
       />
       <!-- :to show-map - is it posible to show params -->
       <q-btn
-        :to="{ name: 'cemetery-map', params: { id: id }}"
+        :to="{ name: 'cemetery-map-show-grave', params: { id: id }}"
         flat
         icon="map"
         class="q-ml-md"

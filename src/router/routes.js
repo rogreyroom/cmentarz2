@@ -8,72 +8,70 @@ const routes = [
 				name: 'home',
 				component: () => import('pages/Index.vue')
 			},
-			{
-				path: '/cemetery-map',
-				name: 'cemetery-map',
-				component: () => import('pages/CemeteryMap.vue')
-			},
-			{
-				path: '/cemetery-add',
-				name: 'cemetery-add',
-				component: () => import('pages/AddCemetery.vue')
-			},
-			{
-				path: '/grave-add',
-				name: 'grave-add',
-				component: () => import('pages/AddGrave.vue')
-			},
+
 			{
 				path: '/full-list',
 				name: 'graves-full-list',
-				component: () => import('pages/ListGraves.vue')
+				component: () => import('pages/show-reports/ListGraves.vue')
+			},
+			{
+				path: '/cemetery-list',
+				name: 'cemetery-full-list',
+				component: () => import('pages/show-reports/ListCemetery.vue')
 			},
 			{
 				path: '/unpaid-list',
 				name: 'unpaid-list',
-				component: () => import('pages/UnpaidGraves.vue')
+				component: () => import('pages/show-reports/UnpaidGraves.vue')
 			},
 			{
 				path: '/dead-list',
 				name: 'dead-list',
-				component: () => import('pages/DeadByYear.vue')
+				component: () => import('pages/show-reports/DeadByYear.vue')
+			},
+
+			{
+				path: '/cemetery-map/:id',
+				name: 'cemetery-map',
+				component: () => import('pages/show-view/Cemetery.vue')
+			},
+			{
+				path: '/cemetery-map-show/:id',
+				name: 'cemetery-map-show-grave',
+				component: () => import('pages/show-view/Cemetery.vue'),
+				props: true
 			},
 			{
 				path: '/grave-show/:id',
 				name: 'grave-show',
-				component: () => import('pages/ShowGrave.vue'),
+				component: () => import('pages/show-view/Grave.vue'),
+				props: true
+			},
+
+			{
+				path: '/cemetery-change',
+				name: 'cemetery-add-edit',
+				component: () => import('pages/show-forms/Cemetery.vue'),
 				props: true
 			},
 			{
-				path: '/grave-edit/:id',
-				name: 'grave-edit',
-				component: () => import('pages/EditGrave.vue'),
+				path: '/grave-change/:id',
+				name: 'grave-add-edit',
+				component: () => import('pages/show-forms/Grave.vue'),
 				props: true
 			},
 			{
-				path: '/taker-edit/:id',
-				name: 'taker-edit',
-				component: () => import('pages/EditTaker.vue'),
+				path: '/taker-change/:id',
+				name: 'taker-add-edit',
+				component: () => import('pages/show-forms/Taker.vue'),
+				props: true
+			},
+			{
+				path: '/user-change/:id',
+				name: 'user-add-edit',
+				component: () => import('pages/show-forms/User.vue'),
 				props: true
 			}
-			// {
-			// 	path: '/grave-delete/',
-			// 	name: 'grave-delete',
-			// 	component: () => import('pages/ShowGrave.vue'),
-			// 	props: true
-			// },
-			// {
-			// 	path: '/user-edit/',
-			// 	name: 'user-edit',
-			// 	component: () => import('pages/ShowGrave.vue'),
-			// 	props: true
-			// },
-			// {
-			// 	path: '/user-delete/',
-			// 	name: 'user-delete',
-			// 	component: () => import('pages/ShowGrave.vue'),
-			// 	props: true
-			// }
 		]
 	}
 ];

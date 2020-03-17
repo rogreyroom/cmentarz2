@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import User from '../components/Forms/User'
+import User from '../../components/Forms/User'
 
 export default {
   components: {

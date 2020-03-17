@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div class="row q-ma-md full-width">
+    <div class="row q-ma-md  full-width">
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Data urodzenia:</strong></p>
@@ -79,7 +79,7 @@
         </div>
       </div>
     </div>
-    <div class="row q-ma-md full-width">
+    <div class="row q-ma-md  full-width">
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Nazwisko rodowe:</strong></p>
@@ -113,16 +113,16 @@
 
     <hr>
 
-    <div class="row q-ma-md full-width">
+    <div class="row q-ma-md  full-width">
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Data zgonu:</strong></p>
         </div>
         <div class="row full-width">
           <q-input
-            v-model="user.dtZgonu"
             name="dtZgonu"
             outlined
+            v-model="user.dtZgonu"
             mask="date"
             :rules="['date']"
           >
@@ -208,7 +208,7 @@
 
     <hr>
 
-    <div class="row q-ma-md full-width">
+    <div class="row q-ma-md  full-width">
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Imię matki:</strong></p>
@@ -279,6 +279,7 @@
 </template>
 
 <script>
+
 export default {
   components: {
   },
@@ -315,5 +316,5 @@ export default {
     addUser () {
     }
   },
-};
+}
 </script>

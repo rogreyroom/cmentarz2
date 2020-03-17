@@ -5,14 +5,14 @@
   >
     <q-card-section class="row q-gutter-md fit">
       <q-btn
-        :to="{ name: 'user-edit', params: {id: id} }"
+        :to="{ name: 'user-add-edit', params: {id: id, user: user, flag: 'edit'} }"
         flat
         icon="edit"
         class="q-ml-sm"
         text-color="light-blue-13"
       />
       <q-btn
-        :to="{ name: 'user-delete', params: {id: id} }"
+        @click="deleteUser(id)"
         flat
         icon="delete"
         class="q-ml-sm"
@@ -48,13 +48,25 @@ import { date } from 'quasar'
 
 export default {
   props: {
-    id: String,
-    user: Object
+    id: {
+      type: String,
+      default: ''
+    },
+    user: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    }
   },
   methods: {
     dateFormat (myDate) {
       return date.formatDate(myDate, "YYYY-MM-DD")
     },
+    deleteUser (id) {
+      // eslint-disable-next-line no-console
+      console.log(id);
+    }
   },
 };
 </script>

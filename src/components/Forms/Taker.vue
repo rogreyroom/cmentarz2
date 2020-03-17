@@ -95,6 +95,7 @@
     <div class="row full-width">
       <q-btn
         unelevated
+        outline
         label="Zmień"
         size="md"
         class="q-ml-md"

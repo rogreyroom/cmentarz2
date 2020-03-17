@@ -38,7 +38,7 @@
             Dane osoby zmarłej:
           </h5>
           <q-btn
-            :to="{ name: 'grave-edit', params: {id: id} }"
+            :to="{ name: 'grave-edit', params: { id: id, flag: 'add' } }"
             flat
             icon="add"
             class="q-ml-md"
@@ -63,9 +63,9 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Grave from '../components/Forms/Grave'
-import Taker from '../components/Forms/Taker'
-import SingleUser from '../components/Views/SingleUser'
+import Grave from '../../components/Forms/Grave'
+import Taker from '../../components/Forms/Taker'
+import SingleUser from '../../components/Views/SingleUser'
 
 export default {
   components: {
@@ -81,7 +81,6 @@ export default {
   },
   data () {
     return {
-      // id: this.$route.params.id,
       graveData: {},
       takerData: {},
       usersData: []
