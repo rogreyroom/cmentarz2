@@ -1,8 +1,8 @@
 <template>
   <div class="row q-pa-sm q-gutter-sm">
 
-    <div class="row q-ma-md">
-      <div class="col">
+    <div class="row q-ma-md  full-width">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Imię:</strong></p>
         </div>
@@ -10,14 +10,13 @@
           <q-input
             v-model="user.imie"
             outlined
-            label="5"
             name="imie"
             class="full-width"
           />
         </div>
       </div>
 
-      <div class="col">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Nazwisko:</strong></p>
         </div>
@@ -25,25 +24,25 @@
           <q-input
             v-model="user.nazwisko"
             outlined
-            label="5"
             name="nazwisko"
             class="full-width"
           />
         </div>
       </div>
     </div>
-    <div class="row q-ma-md">
-      <div class="col">
+    <div class="row q-ma-md full-width">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Data urodzenia:</strong></p>
         </div>
         <div class="row full-width">
           <q-input
+            v-model="user.dtUrodzenia"
             name="dtUrodzenia"
             outlined
-            v-model="user.dtUrodzenia"
             mask="date"
             :rules="['date']"
+            class="full-width"
           >
             <template v-slot:append>
               <q-icon
@@ -66,7 +65,7 @@
         </div>
       </div>
 
-      <div class="col">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Miejsce urodzenia:</strong></p>
         </div>
@@ -74,15 +73,14 @@
           <q-input
             v-model="user.miejsceUrodzenia"
             outlined
-            label="5"
             name="miejsceUrodzenia"
             class="full-width"
           />
         </div>
       </div>
     </div>
-    <div class="row q-ma-md">
-      <div class="col">
+    <div class="row q-ma-md full-width">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Nazwisko rodowe:</strong></p>
         </div>
@@ -90,14 +88,13 @@
           <q-input
             v-model="user.nazwiskoRodowe"
             outlined
-            label="5"
             name="nazwiskoRodowe"
             class="full-width"
           />
         </div>
       </div>
 
-      <div class="col">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Stan cywilny:</strong></p>
         </div>
@@ -116,16 +113,16 @@
 
     <hr>
 
-    <div class="row q-ma-md">
-      <div class="col">
+    <div class="row q-ma-md full-width">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Data zgonu:</strong></p>
         </div>
         <div class="row full-width">
           <q-input
+            v-model="user.dtZgonu"
             name="dtZgonu"
             outlined
-            v-model="user.dtZgonu"
             mask="date"
             :rules="['date']"
           >
@@ -149,7 +146,7 @@
           </q-input>
         </div>
       </div>
-      <div class="col">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Miejsce zgonu:</strong></p>
         </div>
@@ -157,13 +154,12 @@
           <q-input
             v-model="user.miejsceZgonu"
             outlined
-            label="5"
             name="miejsceZgonu"
             class="full-width"
           />
         </div>
       </div>
-      <div class="col">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Data pochówku:</strong></p>
         </div>
@@ -195,7 +191,7 @@
           </q-input>
         </div>
       </div>
-      <div class="col">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Miejsce pochówku:</strong></p>
         </div>
@@ -203,7 +199,6 @@
           <q-input
             v-model="user.miejscePochowku"
             outlined
-            label="5"
             name="miejscePochowku"
             class="full-width"
           />
@@ -213,8 +208,8 @@
 
     <hr>
 
-    <div class="row q-ma-md">
-      <div class="col">
+    <div class="row q-ma-md full-width">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Imię matki:</strong></p>
         </div>
@@ -222,13 +217,12 @@
           <q-input
             v-model="user.imieMatki"
             outlined
-            label="5"
             name="imieMatki"
             class="full-width"
           />
         </div>
       </div>
-      <div class="col">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Nazwisko Matki:</strong></p>
         </div>
@@ -236,13 +230,12 @@
           <q-input
             v-model="user.nazwiskoMatki"
             outlined
-            label="5"
             name="nazwiskoMatki"
             class="full-width"
           />
         </div>
       </div>
-      <div class="col">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Imię ojca:</strong></p>
         </div>
@@ -250,13 +243,12 @@
           <q-input
             v-model="user.imieOjca"
             outlined
-            label="5"
             name="imieOjca"
             class="full-width"
           />
         </div>
       </div>
-      <div class="col">
+      <div class="col q-ma-md">
         <div class="row">
           <p><strong>Nazwisko ojca:</strong></p>
         </div>
@@ -264,7 +256,6 @@
           <q-input
             v-model="user.nazwiskoOjca"
             outlined
-            label="5"
             name="nazwiskoOjca"
             class="full-width"
           />
@@ -272,15 +263,22 @@
       </div>
     </div>
 
-    <div class="row q-ma-md">
-      Przycisk: Zmień
+    <div class="row q-ma-md full-width">
+      <q-btn
+        unelevated
+        outline
+        label="Zmień"
+        size="md"
+        class="q-ml-md"
+        text-color="light-blue-13"
+        @click="addUser()"
+      />
     </div>
 
   </div>
 </template>
 
 <script>
-
 export default {
   components: {
   },
@@ -293,7 +291,7 @@ export default {
       type: String,
       default: 'add'
     },
-    taker: {
+    user: {
       type: Object,
       default: function () {
         return {}
@@ -302,13 +300,20 @@ export default {
   },
   data () {
     return {
+      stanCywilnyOptions: [
+        'Kawaler', 'Mężatka', 'Żonaty', 'Wdowa', 'Wdowiec'
+      ],
     };
   },
   computed: {
   },
   mounted () {
+    // eslint-disable-next-line no-console
+    console.log(this.user);
   },
   methods: {
+    addUser () {
+    }
   },
 };
 </script>
