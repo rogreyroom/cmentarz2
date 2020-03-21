@@ -18,7 +18,7 @@
       </div>
       <div id="printMe">
         <q-table
-          :data="gravesDetails"
+          :data="cemeteries"
           :columns="columns"
           :rows-per-page-options="[5, 10, 15, 20, 25, 30, 35, 50, 0]"
           :pagination.sync="pagination"
@@ -27,72 +27,96 @@
           flat
           row-key="name"
         >
-          <q-tr
-            slot="body"
-            slot-scope="props"
-            class="text-center"
-            :props="props"
-          >
-            <q-td
-              key="opcje"
-              :props="props"
-            >
-              <div
-                class="row items-center justify-between no-wrap print-hide"
-                style="max-width: 105px"
+          <template v-slot:header="props">
+            <q-tr :props="props">
+              <q-th auto-width />
+              <q-th
+                v-for="col in props.cols"
+                :key="col.name"
+                :props="props"
               >
-                <q-btn
-                  size="sm"
-                  round
-                  dense
-                  color="blue"
-                  icon="visibility"
-                  class="q-mr-xs"
-                  :to="{ name: 'cemetery-map', params: { id: props.row._id } }"
+                {{ col.label }}
+              </q-th>
+            </q-tr>
+          </template>
+          <template v-slot:body="props">
+            <q-tr
+              class="text-center"
+              :props="props"
+            >
+              <q-td auto-width>
+                <div
+                  class="row items-center justify-between no-wrap print-hide"
+                  style="max-width: 105px"
                 >
-                  <q-tooltip
-                    anchor="top middle"
-                    self="center middle"
-                    transition-show="scale"
-                    transition-hide="scale"
-                    content-class="bg-blue-4"
+                  <q-btn
+                    size="sm"
+                    round
+                    dense
+                    color="blue"
+                    icon="visibility"
+                    class="q-mr-sm"
+                    :to="{ name: 'cemetery-map', params: { name: props.row.thecm.cName } }"
                   >
-                    Pokaż
-                  </q-tooltip>
-                </q-btn>
-              </div>
-            </q-td>
-            <q-td
-              key="cemeteryName"
-              :props="props"
-            >
-              {{ props.row.thecm.cName }}
-            </q-td>
-            <q-td
-              key="cemeteryFullName"
-              :props="props"
-            >
-              {{ props.row.thecm.cmFullName }}
-            </q-td>
-            <q-td
-              key="cemeteryEntrance"
-              :props="props"
-            >
-              {{ props.row.thecm.wejscie }}
-            </q-td>
-            <q-td
-              key="firstRowPosition"
-              :props="props"
-            >
-              {{ props.row.thecm.rzad }}
-            </q-td>
-            <q-td
-              key="firstGravePosition"
-              :props="props"
-            >
-              {{ props.row.thecm.grob }}
-            </q-td>
-          </q-tr>
+                    <q-tooltip
+                      anchor="top middle"
+                      self="center middle"
+                      transition-show="scale"
+                      transition-hide="scale"
+                      content-class="bg-blue-4"
+                    >
+                      Pokaż {{ props.row.thecm.cName }}
+                    </q-tooltip>
+                  </q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    dense
+                    color="green"
+                    icon="edit"
+                    class="q-mr-sm"
+                    :to="{ name: 'cemetery-add-edit', params: { id: props.row._id, cemetery: props.row } }"
+                  >
+                    <q-tooltip
+                      anchor="top middle"
+                      self="center middle"
+                      transition-show="scale"
+                      transition-hide="scale"
+                      content-class="bg-green-4"
+                    >
+                      Edytuj
+                    </q-tooltip>
+                  </q-btn>
+                  <q-btn
+                    size="sm"
+                    round
+                    dense
+                    color="red"
+                    icon="remove"
+                    class="q-mr-sm"
+                    @click="removeCemetery(props.row._id)"
+                  >
+                    <q-tooltip
+                      anchor="top middle"
+                      self="center middle"
+                      transition-show="scale"
+                      transition-hide="scale"
+                      content-class="bg-red-4"
+                    >
+                      Usuń
+                    </q-tooltip>
+                  </q-btn>
+                </div>
+              </q-td>
+              <q-td
+                v-for="col in props.cols"
+                :key="col.name"
+                :props="props"
+              >
+                {{ col.value }}
+              </q-td>
+            </q-tr>
+          </template>
         </q-table>
       </div>
     </q-page>
@@ -117,11 +141,6 @@ export default {
       },
       columns: [
         {
-          name: "opcje",
-          label: "",
-          align: "center"
-        },
-        {
           name: "cemeteryName",
           label: "Nr. cmentarza",
           align: "center",
@@ -138,17 +157,45 @@ export default {
         {
           name: "cemeteryEntrance",
           label: "Wejście",
-          align: "center"
+          align: "center",
+          field: cemeteries => {
+            switch (cemeteries.thecm.wejscie) {
+              case 'wejscieLeft':
+                return 'Po lewej'
+              case 'wejscieRight':
+                return 'Po prawej'
+            }
+          }
         },
         {
           name: "firstRowPosition",
           label: "Pierwszy rząd",
-          align: "center"
+          align: "center",
+          field: cemeteries => {
+            switch (cemeteries.thecm.rzad) {
+              case 'rzadTop':
+                return 'Na górze'
+              case 'rzadBottom':
+                return 'Na dole'
+            }
+          }
         },
         {
           name: "firstGravePosition",
           label: "Pierwszy grób",
-          align: "center"
+          align: "center",
+          field: cemeteries => {
+            switch (cemeteries.thecm.grob) {
+              case 'grobLeftTop':
+                return 'U góry po lewej'
+              case 'grobRightTop':
+                return 'U góry po prawej'
+              case 'grobLeftBottom':
+                return 'Na dole po lewej'
+              case 'grobRightBottom':
+                return 'Na dole po prawej'
+            }
+          }
         }
       ],
       notPrinting: true
@@ -164,6 +211,10 @@ export default {
   },
   methods: {
     ...mapActions("cm", ["FETCH_ALL"]),
+    removeCemetery (id) {
+      // eslint-disable-next-line no-console
+      console.log(id);
+    }
   }
 }
 
