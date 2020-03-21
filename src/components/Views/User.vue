@@ -3,14 +3,14 @@
     <div class="row q-pa-sm q-gutter-sm">
       <h5>
         Dane osoby zmarłej
+        <q-btn
+          :to="{ name: 'user-add-edit', params: { id: id, flag: 'grave-new-user' } }"
+          flat
+          icon="add"
+          class="q-ml-md"
+          text-color="light-blue-13"
+        />
       </h5>
-      <q-btn
-        :to="{ name: 'user-add-edit', params: { id: id, flag: 'grave-new-user' } }"
-        flat
-        icon="add"
-        class="q-ml-md"
-        text-color="light-blue-13"
-      />
     </div>
     <div
       v-for="{_id, user} in users"

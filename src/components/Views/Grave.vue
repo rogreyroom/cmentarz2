@@ -4,22 +4,23 @@
       <h5>
         Dane grobu:
         <strong class="q-ml-sm">{{ id }}</strong>
+        <q-btn
+          :to="{ name: 'grave-add-edit', params: { id: id, flag: 'edit' }}"
+          flat
+          icon="edit"
+          class="q-ml-md"
+          text-color="light-blue-13"
+        />
+
+        <!-- :to show-map - is it posible to show params -->
+        <q-btn
+          :to="{ name: 'cemetery-map-show-grave', params: { id: id }}"
+          flat
+          icon="map"
+          class="q-ml-md"
+          text-color="light-blue-13"
+        />
       </h5>
-      <q-btn
-        :to="{ name: 'grave-add-edit', params: { id: id, flag: 'edit' }}"
-        flat
-        icon="edit"
-        class="q-ml-md"
-        text-color="light-blue-13"
-      />
-      <!-- :to show-map - is it posible to show params -->
-      <q-btn
-        :to="{ name: 'cemetery-map-show-grave', params: { id: id }}"
-        flat
-        icon="map"
-        class="q-ml-md"
-        text-color="light-blue-13"
-      />
     </div>
     <hr>
     <div class="row q-pa-sm q-gutter-sm">
