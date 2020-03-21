@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 export function someGetter(/* state */) {}
 
 export function GET_UNPAID_GRAVES(state) {
@@ -25,5 +26,54 @@ export function GET_GRAVE_USERS(state) {
 export function GET_PARCELA(state) {
 	return name => {
 		return state.cemeteries.find(({ thecm: { cName } }) => cName === name);
+	};
+}
+
+export function GET_ALL_GRAVES_COUNT(state) {
+	return cmName => {
+		return state.graves.filter(({ parcela: { parcela } }) => parcela === cmName).length;
+	};
+}
+
+export function GET_ALL_PAID_GRAVES_COUNT(state) {
+	return cmName => {
+		return state.graves.filter(({ parcela: { parcela, status } }) => parcela === cmName && status === 'Opłacony')
+			.length;
+	};
+}
+
+export function GET_ALL_UNPAID_GRAVES_COUNT(state) {
+	return cmName => {
+		return state.graves.filter(
+			({ parcela: { parcela, status } }) => parcela === cmName && status === 'Nie opłacony'
+		).length;
+	};
+}
+
+export function GET_ALL_EMPTY_GRAVES_COUNT(state) {
+	return cmName => {
+		return state.graves.filter(({ parcela: { parcela, status } }) => parcela === cmName && status === 'Puste')
+			.length;
+	};
+}
+
+export function GET_UNIQUE_CEMETERY_ROWS(state) {
+	return cmName => {
+		const arrOfFoundCementeryGraves = state.graves.filter(({ parcela: { parcela } }) => parcela === cmName);
+		return [
+			...new Set(arrOfFoundCementeryGraves.map(({ parcela: { rzad } }) => rzad))
+		].sort((a, b) => +a - +b);
+	};
+}
+
+export function GET_CEMETERY_ROW_GRAVES(state) {
+	return (cmName, cmRow) => {
+		return state.graves
+			.filter(({ parcela: { parcela, rzad } }) => parcela === cmName && rzad === cmRow)
+			.sort((a, b) => {
+				const { parcela: { grob: graveA } } = a;
+				const { parcela: { grob: graveB } } = b;
+				return graveA - graveB;
+			});
 	};
 }
