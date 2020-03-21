@@ -1,6 +1,10 @@
 /* eslint-disable no-console */
 export function SET_CEMETERIES(state, payload) {
-	state.cemeteries = payload;
+	state.cemeteries = payload.sort((a, b) => {
+		const { thecm: { cName: cmNameA } } = a;
+		const { thecm: { cName: cmNameB } } = b;
+		return cmNameA.substring(2) - cmNameB.substring(2);
+	});
 }
 
 export function SET_USERS(state, payload) {
