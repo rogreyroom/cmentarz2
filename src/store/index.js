@@ -1,10 +1,12 @@
 /* eslint-disable prettier/prettier */
 import Vue from "vue";
 import Vuex from "vuex";
+import Print from 'vue-print-qj'
 
 // import example from './module-example'
 import cm from "./cm";
 
+Vue.use(Print);
 Vue.use(Vuex);
 
 /*
