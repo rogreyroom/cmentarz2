@@ -31,14 +31,15 @@ const routes = [
 			},
 
 			{
-				path: '/cemeteries/',
+				path: '/cemeteries',
 				name: 'cemeteries',
-				component: () => import('pages/show-view/Cemetery.vue')
+				component: () => import('pages/show-view/Cemeteries.vue')
 			},
 			{
-				path: '/cemetery-map/:id',
+				path: '/cemeteries/:name',
 				name: 'cemetery-map',
-				component: () => import('pages/show-view/Cemetery.vue')
+				component: () => import('pages/show-view/Cemeteries.vue'),
+				props: true
 			},
 			{
 				path: '/cemetery-map-show/:id',
