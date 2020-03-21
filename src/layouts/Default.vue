@@ -107,6 +107,14 @@ const menuList = [
   {
     icon: "view_list",
     iconColor: "deep-purple-9",
+    label: "Lista cmentarzy",
+    class: "text-deep-purple-9",
+    separator: false,
+    link: "cemetery-full-list"
+  },
+  {
+    icon: "view_list",
+    iconColor: "deep-purple-9",
     label: "Pełna lista",
     class: "text-deep-purple-9",
     separator: false,
