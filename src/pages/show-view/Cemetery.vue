@@ -3,6 +3,7 @@
     <q-page padding>
       <cemetery
         :id="id"
+        :grave="grave"
         :cemetery="cemeteryData"
       />
     </q-page>
@@ -22,6 +23,10 @@ export default {
       type: String,
       default: ''
     },
+    grave: {
+      type: String,
+      default: ''
+    }
   },
   data () {
     return {
