@@ -34,7 +34,7 @@
         <taker-form
           :id="id"
           :taker="takerData"
-          flag="edit"
+          :flag="flag"
         />
       </section>
       <hr>
@@ -42,25 +42,35 @@
         <div class="row q-pa-sm q-gutter-sm">
           <h5>
             Dane osoby zmarłej:
-            <q-btn
-              :to="{ name: 'user-add-edit', params: { id: id, flag: 'add' } }"
-              flat
-              icon="add"
-              class="q-ml-md"
-              text-color="light-blue-13"
-            />
+            <template v-if="flag === 'edit'">
+              <q-btn
+                :to="{ name: 'user-add-edit', params: { id: id, flag: 'add' } }"
+                flat
+                icon="add"
+                class="q-ml-md"
+                text-color="light-blue-13"
+              />
+            </template>
           </h5>
         </div>
-        <div
-          v-for="{_id, user} in usersData"
-          :key="_id"
-          class="row q-pa-sm q-gutter-sm"
-        >
-          <single-user
-            :id="_id"
-            :user="user"
+        <template v-if="flag === 'add'">
+          <user-form
+            :id="id"
+            :flag="flag"
           />
-        </div>
+        </template>
+        <template v-else>
+          <div
+            v-for="{_id, user} in usersData"
+            :key="_id"
+            class="row q-pa-sm q-gutter-sm"
+          >
+            <single-user
+              :id="id"
+              :user="user"
+            />
+          </div>
+        </template>
       </section>
     </q-page>
   </div>
@@ -70,12 +80,14 @@
 import { mapGetters } from "vuex";
 import Grave from '../../components/Forms/Grave'
 import Taker from '../../components/Forms/Taker'
+import User from '../../components/Forms/User'
 import SingleUser from '../../components/Views/SingleUser'
 
 export default {
   components: {
     'grave-form': Grave,
     'taker-form': Taker,
+    'user-form': User,
     'single-user': SingleUser
   },
   props: {

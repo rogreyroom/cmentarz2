@@ -1,5 +1,4 @@
 <template>
-  <!--  q-pa-sm q-gutter-sm -->
   <div class="row q-pa-sm q-gutter-sm">
     <div class="row full-width">
       <div class="col q-ma-md">
@@ -15,7 +14,6 @@
           />
         </div>
       </div>
-
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Nazwisko</strong></p>
@@ -29,7 +27,6 @@
           />
         </div>
       </div>
-
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Adres</strong></p>
@@ -45,7 +42,6 @@
         </div>
       </div>
     </div>
-
     <div class="row full-width">
       <div class="col q-ma-md">
         <div class="row">
@@ -60,7 +56,6 @@
           />
         </div>
       </div>
-
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Email</strong></p>
@@ -74,7 +69,6 @@
           />
         </div>
       </div>
-
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Uwagi dodatkowe</strong></p>
@@ -91,22 +85,22 @@
         </div>
       </div>
     </div>
-
-    <div class="row full-width">
-      <q-btn
-        unelevated
-        outline
-        label="Zmień"
-        size="md"
-        class="q-ml-md"
-        text-color="light-blue-13"
-        @click="updateTaker(1)"
-      />
-    </div>
+    <template v-if="flag === 'edit'">
+      <div class="row full-width">
+        <q-btn
+          unelevated
+          outline
+          label="Zmień"
+          size="md"
+          class="q-ml-md"
+          text-color="light-blue-13"
+          @click="updateTaker(1)"
+        />
+      </div>
+    </template>
   </div>
 </template>
 <script>
-// Flag determines if data is added as new or edited
 
 export default {
   components: {
@@ -134,10 +128,6 @@ export default {
   computed: {
   },
   created () {
-    // eslint-disable-next-line no-console
-    // console.log('Taker Form:');
-    // eslint-disable-next-line no-console
-    // console.log(this.taker);
   },
   mounted () {
   },

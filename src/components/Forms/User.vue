@@ -261,17 +261,30 @@
         </div>
       </div>
     </div>
-
+    <hr>
     <div class="row q-ma-md full-width">
-      <q-btn
-        unelevated
-        outline
-        label="Zmień"
-        size="md"
-        class="q-ml-md"
-        text-color="light-blue-13"
-        @click="addUser()"
-      />
+      <template v-if="flag === 'edit'">
+        <q-btn
+          unelevated
+          outline
+          label="Zmień"
+          size="md"
+          class="q-ml-md"
+          text-color="light-blue-13"
+          @click="editUser()"
+        />
+      </template>
+      <template v-else>
+        <q-btn
+          unelevated
+          outline
+          label="Dodaj"
+          size="md"
+          class="q-ml-md"
+          text-color="light-blue-13"
+          @click="addUser()"
+        />
+      </template>
     </div>
   </div>
 </template>

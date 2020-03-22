@@ -60,8 +60,18 @@
       </div>
     </div>
     <div class="col q-ml-lg">
-      <div v-if="flag !== 'edit'">
-        <!-- TODO: check if parcela is no a list of options -->
+      <template v-if="flag === 'edit'">
+        <div class="row q-ma-md">
+          <p><strong>Parcela:</strong> {{ cemetery }}</p>
+        </div>
+        <div class="row q-ma-md">
+          <p><strong>Rząd:</strong> {{ grave.rzad }}</p>
+        </div>
+        <div class="row q-ma-md">
+          <p><strong>Numer grobu:</strong> {{ grave.grob }}</p>
+        </div>
+      </template>
+      <template v-else>
         <div class="row">
           <p><strong>Parcela:</strong></p>
         </div>
@@ -73,7 +83,6 @@
             class="full-width"
           />
         </div>
-
         <div class="row">
           <p><strong>Rząd:</strong></p>
         </div>
@@ -85,7 +94,6 @@
             class="full-width"
           />
         </div>
-
         <div class="row">
           <p><strong>Numer grobu:</strong></p>
         </div>
@@ -97,20 +105,7 @@
             class="full-width"
           />
         </div>
-      </div>
-      <div v-else>
-        <div class="row q-ma-md">
-          <p><strong>Parcela:</strong> {{ cemetery }}</p>
-        </div>
-
-        <div class="row q-ma-md">
-          <p><strong>Rząd:</strong> {{ grave.rzad }}</p>
-        </div>
-
-        <div class="row q-ma-md">
-          <p><strong>Numer grobu:</strong> {{ grave.grob }}</p>
-        </div>
-      </div>
+      </template>
       <div class="row q-ma-md">
         <div class="row">
           <p><strong>Rodzaj grobu:</strong></p>

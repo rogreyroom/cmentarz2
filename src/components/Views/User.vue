@@ -18,7 +18,7 @@
       class="row q-pa-sm q-gutter-sm"
     >
       <single-user
-        :id="_id"
+        :id="id"
         :user="user"
       />
     </div>
