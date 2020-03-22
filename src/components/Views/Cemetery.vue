@@ -10,7 +10,7 @@
             <h5 class="q-mt-none">
               Cmentarz: {{ fullName }}
               <q-btn
-                :to="{ name: 'cemetery-add-edit', params: { id: id } }"
+                :to="{ name: 'cemetery-add-edit', params: { id: id, flag: 'edit', cemetery: cm } }"
                 flat
                 icon="edit"
                 class="q-ml-md"
@@ -42,7 +42,7 @@
                 class="bg-light-green-9 text-light-green-9 shadow-2 q-ma-xs"
                 size="30px"
               />
-              <span class="text-subtitle1 q-ml-md self-center"> Opłacone</span>
+              <span class="text-subtitle1 q-ml-md self-center">Opłacone</span>
             </div>
             <div class="row full-width">
               <q-icon
@@ -50,14 +50,21 @@
                 class="bg-red-9 text-red-9 shadow-2 q-ma-xs"
                 size="30px"
               />
-              <span class="text-subtitle1 q-ml-md self-center"> Nie opłacone</span>
+              <span class="text-subtitle1 q-ml-md self-center">Nie opłacone</span>
             </div>
             <div class="row full-width">
               <q-icon
                 name="check_box_outline_blank"
                 class="bg-brown-6 text-brown-6 shadow-2 q-ma-xs"
                 size="30px"
-              /><span class="text-subtitle1 q-ml-md self-center"> Puste</span>
+              /><span class="text-subtitle1 q-ml-md self-center">Puste</span>
+            </div>
+            <div class="row full-width">
+              <q-icon
+                name="check_box_outline_blank"
+                class="bg-light-blue-13 text-light-blue-13 shadow-2 q-ma-xs"
+                size="30px"
+              /><span class="text-subtitle1 q-ml-md self-center">Wybrany</span>
             </div>
           </div>
         </div>
@@ -81,12 +88,22 @@
                       v-for="{parcela: { nrGrobu, grob, status }} in gravesOfTheRow(name, cmRow)"
                       :key="nrGrobu"
                     >
-                      <q-btn
-                        :to="{ name: 'grave-show', params: { id: nrGrobu } }"
-                        :label="grob"
-                        class="q-ma-xs"
-                        :color="setColor(status)"
-                      />
+                      <template v-if="flag === 'show-grave' && cmRow === grave.r && grob === grave.g && name === grave.cm">
+                        <q-btn
+                          :to="{ name: 'grave-show', params: { id: nrGrobu } }"
+                          :label="grob"
+                          class="q-ma-xs"
+                          color="light-blue-13"
+                        />
+                      </template>
+                      <template v-else>
+                        <q-btn
+                          :to="{ name: 'grave-show', params: { id: nrGrobu } }"
+                          :label="grob"
+                          class="q-ma-xs"
+                          :color="setColor(status)"
+                        />
+                      </template>
                     </div>
                   </div>
                 </div>
@@ -115,7 +132,6 @@
 </template>
 
 <script>
-
 import { mapGetters } from 'vuex'
 
 export default {
@@ -128,7 +144,17 @@ export default {
       type: String,
       default: ''
     },
+    flag: {
+      type: String,
+      default: ''
+    },
     cm: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    },
+    grave: {
       type: Object,
       default: function () {
         return {}

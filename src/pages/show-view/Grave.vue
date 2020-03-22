@@ -4,6 +4,7 @@
       <grave
         :id="id"
         :grave="graveData"
+        :cemetery="cmFullName"
       />
       <hr>
       <taker
@@ -42,17 +43,22 @@ export default {
     return {
       graveData: {},
       takerData: {},
-      usersData: []
+      usersData: [],
+      cmFullName: ''
     };
   },
   computed: {
     ...mapGetters({ grave: "cm/GET_GRAVE" }),
     ...mapGetters({ taker: "cm/GET_GRAVE_TAKER" }),
     ...mapGetters({ users: "cm/GET_GRAVE_USERS" }),
+    ...mapGetters({ getCemetery: "cm/GET_PARCELA" }),
   },
   mounted () {
     const { parcela } = this.grave(this.id)[0]
     this.graveData = parcela
+
+    const { thecm: { cmFullName } } = this.getCemetery(parcela.parcela)
+    this.cmFullName = cmFullName
 
     const { taker } = this.taker(this.id)[0]
     this.takerData = taker

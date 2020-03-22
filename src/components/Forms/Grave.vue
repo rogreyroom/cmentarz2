@@ -100,7 +100,7 @@
       </div>
       <div v-else>
         <div class="row q-ma-md">
-          <p><strong>Parcela:</strong> {{ parcelaName() }}</p>
+          <p><strong>Parcela:</strong> {{ cemetery }}</p>
         </div>
 
         <div class="row q-ma-md">
@@ -173,7 +173,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -192,6 +191,10 @@ export default {
       default: function () {
         return {}
       }
+    },
+    cemetery: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -205,7 +208,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ parcela: "cm/GET_PARCELA" }),
   },
   created () {
 
@@ -213,11 +215,6 @@ export default {
   mounted () {
   },
   methods: {
-    parcelaName () {
-      const cemetery = this.parcela(this.grave.parcela)
-      if (cemetery) return cemetery.thecm.cmFullName
-      return ''
-    }
   },
 };
 </script>

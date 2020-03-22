@@ -45,7 +45,7 @@
           v-ripple
           clickable
           :active="menuItem.label === 'Outbox'"
-          :to="{ name: menuItem.link }"
+          :to="{ name: menuItem.link, flag: menuItem.flag || '' }"
         >
           <q-item-section avatar>
             <q-icon
@@ -94,7 +94,8 @@ const menuList = [
     label: "Dodaj cmentarz",
     class: "text-green-9",
     separator: false,
-    link: "cemetery-add-edit"
+    link: "cemetery-add-edit",
+    flag: 'add'
   },
   {
     icon: "add",
@@ -102,7 +103,8 @@ const menuList = [
     label: "Dodaj grób",
     class: "text-green-9",
     separator: true,
-    link: "grave-add-edit"
+    link: "grave-add-edit",
+    flag: 'add'
   },
   {
     icon: "view_list",

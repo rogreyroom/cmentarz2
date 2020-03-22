@@ -5,16 +5,14 @@
         Dane grobu:
         <strong class="q-ml-sm">{{ id }}</strong>
         <q-btn
-          :to="{ name: 'grave-add-edit', params: { id: id, flag: 'edit' }}"
+          :to="{ name: 'grave-add-edit', params: { id: id, flag: 'edit', cemetery: cemetery }}"
           flat
           icon="edit"
           class="q-ml-md"
           text-color="light-blue-13"
         />
-
-        <!-- :to show-map - is it posible to show params -->
         <q-btn
-          :to="{ name: 'cemetery-map-show-grave', params: { id: id }}"
+          :to="{ name: 'cemetery-map', params: { id: id, flag:'show-grave', name: grave.parcela, grave: { cm: grave.parcela, r: grave.rzad, g: grave.grob } }}"
           flat
           icon="map"
           class="q-ml-md"
@@ -33,7 +31,7 @@
       </div>
       <div class="col q-ml-lg justify-start">
         <div class="row">
-          <p><strong>Parcela:</strong> {{ parcelaName() }}</p>
+          <p><strong>Parcela:</strong> {{ cemetery }}</p>
         </div>
         <div class="row">
           <p><strong>Rząd:</strong> {{ grave.rzad }}</p>
@@ -64,7 +62,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 
 export default {
   props: {
@@ -77,6 +74,10 @@ export default {
       default: function () {
         return {}
       }
+    },
+    cemetery: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -85,18 +86,10 @@ export default {
 
   },
   computed: {
-    ...mapGetters({ parcela: "cm/GET_PARCELA" }),
-  },
-  created () {
   },
   mounted () {
   },
   methods: {
-    parcelaName () {
-      const cemetery = this.parcela(this.grave.parcela)
-      if (cemetery) return cemetery.thecm.cmFullName
-      return ''
-    }
   },
 };
 </script>

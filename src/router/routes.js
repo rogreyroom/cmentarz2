@@ -42,12 +42,6 @@ const routes = [
 				props: true
 			},
 			{
-				path: '/cemetery-map-show/:id',
-				name: 'cemetery-map-show-grave',
-				component: () => import('pages/show-view/Cemetery.vue'),
-				props: true
-			},
-			{
 				path: '/grave-show/:id',
 				name: 'grave-show',
 				component: () => import('pages/show-view/Grave.vue'),
@@ -58,6 +52,18 @@ const routes = [
 				path: '/cemetery-change',
 				name: 'cemetery-add-edit',
 				component: () => import('pages/show-forms/Cemetery.vue'),
+				props: true
+			},
+			{
+				path: '/cemetery-change/:id',
+				name: 'cemetery-add-edit',
+				component: () => import('pages/show-forms/Cemetery.vue'),
+				props: true
+			},
+			{
+				path: '/grave-change/',
+				name: 'grave-add-edit',
+				component: () => import('pages/show-forms/Grave.vue'),
 				props: true
 			},
 			{

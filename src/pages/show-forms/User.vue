@@ -2,17 +2,25 @@
   <div class="q-pa-md">
     <q-page padding>
       <header class="row q-pa-sm q-gutter-sm">
-        <h5>
-          Dodaj zmarłego do grobu:
-          <strong class="q-ml-sm">{{ id }}</strong>
-        </h5>
+        <template v-if="flag === 'add'">
+          <h5>
+            Dodaj zmarłego do grobu:
+            <strong class="q-ml-sm">{{ id }}</strong>
+          </h5>
+        </template>
+        <template v-else>
+          <h5>
+            Edytuj dane zmarłego z grobu:
+            <strong class="q-ml-sm">{{ id }}</strong>
+          </h5>
+        </template>
         <hr>
       </header>
       <section>
         <user-form
           :id="id"
           :user="user"
-          flag="edit"
+          :flag="flag"
         />
       </section>
     </q-page>
@@ -36,7 +44,11 @@ export default {
       default: function () {
         return {}
       }
-    }
+    },
+    flag: {
+      type: String,
+      default: 'add'
+    },
   }
 };
 </script>

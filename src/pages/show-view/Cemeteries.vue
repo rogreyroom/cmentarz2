@@ -28,6 +28,8 @@
           :key="_id"
           :name="cm.cName"
           :cm="cm"
+          :grave="grave"
+          :flag="flag"
         />
       </q-tab-panels>
     </div>
@@ -51,6 +53,16 @@ export default {
       type: String,
       default: ''
     },
+    flag: {
+      type: String,
+      default: ''
+    },
+    grave: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    }
   },
   data () {
     return {

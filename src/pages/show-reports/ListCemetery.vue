@@ -75,7 +75,7 @@
                     color="green"
                     icon="edit"
                     class="q-mr-sm"
-                    :to="{ name: 'cemetery-add-edit', params: { id: props.row._id, cemetery: props.row } }"
+                    :to="{ name: 'cemetery-add-edit', params: { id: props.row._id, flag: 'edit', cemetery: props.row.thecm } }"
                   >
                     <q-tooltip
                       anchor="top middle"
@@ -217,7 +217,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style lang="scss">

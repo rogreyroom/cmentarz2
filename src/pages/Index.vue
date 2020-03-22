@@ -49,7 +49,7 @@
               color="green"
               icon="edit"
               class="q-mr-sm"
-              :to="{ name: 'grave-add-edit', params: { id: props.row.parcela.nrGrobu } }"
+              :to="{ name: 'grave-add-edit', params: { id: props.row.parcela.nrGrobu, flag: 'edit' } }"
             >
               <q-tooltip
                 anchor="top middle"

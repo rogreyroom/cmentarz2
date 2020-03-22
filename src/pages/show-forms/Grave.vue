@@ -3,21 +3,28 @@
     <q-page padding>
       <section>
         <header class="row q-pa-sm q-gutter-sm">
-          <h5>
-            Edytuj grób:
-            <strong class="q-ml-sm">{{ id }}</strong>
-            (Cmantarz dolny)
-          </h5>
+          <template v-if="flag === 'add'">
+            <h5>
+              Dodaj grób:
+            </h5>
+          </template>
+          <template v-else>
+            <h5>
+              Edytuj grób:
+              <strong class="q-ml-sm">{{ id }}</strong>
+              ( {{ cmFullName }} )
+            </h5>
+          </template>
           <hr>
         </header>
         <grave-form
           :id="id"
           :grave="graveData"
-          flag="edit"
+          :flag="flag"
+          :cemetery="cmFullName"
         />
       </section>
       <hr>
-      <!-- edit-grave-taker-form -->
       <section>
         <div class="row q-pa-sm q-gutter-sm">
           <h5>
@@ -31,7 +38,6 @@
         />
       </section>
       <hr>
-      <!-- list-grave-users -->
       <section>
         <div class="row q-pa-sm q-gutter-sm">
           <h5>
@@ -50,7 +56,6 @@
           :key="_id"
           class="row q-pa-sm q-gutter-sm"
         >
-          <!-- {{user}} -->
           <single-user
             :id="_id"
             :user="user"
@@ -78,27 +83,37 @@ export default {
       type: String,
       default: ''
     },
+    flag: {
+      type: String,
+      default: 'add'
+    },
   },
   data () {
     return {
       graveData: {},
       takerData: {},
-      usersData: []
+      usersData: [],
+      cmFullName: ''
     };
   },
   computed: {
     ...mapGetters({ grave: "cm/GET_GRAVE" }),
     ...mapGetters({ taker: "cm/GET_GRAVE_TAKER" }),
     ...mapGetters({ users: "cm/GET_GRAVE_USERS" }),
+    ...mapGetters({ getCemetery: "cm/GET_PARCELA" })
   },
   mounted () {
-    const { parcela } = this.grave(this.id)[0]
-    this.graveData = parcela
+    if (this.flag === 'edit') {
+      const { parcela, parcela: { parcela: cmName } } = this.grave(this.id)[0]
+      this.graveData = parcela
+      const { thecm: { cmFullName } } = this.getCemetery(cmName)
+      this.cmFullName = cmFullName
 
-    const { taker } = this.taker(this.id)[0]
-    this.takerData = taker
+      const { taker } = this.taker(this.id)[0]
+      this.takerData = taker
 
-    this.usersData = this.users(this.id)
+      this.usersData = this.users(this.id)
+    }
   },
 };
 </script>
