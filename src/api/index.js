@@ -1,4 +1,5 @@
-import db from "./db";
-import * as schema from "./schema";
+import db from './db';
+import * as schema from './db/schema';
+import * as actions from './db/actions';
 
-export { db, schema };
+export { db, schema, actions };
