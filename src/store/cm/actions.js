@@ -1,4 +1,5 @@
-import { GET_DB_DATA } from '../../api/db-actions';
+import { read } from '../../api';
+const { GET_DB_DATA } = read;
 
 export const FETCH_ALL = async ({ commit }) => {
 	await GET_DB_DATA({ commit }).then(result => {

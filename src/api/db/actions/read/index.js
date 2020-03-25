@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { db } from './';
+import { db } from '../../index';
 
 export const GET_DB_DATA = async () => {
 	const cemeteries = db.asyncFind({ doc: 'cm' }, (err, data) => {

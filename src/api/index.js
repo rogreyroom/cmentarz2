@@ -1,5 +1,6 @@
-import db from './db';
-import * as schema from './db/schema';
-import * as actions from './db/actions';
+import * as read from './db/actions/read';
+import * as add from './db/actions/add';
+import * as update from './db/actions/update';
+import * as del from './db/actions/delete';
 
-export { db, schema, actions };
+export { read, add, update, del };

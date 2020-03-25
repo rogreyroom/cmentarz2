@@ -8,7 +8,7 @@ const userDbPath = '/cmentarz/db/';
 const dbPath = `${userDocumentsPath}${userDbPath}`;
 
 // DATABASE CONNECTION
-const db = new Datastore({
+export const db = new Datastore({
 	autoload: true,
 	filename: path.join(dbPath, 'cm.db'),
 	onload: function(err) {
@@ -19,5 +19,3 @@ const db = new Datastore({
 		}
 	}
 });
-
-export default db;
