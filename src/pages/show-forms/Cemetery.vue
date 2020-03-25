@@ -3,9 +3,12 @@
     <q-page padding>
       <header class="row q-pa-sm q-gutter-sm">
         <template v-if="flag === 'add'">
-          <h5>
-            Dodaj cmentarz:
+          <h5 class="q-mb-sm">
+            Dodaj cmentarz
           </h5>
+          <p class="row full-width q-gutter-sm">
+            <strong>Wybierz położenie kluczowych elementów cmentarza</strong>
+          </p>
         </template>
         <template v-else>
           <h5>
