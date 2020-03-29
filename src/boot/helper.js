@@ -1,5 +1,5 @@
-import { validateField } from '../helpers/formValidationMsg';
+import { notifyAlert } from '../helpers/notifyAlert';
 
 export default ({ Vue }) => {
-	Vue.prototype.$validateField = validateField;
+	Vue.prototype.$notifyAlert = notifyAlert;
 };

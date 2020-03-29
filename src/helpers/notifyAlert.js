@@ -1,4 +1,4 @@
-export const validateField = function(msg, msgType) {
+export const notifyAlert = function(msg, msgType) {
 	return this.$q.notify({
 		message: msg,
 		color: msgType === 'error' ? 'negative' : 'positive',
