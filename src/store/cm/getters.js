@@ -29,6 +29,10 @@ export function GET_PARCELA(state) {
 	};
 }
 
+export function GET_CEMETERY_COUNT(state) {
+	return state.cemeteries.filter(cm => cm).length;
+}
+
 export function GET_ALL_GRAVES_COUNT(state) {
 	return cmName => {
 		return state.graves.filter(({ parcela: { parcela } }) => parcela === cmName).length;
