@@ -211,9 +211,13 @@ export default {
   },
   methods: {
     ...mapActions("cm", ["FETCH_ALL"]),
+    ...mapActions("cm", ["REMOVE_CEMETERY"]),
     removeCemetery (id) {
-      // eslint-disable-next-line no-console
-      console.log(id);
+      this.REMOVE_CEMETERY(id)
+        .then(res => {
+          if (res && res.hasOwnProperty('error')) return this.$notifyAlert(res.error.message, 'error')
+          this.$notifyAlert('Dane zostały pomyślnie usunięte z bazy.', 'ok')
+        })
     }
   }
 }
