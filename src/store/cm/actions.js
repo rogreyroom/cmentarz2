@@ -15,6 +15,11 @@ export const FETCH_ALL = async ({ commit }) => {
 			takers
 		] = result;
 
+		graves.map(({ parcela }) => {
+			const fileName = `${parcela.nrGrobu.replace(/\|/gi, '-')}`;
+			parcela.imgFileName = `${fileName}.${parcela.ext}`;
+		});
+
 		commit('SET_CEMETERIES', cemeteries);
 		commit('SET_GRAVES', graves);
 		commit('SET_USERS', users);
