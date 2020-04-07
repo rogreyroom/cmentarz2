@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <q-page padding>
       <header class="row q-pa-sm q-gutter-sm">
-        <template v-if="flag === 'add'">
+        <template v-if="flag === 'add-new'">
           <h5>
             Dodaj zmarłego do grobu:
             <strong class="q-ml-sm">{{ id }}</strong>
