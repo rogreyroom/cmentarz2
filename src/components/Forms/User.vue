@@ -9,6 +9,7 @@
           <q-input
             v-model="user.imie"
             outlined
+            label="Imię osoby zmarłej"
             name="imie"
             class="full-width"
           />
@@ -23,6 +24,7 @@
           <q-input
             v-model="user.nazwisko"
             outlined
+            label="Nazwisko osoby zmarłej"
             name="nazwisko"
             class="full-width"
           />
@@ -39,8 +41,9 @@
             v-model="user.dtUrodzenia"
             name="dtUrodzenia"
             outlined
-            mask="date"
-            :rules="['date']"
+            label="Data urodzenia osoby zmarłej"
+            error-message="Podaj datę!"
+            :error="!isValidBirthDate"
             class="full-width"
           >
             <template v-slot:append>
@@ -49,13 +52,14 @@
                 class="cursor-pointer"
               >
                 <q-popup-proxy
-                  ref="qDateProxy"
+                  ref="q1DateProxy"
                   transition-show="scale"
                   transition-hide="scale"
                 >
                   <q-date
                     v-model="user.dtUrodzenia"
-                    @input="() => $refs.qDateProxy.hide()"
+                    mask="YYYY-MM-DD"
+                    @input="() => $refs.q1DateProxy.hide()"
                   />
                 </q-popup-proxy>
               </q-icon>
@@ -63,7 +67,6 @@
           </q-input>
         </div>
       </div>
-
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Miejsce urodzenia:</strong></p>
@@ -72,6 +75,7 @@
           <q-input
             v-model="user.miejsceUrodzenia"
             outlined
+            label="Miejsce urodzenia osoby zmarłej"
             name="miejsceUrodzenia"
             class="full-width"
           />
@@ -87,6 +91,7 @@
           <q-input
             v-model="user.nazwiskoRodowe"
             outlined
+            label="Nazwisko rodowe osoby zmarłej"
             name="nazwiskoRodowe"
             class="full-width"
           />
@@ -102,7 +107,7 @@
             v-model="user.stanCywilny"
             outlined
             :options="stanCywilnyOptions"
-            label="Wybierz"
+            label="Wybierz stan cywilny"
             name="stanCywilny"
             class="full-width"
           />
@@ -122,8 +127,9 @@
             v-model="user.dtZgonu"
             name="dtZgonu"
             outlined
-            mask="date"
-            :rules="['date']"
+            label="Data zgonu osoby zmarłej"
+            error-message="Podaj datę!"
+            :error="!isValidDeathDate"
           >
             <template v-slot:append>
               <q-icon
@@ -131,13 +137,14 @@
                 class="cursor-pointer"
               >
                 <q-popup-proxy
-                  ref="qDateProxy"
+                  ref="q2DateProxy"
                   transition-show="scale"
                   transition-hide="scale"
                 >
                   <q-date
                     v-model="user.dtZgonu"
-                    @input="() => $refs.qDateProxy.hide()"
+                    mask="YYYY-MM-DD"
+                    @input="() => $refs.q2DateProxy.hide()"
                   />
                 </q-popup-proxy>
               </q-icon>
@@ -153,6 +160,7 @@
           <q-input
             v-model="user.miejsceZgonu"
             outlined
+            label="Miejsce zgonu osoby zmarłej"
             name="miejsceZgonu"
             class="full-width"
           />
@@ -167,8 +175,9 @@
             v-model="user.dtPochowku"
             name="dtPochowku"
             outlined
-            mask="date"
-            :rules="['date']"
+            label="Data pochówku osoby zmarłej"
+            error-message="Podaj datę!"
+            :error="!isValidBurialDate"
           >
             <template v-slot:append>
               <q-icon
@@ -176,13 +185,14 @@
                 class="cursor-pointer"
               >
                 <q-popup-proxy
-                  ref="qDateProxy"
+                  ref="q3DateProxy"
                   transition-show="scale"
                   transition-hide="scale"
                 >
                   <q-date
                     v-model="user.dtPochowku"
-                    @input="() => $refs.qDateProxy.hide()"
+                    mask="YYYY-MM-DD"
+                    @input="() => $refs.q3DateProxy.hide()"
                   />
                 </q-popup-proxy>
               </q-icon>
@@ -198,6 +208,7 @@
           <q-input
             v-model="user.miejscePochowku"
             outlined
+            label="Miejsce pochówku osoby zmarłej"
             name="miejscePochowku"
             class="full-width"
           />
@@ -216,6 +227,7 @@
           <q-input
             v-model="user.imieMatki"
             outlined
+            label="Imię matki osoby zmarłej"
             name="imieMatki"
             class="full-width"
           />
@@ -229,6 +241,7 @@
           <q-input
             v-model="user.nazwiskoMatki"
             outlined
+            label="Nazwisko matki osoby zmarłej"
             name="nazwiskoMatki"
             class="full-width"
           />
@@ -242,6 +255,7 @@
           <q-input
             v-model="user.imieOjca"
             outlined
+            label="Imię ojca osoby zmarłej"
             name="imieOjca"
             class="full-width"
           />
@@ -255,6 +269,7 @@
           <q-input
             v-model="user.nazwiskoOjca"
             outlined
+            label="Nazwisko ojca osoby zmarłej"
             name="nazwiskoOjca"
             class="full-width"
           />
@@ -274,7 +289,7 @@
           @click="editUser()"
         />
       </template>
-      <template v-else>
+      <template v-else-if="flag === 'add-new'">
         <q-btn
           unelevated
           outline
@@ -290,6 +305,7 @@
 </template>
 
 <script>
+import { date } from 'quasar'
 
 export default {
   components: {
@@ -318,12 +334,24 @@ export default {
     };
   },
   computed: {
+    isValidBirthDate () {
+      return this.user.dtUrodzenia === this.dateFormat(this.user.dtUrodzenia)
+    },
+    isValidDeathDate () {
+      return this.user.dtZgonu === this.dateFormat(this.user.dtZgonu)
+    },
+    isValidBurialDate () {
+      return this.user.dtPochowku === this.dateFormat(this.user.dtPochowku)
+    }
   },
   mounted () {
     // eslint-disable-next-line no-console
     console.log(this.user);
   },
   methods: {
+    dateFormat (myDate) {
+      return date.formatDate(myDate, "YYYY-MM-DD")
+    },
     addUser () {
     }
   },

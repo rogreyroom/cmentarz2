@@ -9,6 +9,7 @@
           <q-input
             v-model="taker.imie"
             outlined
+            label="Imię opiekuna grobu"
             name="imie"
             class="full-width"
           />
@@ -22,6 +23,7 @@
           <q-input
             v-model="taker.nazwisko"
             outlined
+            label="Nazwisko opiekuna grobu"
             name="nazwisko"
             class="full-width"
           />
@@ -36,6 +38,7 @@
             v-model="taker.adres"
             autogrow
             outlined
+            label="Adres opiekuna grobu"
             name="adres"
             class="full-width"
           />
@@ -51,6 +54,7 @@
           <q-input
             v-model="taker.telefon"
             outlined
+            label="Telefon do opiekuna grobu"
             name="telefon"
             class="full-width"
           />
@@ -64,6 +68,7 @@
           <q-input
             v-model="taker.email"
             outlined
+            label="Email do opiekuna grobu"
             name="email"
             class="full-width"
           />
@@ -76,9 +81,9 @@
         <div class="row full-width">
           <q-input
             v-model="taker.uwagi"
-            filled
             autogrow
             outlined
+            label="Wpisz ewentualne uwagi/notatki"
             name="uwagi"
             class="full-width"
           />
