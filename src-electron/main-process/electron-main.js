@@ -1,9 +1,13 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 import { app, BrowserWindow } from 'electron';
+const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const express = require('express');
 const cors = require('cors');
+const formidable = require('formidable');
+const sharp = require('sharp');
 const expressApp = express();
 const router = express.Router();
 
@@ -57,12 +61,41 @@ app.on('activate', () => {
 
 expressApp.use(cors());
 
-router.get('/file/:name', function(req, res) {
-	const imagesFolder = path.join(app.getPath('documents'), './cmentarz/db/images/');
-	const filename = path.join(imagesFolder, req.params.name);
-	// eslint-disable-next-line no-console
+router.get('/images/:name', function(req, res) {
+	const folderName = path.join(app.getPath('documents'), '/cmentarz/db/images/');
+	const filename = path.join(folderName, req.params.name);
 	console.log('Serving file:', filename);
 	res.sendFile(filename);
+});
+
+router.post('/images/upload/:name', function(req, res) {
+	const form = new formidable.IncomingForm({ keepExtensions: true });
+	const folder = path.join(app.getPath('documents'), '/cmentarz/db/test/');
+	form.uploadDir = folder;
+
+	form.on('file', (filename, file) => {
+		file.name = req.params.name;
+		fs.rename(file.path, `${form.uploadDir}/n_${file.name}`, err => {
+			if (err) throw err;
+			console.log(`Renamed: [ ${file.name} ]`);
+		});
+
+		sharp(`${form.uploadDir}/n_${file.name}`)
+			.resize({ height: 400 })
+			.toFile(`${form.uploadDir}/${file.name}`)
+			.then(info => {
+				fs.unlinkSync(`${form.uploadDir}/n_${file.name}`, err => {
+					if (err) throw err;
+				});
+				console.log(`Resized: [ ${file.size} ] -> [ ${info.size} ]`);
+			})
+			.catch(err => console.log(err));
+	});
+
+	form.parse(req, (_, field, file) => {
+		console.log('Received:', Object.keys(file));
+		res.send('Thank you');
+	});
 });
 
 expressApp.use('/', router);
