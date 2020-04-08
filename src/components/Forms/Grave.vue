@@ -1,7 +1,6 @@
 
 <template>
   <div class="row q-pa-sm q-gutter-sm">
-    <!-- {{ grave }} -->
     <div class="col">
       <template v-if="flag === 'add' && grave.parcela && grave.rzad && grave.grob">
         <div class="row q-ma-md">
