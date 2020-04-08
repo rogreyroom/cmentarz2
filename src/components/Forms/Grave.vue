@@ -1,62 +1,53 @@
+
 <template>
   <div class="row q-pa-sm q-gutter-sm">
+    <!-- {{ grave }} -->
     <div class="col">
+      <template v-if="flag === 'add' && grave.parcela && grave.rzad && grave.grob">
+        <div class="row q-ma-md">
+          <q-uploader
+            label="Dodaj zdjęcie"
+            auto-upload
+            :url="uploadUrl"
+            class="full-width"
+            flat
+            color="light-blue-13"
+          />
+        </div>
+      </template>
+      <template v-else-if="flag === 'edit'">
+        <div class="row q-ma-md">
+          <q-uploader
+            label="Zmień zdjęcie"
+            auto-upload
+            :url="uploadUrl"
+            class="full-width"
+            flat
+            color="light-blue-13"
+          />
+        </div>
+        <div class="row q-ma-md">
+          <q-img
+            :src="getUrl"
+            style="height: 300px;"
+            class="full-width"
+          />
+        </div>
+      </template>
       <div class="row q-ma-md">
-        <!-- <label for="image">Zdjęcie</label>
-            <button v-on:click.prevent="photoLoader()" class="button">{{ (grave.grob !== '') ? 'Zmień zdjęcie' : 'Dodaj zdjęcie' }}</button>
-            <input id="zdjecie" @change="previewImage" accept="image/*" type="file" style="display:none;" /> -->
-        <q-uploader
-          label="Auto Uploader"
-          auto-upload
-          url="http://localhost:4444/upload"
-          class="full-width"
-          flat
-          color="light-blue-13"
-        />
-      </div>
-      <div class="row q-ma-md">
-        <q-img
-          src="https://placeimg.com/500/300/nature"
-          style="height: 300px;"
-          class="full-width"
-        />
-      </div>
-      <div class="row q-ma-md">
-        <p><strong>Data opłaty:</strong></p>
-      </div>
-      <div class="row q-ma-md">
-        <!-- <q-date
-          v-model="graveData.dtOplaty"
-          minimal
-          name="dtOplaty"
-          class="full-width"
-          flat
-        /> -->
-        <q-input
-          v-model="grave.dtOplaty"
-          name="dtOplaty"
-          outlined
-          mask="date"
-          :rules="['date']"
-        >
-          <template v-slot:append>
-            <q-icon
-              name="event"
-              class="cursor-pointer"
-            >
-              <q-popup-proxy
-                ref="qDateProxy"
-                transition-show="scale"
-                transition-hide="scale"
-              >
-                <q-date
-                  v-model="grave.dtOplaty"
-                  @input="() => $refs.qDateProxy.hide()"
-                />
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input>
+        <div class="row">
+          <p><strong>Uwagi:</strong></p>
+        </div>
+        <div class="row  full-width">
+          <q-input
+            v-model="grave.uwagi"
+            outlined
+            label="Wpisz ewentualne uwagi/notatki"
+            autogrow
+            name="uwagiG"
+            class="full-width"
+          />
+        </div>
       </div>
     </div>
     <div class="col q-ml-lg">
@@ -72,38 +63,60 @@
         </div>
       </template>
       <template v-else>
-        <div class="row">
-          <p><strong>Parcela:</strong></p>
+        <div class="row q-ma-md">
+          <div class="row">
+            <p><strong>Parcela:</strong></p>
+          </div>
+          <div class="row full-width">
+            <q-select
+              v-model="grave.parcela"
+              outlined
+              :options="cemeteriesList"
+              option-label="cmFullName"
+              option-value="cName"
+              emit-value
+              map-options
+              label="Wybierz cmentarz/parcelę"
+              name="parcela"
+              class="full-width"
+              :rules="[val => !!val || 'Pole jest wymagane']"
+              @change="createGraveName"
+            />
+          </div>
         </div>
-        <div class="row full-width">
-          <q-input
-            v-model="grave.parcela"
-            outlined
-            name="parcela"
-            class="full-width"
-          />
+        <div class="row q-ma-md">
+          <div class="row">
+            <p><strong>Rząd:</strong></p>
+          </div>
+          <div class="row full-width">
+            <q-input
+              v-model="grave.rzad"
+              type="number"
+              outlined
+              label="Podaj numer rzędu cmentarza/parceli"
+              name="rzad"
+              class="full-width"
+              :rules="[val => !!val || 'Pole jest wymagane']"
+              @change="createGraveName"
+            />
+          </div>
         </div>
-        <div class="row">
-          <p><strong>Rząd:</strong></p>
-        </div>
-        <div class="row full-width">
-          <q-input
-            v-model="grave.rzad"
-            outlined
-            name="rzad"
-            class="full-width"
-          />
-        </div>
-        <div class="row">
-          <p><strong>Numer grobu:</strong></p>
-        </div>
-        <div class="row full-width">
-          <q-input
-            v-model="grave.grob"
-            outlined
-            name="grob"
-            class="full-width"
-          />
+        <div class="row q-ma-md">
+          <div class="row">
+            <p><strong>Numer grobu:</strong></p>
+          </div>
+          <div class="row full-width">
+            <q-input
+              v-model="grave.grob"
+              type="number"
+              outlined
+              label="Podaj numer grobu cmentarza/parceli"
+              name="grob"
+              class="full-width"
+              :rules="[val => !!val || 'Pole jest wymagane']"
+              @change="createGraveName"
+            />
+          </div>
         </div>
       </template>
       <div class="row q-ma-md">
@@ -115,9 +128,10 @@
             v-model="grave.rodzaj"
             outlined
             :options="graveOptions"
-            label="Wybierz"
+            label="Wybierz rodzaj grobu"
             name="rodzaj"
             class="full-width"
+            :rules="[val => !!val || 'Pole jest wymagane']"
           />
         </div>
       </div>
@@ -130,9 +144,10 @@
             v-model="grave.status"
             outlined
             :options="graveStatus"
-            label="Wybierz"
+            label="Wybierz status grobu"
             name="status"
             class="full-width"
+            :rules="[val => !!val || 'Pole jest wymagane']"
           />
         </div>
       </div>
@@ -142,25 +157,54 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="grave.okres"
+            v-model.number="grave.okres"
+            type="number"
             outlined
+            min="1"
             name="okres"
+            label="Podaj okres na jaki grób jest opłacony"
             class="full-width"
+            :rules="[
+              val => val > 0 || (val === undefined || val === '') || 'Okres opłaty powinien być większy od zera!'
+            ]"
           />
         </div>
       </div>
-      <div class="row q-ma-md">
-        <div class="rom">
-          <p><strong>Uwagi:</strong></p>
+      <div
+        v-if="grave.okres && grave.okres > 0"
+        class="row q-ma-md"
+      >
+        <div class="row">
+          <p><strong>Data opłaty:</strong></p>
         </div>
-        <div class="row  full-width">
+        <div class="row full-width">
           <q-input
-            v-model="grave.uwagi"
-            filled
-            autogrow
-            name="uwagiG"
-            class="full-width"
-          />
+            v-model="grave.dtOplaty"
+            outlined
+            label="Podaj datę opłaty grobu"
+            error-message="Podaj datę!"
+            :error="!isValidDate"
+            class="row full-width"
+          >
+            <template v-slot:append>
+              <q-icon
+                name="event"
+                class="cursor-pointer"
+              >
+                <q-popup-proxy
+                  ref="qDateProxy"
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
+                  <q-date
+                    v-model="grave.dtOplaty"
+                    mask="YYYY-MM-DD"
+                    @input="() => $refs.qDateProxy.hide()"
+                  />
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
         </div>
       </div>
     </div>
@@ -168,6 +212,8 @@
 </template>
 
 <script>
+import { date } from 'quasar'
+import { mapState, mapGetters } from "vuex"
 
 export default {
   components: {
@@ -200,16 +246,61 @@ export default {
       graveStatus: [
         'Nie opłacony', 'Opłacony', 'Puste'
       ],
+      cemeteriesList: [],
+      date: null,
+      url: 'http://localhost:8000/images/',
+      newGrave: ''
     };
   },
   computed: {
+    ...mapState("cm", ["cemeteries", "graves"]),
+    ...mapGetters({ getGrave: "cm/GET_GRAVE" }),
+    isValidDate () {
+      return this.grave.dtOplaty === this.dateFormat(this.grave.dtOplaty)
+    },
+
+    isValidNumber () {
+      return val => { if (val.length > 0 && val > 0) return true }
+    },
+
+    getUrl () {
+      return this.grave.imgFileName ? `${this.url}${this.grave.imgFileName}` : ''
+    }
   },
   created () {
-
-  },
-  mounted () {
+    this.cemeteriesList = this.cemeteries.map(({ thecm }) => thecm)
+    this.date = this.grave.dtOplaty
   },
   methods: {
+    dateFormat (myDate) {
+      return date.formatDate(myDate, "YYYY-MM-DD")
+    },
+
+    onIntersection (entry) {
+      if (entry.isIntersecting) {
+        this.src = this.$props.grave.imgPath
+      }
+    },
+
+    uploadUrl (file) {
+      if (this.flag === 'add') {
+        const ext = file[0].name.split('.').slice(-1)
+        this.grave.ext = ext
+        this.grave.nrGrobu = `P${this.grave.parcela}|R${this.grave.rzad}|G${this.grave.grob}`
+        const graveExists = this.getGrave(this.grave.nrGrobu).length > 0 ? true : false
+        if (graveExists)
+          return this.$notifyAlert('Grób o tym numerze już istnieje!', 'error')
+        return `${this.url}upload/${this.newGrave}.${ext}`
+      } else {
+        return `${this.url}upload/${this.grave.imgFileName}`
+      }
+    },
+
+    createGraveName () {
+      if (this.grave.parcela && this.grave.rzad && this.grave.grob) {
+        this.newGrave = `P${this.grave.parcela}-R${this.grave.rzad}-G${this.grave.grob}`
+      }
+    }
   },
 };
 </script>
