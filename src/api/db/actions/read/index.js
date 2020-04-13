@@ -50,3 +50,15 @@ export const GET_CEMETERY_DATA = async () => {
 	const result = await cemeteries;
 	return result;
 };
+
+export const GET_GRAVES_DATA = async () => {
+	const graves = gravesCall();
+	const result = await graves;
+	return result;
+};
+
+export const GET_TAKERS_DATA = async () => {
+	const takers = takersCall();
+	const result = await takers;
+	return result;
+};
