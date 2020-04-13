@@ -5,18 +5,21 @@
       <template v-if="flag === 'add' && grave.parcela && grave.rzad && grave.grob">
         <div class="row q-ma-md">
           <q-uploader
+            ref="uploader"
             label="Dodaj zdjęcie"
             auto-upload
             :url="uploadUrl"
             class="full-width"
             flat
             color="light-blue-13"
+            @failed="noUpload"
           />
         </div>
       </template>
       <template v-else-if="flag === 'edit'">
         <div class="row q-ma-md">
           <q-uploader
+            ref="uploader"
             label="Zmień zdjęcie"
             auto-upload
             :url="uploadUrl"
@@ -263,6 +266,10 @@ export default {
     },
 
     getUrl () {
+      // eslint-disable-next-line no-console
+      console.log(this.grave.imgFileName);
+      // eslint-disable-next-line no-console
+      console.log(`${this.url}${this.grave.imgFileName}`);
       return this.grave.imgFileName ? `${this.url}${this.grave.imgFileName}` : ''
     }
   },
@@ -283,16 +290,23 @@ export default {
 
     uploadUrl (file) {
       if (this.flag === 'add') {
-        const ext = file[0].name.split('.').slice(-1)
+        const ext = file[file.length - 1].name.split('.').slice(-1).toString()
         this.grave.ext = ext
         this.grave.nrGrobu = `P${this.grave.parcela}|R${this.grave.rzad}|G${this.grave.grob}`
         const graveExists = this.getGrave(this.grave.nrGrobu).length > 0 ? true : false
+
         if (graveExists)
           return this.$notifyAlert('Grób o tym numerze już istnieje!', 'error')
         return `${this.url}upload/${this.newGrave}.${ext}`
       } else {
         return `${this.url}upload/${this.grave.imgFileName}`
       }
+    },
+
+    noUpload (info) {
+      if (info.xhr.status === 500)
+        this.$notifyAlert(info.xhr.response, 'error', 5000)
+      this.$refs.uploader.reset()
     },
 
     createGraveName () {
