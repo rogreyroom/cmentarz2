@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 import { app, BrowserWindow } from 'electron';
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const http = require('http');
 const express = require('express');
@@ -70,31 +70,35 @@ router.get('/images/:name', function(req, res) {
 
 router.post('/images/upload/:name', function(req, res) {
 	const form = new formidable.IncomingForm({ keepExtensions: true });
-	const folder = path.join(app.getPath('documents'), '/cmentarz/db/test/');
+	const folder = path.join(app.getPath('documents'), '/cmentarz/db/images/');
 	form.uploadDir = folder;
-
-	form.on('file', (filename, file) => {
-		file.name = req.params.name;
-		fs.rename(file.path, `${form.uploadDir}/n_${file.name}`, err => {
-			if (err) throw err;
-			console.log(`Renamed: [ ${file.name} ]`);
-		});
-
-		sharp(`${form.uploadDir}/n_${file.name}`)
-			.resize({ height: 400 })
-			.toFile(`${form.uploadDir}/${file.name}`)
-			.then(info => {
-				fs.unlinkSync(`${form.uploadDir}/n_${file.name}`, err => {
-					if (err) throw err;
-				});
-				console.log(`Resized: [ ${file.size} ] -> [ ${info.size} ]`);
-			})
-			.catch(err => console.log(err));
-	});
+	const graveFilename = req.params.name.split('.')[0].toString();
 
 	form.parse(req, (_, field, file) => {
 		console.log('Received:', Object.keys(file));
-		res.send('Thank you');
+	});
+
+	form.on('file', (filename, file) => {
+		const uploadedFileExtension = filename.split('.').pop();
+		const newFileName = `${graveFilename}.${uploadedFileExtension}`;
+
+		return sharp(file.path)
+			.resize({ height: 500 })
+			.toFile(path.join(form.uploadDir, newFileName))
+			.then(() => {
+				fs.remove(file.path, err => console.log(`Removing uploaded file error: ${err}`));
+				console.log(`Image processing is ready. New filename ${newFileName}`);
+				res.status(200).send('Thank you');
+			})
+			.catch(err => {
+				fs.remove(file.path, err => console.log(`Removing uploaded file error: ${err}`));
+				console.error(`Error when processing the file: ${err}`);
+				res
+					.status(500)
+					.send(
+						"Nie udało się nadpisać istniejącego zdjęcia. Sprawdź czy istniejące zdjęcie nie zawiera atrybutu 'Tylko do odczytu'"
+					);
+			});
 	});
 });
 
