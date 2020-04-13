@@ -27,6 +27,14 @@
             flat
             color="light-blue-13"
           />
+          <q-tooltip
+            anchor="top middle"
+            self="bottom middle"
+            :offset="[10, 10]"
+            content-class="bg-warning text-black"
+          >
+            Zmiana zdjęcia powoduje automatyczne zapisanie go.
+          </q-tooltip>
         </div>
         <div class="row q-ma-md">
           <q-img
@@ -249,43 +257,26 @@ export default {
         'Nie opłacony', 'Opłacony', 'Puste'
       ],
       cemeteriesList: [],
-      date: null,
       url: 'http://localhost:8000/images/',
       newGrave: ''
     };
   },
   computed: {
-    ...mapState("cm", ["cemeteries", "graves"]),
+    ...mapState("cm", ["cemeteries"]),
     ...mapGetters({ getGrave: "cm/GET_GRAVE" }),
+    getUrl () {
+      return this.grave.imgFileName ? `${this.url}${this.grave.imgFileName}` : ''
+    },
     isValidDate () {
       return this.grave.dtOplaty === this.dateFormat(this.grave.dtOplaty)
     },
-
-    isValidNumber () {
-      return val => { if (val.length > 0 && val > 0) return true }
-    },
-
-    getUrl () {
-      // eslint-disable-next-line no-console
-      console.log(this.grave.imgFileName);
-      // eslint-disable-next-line no-console
-      console.log(`${this.url}${this.grave.imgFileName}`);
-      return this.grave.imgFileName ? `${this.url}${this.grave.imgFileName}` : ''
-    }
   },
   created () {
     this.cemeteriesList = this.cemeteries.map(({ thecm }) => thecm)
-    this.date = this.grave.dtOplaty
   },
   methods: {
     dateFormat (myDate) {
       return date.formatDate(myDate, "YYYY-MM-DD")
-    },
-
-    onIntersection (entry) {
-      if (entry.isIntersecting) {
-        this.src = this.$props.grave.imgPath
-      }
     },
 
     uploadUrl (file) {
