@@ -24,8 +24,9 @@
     <div class="row q-pa-sm q-gutter-sm">
       <div class="col">
         <q-img
-          src="https://placeimg.com/500/300/nature"
-          style="max-width: 400px; height: 200px;"
+          :src="getUrl"
+          style="height: 300px;"
+          class="full-width"
         />
         <!-- {{ graveData.ext }} -->
       </div>
@@ -82,14 +83,23 @@ export default {
   },
   data () {
     return {
+      url: 'http://localhost:8000/images/',
     }
 
   },
   computed: {
+    getUrl () {
+      // eslint-disable-next-line no-console
+      console.log(this.grave.imgFileName);
+      // eslint-disable-next-line no-console
+      console.log(`${this.url}${this.grave.imgFileName}`);
+      return this.grave.imgFileName ? `${this.url}${this.grave.imgFileName}` : ''
+    }
   },
   mounted () {
   },
   methods: {
+
   },
 };
 </script>
