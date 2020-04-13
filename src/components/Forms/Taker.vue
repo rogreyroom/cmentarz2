@@ -90,19 +90,6 @@
         </div>
       </div>
     </div>
-    <template v-if="flag === 'edit'">
-      <div class="row full-width">
-        <q-btn
-          unelevated
-          outline
-          label="Zmień"
-          size="md"
-          class="q-ml-md"
-          text-color="light-blue-13"
-          @click="updateTaker(1)"
-        />
-      </div>
-    </template>
   </div>
 </template>
 <script>
@@ -137,10 +124,6 @@ export default {
   mounted () {
   },
   methods: {
-    updateTaker (id) {
-      // eslint-disable-next-line no-console
-      console.log(id);
-    }
   },
 };
 </script>
