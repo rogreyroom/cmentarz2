@@ -1,11 +1,10 @@
 <template>
   <div class="q-pa-md">
-    show-forms page: {{ id }} {{ flag }}
     <q-page padding>
       <q-form
         ref="graveForm"
         greedy
-        @submit.prevent="addGrave"
+        @submit.prevent="getFormsData"
       >
         <section>
           <header class="row q-pa-sm q-gutter-sm">
@@ -79,10 +78,11 @@
             </div>
           </template>
         </section>
+        <hr v-if="flag === 'edit'">
         <div class="row full-width">
           <q-btn
             outline
-            label="Dodaj"
+            :label="flag === 'add' ? 'Dodaj' : 'Zmień'"
             size="md"
             class="q-ml-md"
             text-color="light-blue-13"
@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import Grave from '../../components/Forms/Grave'
 import Taker from '../../components/Forms/Taker'
 import User from '../../components/Forms/User'
@@ -125,7 +125,9 @@ export default {
       takerData: {},
       userData: {},
       usersData: [],
-      cmFullName: ''
+      cmFullName: '',
+      graveNumber: '',
+      isValid: false
     };
   },
   computed: {
@@ -143,50 +145,66 @@ export default {
       this.graveData = parcela
       const { thecm: { cmFullName } } = this.getCemetery(cmName)
       this.cmFullName = cmFullName
-
       const { taker } = this.taker(this.id)[0]
       this.takerData = taker
-
       this.usersData = this.users(this.id)
     }
   },
   methods: {
+    ...mapActions("cm", ["ADD_GRAVE", "UPDATE_GRAVE", "ADD_TAKER", "UPDATE_TAKER", "ADD_USER", "UPDATE_USER"]),
     async checkIsValid () {
       await this.$refs.graveForm.validate()
         .then(res => {
-          if (!res) this.$notifyAlert(`Wypełnij wymagane pola formularza!`, 'error')
+          if (!res) {
+            this.$notifyAlert(`Wypełnij wymagane pola formularza!`, 'error')
+            return false
+          }
+          if (this.flag === 'add') {
+            if (!this.graveData.hasOwnProperty('nrGrobu')) {
+              this.graveNumber = `P${this.graveData.parcela}|R${this.graveData.rzad}|G${this.graveData.grob}`
+            } else {
+              this.graveNumber = this.graveData.nrGrobu
+            }
+
+            const graveExists = this.grave(this.graveNumber).length > 0 ? true : false
+            if (graveExists) {
+              this.$notifyAlert('Grób o tym numerze już istnieje!', 'error')
+              return false
+            } else {
+              this.graveData.nrGrobu = this.graveNumber
+              return true
+            }
+          }
         })
-        .then(info => {
-          // eslint-disable-next-line no-console
-          console.log(info);
-          // eslint-disable-next-line no-console
-          console.log(this.graveData);
-          // eslint-disable-next-line no-console
-          console.log(this.takerData);
-          // eslint-disable-next-line no-console
-          console.log(this.userData);
+        .then(valid => {
+          valid ? this.isValid = true : this.isValid = false
         })
     },
 
-    addGrave () {
+    async getFormsData () {
       // TODO: Every set ( grave, taker and user ) need to have nrGrobu
       // TODO: Remove imgFileName from graves => delete grave.imgFileName
       // TODO: Send data to api db actions and update state
       // TODO: Check if this show-form page is used to handle grave editing
 
+      if (this.isValid) {
+        if (this.flag === 'add') {
+          this.checkOptionalGraveFields()
+          this.checkOptionalTakerFields()
+          this.takerData.nrGrobu = this.graveData.nrGrobu
+          this['ADD_GRAVE'](this.graveData)
+          this['ADD_TAKER'](this.takerData)
 
-      this.checkOptionalGraveFields()
-      this.checkOptionalTakerFields()
-      this.checkOptionalUserFields()
+          if (Object.keys(this.userData).length > 0) {
+            this.checkOptionalUserFields()
+            this.userData.nrGrobu = this.graveData.nrGrobu
+            this['ADD_USER'](this.graveData)
+          }
 
-      // eslint-disable-next-line no-console
-      console.log('---------------------------------');
-      // eslint-disable-next-line no-console
-      console.log(this.graveData);
-      // eslint-disable-next-line no-console
-      console.log(this.takerData);
-      // eslint-disable-next-line no-console
-      console.log(this.userData);
+          this.$notifyAlert('Dane zostały pomyślnie dodane do bazy.', 'ok')
+          // TODO: Clear form
+        }
+      }
 
     },
     checkOptionalGraveFields () {
