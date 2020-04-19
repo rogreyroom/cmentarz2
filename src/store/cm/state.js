@@ -4,7 +4,6 @@ export default function() {
 		users: [],
 		graves: [],
 		takers: [],
-		gravesDetails: [],
-		grave: []
+		gravesDetails: []
 	};
 }
