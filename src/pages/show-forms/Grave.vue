@@ -23,6 +23,7 @@
             <hr>
           </header>
           <grave-form
+            v-if="loadGrave"
             :id="id"
             :grave="graveData"
             :flag="flag"
@@ -121,13 +122,16 @@ export default {
   },
   data () {
     return {
+      graveID: '',
+      takerID: '',
       graveData: {},
       takerData: {},
       userData: {},
       usersData: [],
       cmFullName: '',
       graveNumber: '',
-      isValid: false
+      isValid: false,
+      loadGrave: false
     };
   },
   computed: {
@@ -141,13 +145,20 @@ export default {
   },
   mounted () {
     if (this.flag === 'edit') {
-      const { parcela, parcela: { parcela: cmName } } = this.grave(this.id)[0]
-      this.graveData = parcela
+      const { parcela, parcela: { parcela: cmName }, _id: graveId } = this.grave(this.id)[0]
+      this.graveData = Object.assign({}, parcela)
+      this.graveID = graveId
       const { thecm: { cmFullName } } = this.getCemetery(cmName)
       this.cmFullName = cmFullName
-      const { taker } = this.taker(this.id)[0]
-      this.takerData = taker
+      const { taker, _id: takerId } = this.taker(this.id)[0]
+      this.takerID = takerId
+      this.takerData = Object.assign({}, taker)
       this.usersData = this.users(this.id)
+
+      if (Object.keys(this.graveData).length > 0)
+        this.loadGrave = true
+    } else {
+      this.loadGrave = true
     }
   },
   methods: {
@@ -174,6 +185,8 @@ export default {
               this.graveData.nrGrobu = this.graveNumber
               return true
             }
+          } else {
+            return true
           }
         })
         .then(valid => {
@@ -203,6 +216,14 @@ export default {
 
           this.$notifyAlert('Dane zostały pomyślnie dodane do bazy.', 'ok')
           // TODO: Clear form
+        } else {
+          this.checkOptionalGraveFields()
+          this['UPDATE_GRAVE']({ id: this.graveID, graveData: this.graveData })
+
+          if (Object.keys(this.takerData).length > 1) {
+            this.checkOptionalTakerFields()
+            this['UPDATE_TAKER']({ id: this.takerID, takerData: this.takerData })
+          }
         }
       }
 
