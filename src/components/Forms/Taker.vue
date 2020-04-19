@@ -52,10 +52,10 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="taker.telefon"
+            v-model="taker.tel"
             outlined
             label="Telefon do opiekuna grobu"
-            name="telefon"
+            name="tel"
             class="full-width"
           />
         </div>
@@ -70,7 +70,9 @@
             outlined
             label="Email do opiekuna grobu"
             name="email"
+            type="email"
             class="full-width"
+            :rules="[isValidEmail]"
           />
         </div>
       </div>
@@ -113,17 +115,13 @@ export default {
       }
     }
   },
-  data () {
-    return {
-    };
-  },
-  computed: {
-  },
-  created () {
-  },
-  mounted () {
-  },
   methods: {
+    isValidEmail (val) {
+      if (val !== '') {
+        const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+        return emailPattern.test(val) || 'Niewłaściwy adres email!';
+      }
+    }
   },
 };
 </script>
