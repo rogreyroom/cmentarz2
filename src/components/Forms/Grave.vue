@@ -38,6 +38,7 @@
         </div>
         <div class="row q-ma-md">
           <q-img
+            v-if="grave.ext"
             :src="getUrl"
             style="height: 300px;"
             class="full-width"
