@@ -218,12 +218,15 @@ export default {
           // TODO: Clear form
         } else {
           this.checkOptionalGraveFields()
+          if (this.graveData.imgFileName) delete this.graveData['imgFileName']
           this['UPDATE_GRAVE']({ id: this.graveID, graveData: this.graveData })
 
           if (Object.keys(this.takerData).length > 1) {
             this.checkOptionalTakerFields()
             this['UPDATE_TAKER']({ id: this.takerID, takerData: this.takerData })
           }
+
+          this.$notifyAlert('Dane zostały pomyślnie zaktualizowane.', 'ok')
         }
       }
 
