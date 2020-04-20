@@ -86,12 +86,16 @@ router.post('/images/upload/:name', function(req, res) {
 			.resize({ height: 500 })
 			.toFile(path.join(form.uploadDir, newFileName))
 			.then(() => {
-				fs.remove(file.path, err => console.log(`Removing uploaded file error: ${err}`));
+				fs.remove(file.path, err => {
+					if (err) console.log(`Removing uploaded file error: ${err}`);
+				});
 				console.log(`Image processing is ready. New filename ${newFileName}`);
 				res.status(200).send('Thank you');
 			})
 			.catch(err => {
-				fs.remove(file.path, err => console.log(`Removing uploaded file error: ${err}`));
+				fs.remove(file.path, err => {
+					if (err) console.log(`Removing uploaded file error: ${err}`);
+				});
 				console.error(`Error when processing the file: ${err}`);
 				res
 					.status(500)
