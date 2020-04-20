@@ -94,7 +94,11 @@ export const UPDATE_GRAVE = async ({ commit }, { id, graveData }) => {
 
 	if (error) throw error;
 	await UPDATE_GRAVE_DATA(id, value);
-	value.dtOplaty = dateFormat(value.dtOplaty);
+	if (value.dtOplaty) value.dtOplaty = dateFormat(value.dtOplaty);
+	if (value.ext) {
+		const fileName = `${value.nrGrobu.replace(/\|/gi, '-')}`;
+		value.imgFileName = `${fileName}.${value.ext}`;
+	}
 	commit('SET_GRAVE', { id: id, value: value });
 };
 
