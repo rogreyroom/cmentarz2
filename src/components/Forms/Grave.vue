@@ -26,6 +26,7 @@
             class="full-width"
             flat
             color="light-blue-13"
+            @uploaded="reloadUrl"
           />
           <q-tooltip
             anchor="top middle"
@@ -39,7 +40,9 @@
         <div class="row q-ma-md">
           <q-img
             v-if="grave.ext"
-            :src="getUrl"
+            :src="imgSrc"
+            spinner-color="primary"
+            spinner-size="64px"
             style="height: 300px;"
             class="full-width"
           />
@@ -259,30 +262,56 @@ export default {
       ],
       cemeteriesList: [],
       url: 'http://localhost:8000/images/',
-      newGrave: ''
+      newGrave: '',
+      imgSrc: ''
     };
   },
   computed: {
     ...mapState("cm", ["cemeteries"]),
     ...mapGetters({ getGrave: "cm/GET_GRAVE" }),
-    getUrl () {
-      return this.grave.imgFileName ? `${this.url}${this.grave.imgFileName}` : ''
-    },
     isValidDate () {
       return this.grave.dtOplaty === this.dateFormat(this.grave.dtOplaty)
     },
   },
   created () {
     this.cemeteriesList = this.cemeteries.map(({ thecm }) => thecm)
+    if (!this.grave.ext && this.flag === 'edit') {
+      this.graveImageFileName = `${this.grave.nrGrobu.replace(/\|/gi, '-')}`;
+    }
+    if (this.flag === 'edit')
+      this.imgSrc = this.getUrl()
   },
   methods: {
     dateFormat (myDate) {
       return date.formatDate(myDate, "YYYY-MM-DD")
     },
 
+    createImageName () {
+      return `${this.grave.nrGrobu.replace(/\|/gi, '-')}`;
+    },
+
+    getUrl () {
+      return this.grave.imgFileName
+        ? `${this.url}${this.grave.imgFileName}?${+ Date.now()}`
+        : this.grave.ext
+          ? `${this.url}${this.createImageName()}.${this.grave.ext}?${+ Date.now()}`
+          : ''
+    },
+
+    reloadUrl (info) {
+      if (info.xhr.status === 200) {
+        this.imgSrc = this.grave.imgFileName
+          ? `${this.url}${this.grave.imgFileName}?${+ Date.now()}`
+          : this.grave.ext
+            ? `${this.url}${this.createImageName()}.${this.grave.ext}?${+ Date.now()}`
+            : ''
+      }
+
+    },
+
     uploadUrl (file) {
+      const ext = file[file.length - 1].name.split('.').slice(-1).toString()
       if (this.flag === 'add') {
-        const ext = file[file.length - 1].name.split('.').slice(-1).toString()
         this.grave.ext = ext
         this.grave.nrGrobu = `P${this.grave.parcela}|R${this.grave.rzad}|G${this.grave.grob}`
         const graveExists = this.getGrave(this.grave.nrGrobu).length > 0 ? true : false
@@ -290,8 +319,18 @@ export default {
         if (graveExists)
           return this.$notifyAlert('Grób o tym numerze już istnieje!', 'error')
         return `${this.url}upload/${this.newGrave}.${ext}`
-      } else {
-        return `${this.url}upload/${this.grave.imgFileName}`
+
+      } else if (this.flag === 'edit') {
+        if (this.grave.ext) {
+          return this.grave.imgFileName
+            ? `${this.url}${this.grave.imgFileName}`
+            : this.grave.ext
+              ? `${this.url}upload/${this.createImageName()}.${this.grave.ext}`
+              : ''
+        } else {
+          this.grave.ext = ext
+          return `${this.url}upload/${this.createImageName()}.${ext}`
+        }
       }
     },
 
