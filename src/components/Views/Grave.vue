@@ -23,41 +23,41 @@
     <hr>
     <div class="row q-pa-sm q-gutter-sm">
       <div class="col">
-        <q-img
-          :src="getUrl"
-          style="height: 300px;"
-          class="full-width"
-        />
-        <!-- {{ graveData.ext }} -->
+        <div class="row q-ma-md">
+          <q-img
+            :src="getUrl"
+            style="height: 300px;"
+            class="full-width"
+          />
+        </div>
+        <div class="row q-ma-md">
+          <p><strong>Uwagi:</strong> {{ grave.uwagi }}</p>
+        </div>
       </div>
-      <div class="col q-ml-lg justify-start">
-        <div class="row">
+
+      <div class="col">
+        <div class="row q-ma-md">
           <p><strong>Parcela:</strong> {{ cemetery }}</p>
         </div>
-        <div class="row">
+        <div class="row q-ma-md">
           <p><strong>Rząd:</strong> {{ grave.rzad }}</p>
         </div>
-        <div class="row">
+        <div class="row q-ma-md">
           <p><strong>Numer grobu:</strong> {{ grave.grob }}</p>
         </div>
-        <div class="row">
+        <div class="row q-ma-md">
           <p><strong>Rodzaj grobu:</strong> {{ grave.rodzaj }}</p>
         </div>
-        <div class="row">
+        <div class="row q-ma-md">
           <p><strong>Status grobu:</strong> {{ grave.status }}</p>
         </div>
+        <div class="row q-ma-md">
+          <p><strong>Okres opłaty:</strong> {{ grave.okres }}</p>
+        </div>
+        <div class="row q-ma-md">
+          <p><strong>Data opłaty:</strong> {{ grave.dtOplaty }}</p>
+        </div>
       </div>
-    </div>
-    <div class="row q-pa-sm q-gutter-sm">
-      <div class="col">
-        <p><strong>Okres opłaty:</strong> {{ grave.okres }}</p>
-      </div>
-      <div class="col">
-        <p><strong>Data opłaty:</strong> {{ grave.dtOplaty }}</p>
-      </div>
-    </div>
-    <div class="row q-pa-sm q-gutter-sm">
-      <p><strong>Uwagi:</strong> {{ grave.uwagi }}</p>
     </div>
   </section>
 </template>
@@ -89,17 +89,17 @@ export default {
   },
   computed: {
     getUrl () {
-      // eslint-disable-next-line no-console
-      console.log(this.grave.imgFileName);
-      // eslint-disable-next-line no-console
-      console.log(`${this.url}${this.grave.imgFileName}`);
-      return this.grave.imgFileName ? `${this.url}${this.grave.imgFileName}` : ''
+      return this.grave.imgFileName
+        ? `${this.url}${this.grave.imgFileName}?${+ Date.now()}`
+        : this.grave.ext
+          ? `${this.url}${this.createImageName()}.${this.grave.ext}?${+ Date.now()}`
+          : ''
     }
   },
-  mounted () {
-  },
   methods: {
-
+    createImageName () {
+      return `${this.id.replace(/\|/gi, '-')}`;
+    },
   },
 };
 </script>
