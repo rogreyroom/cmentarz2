@@ -195,11 +195,6 @@ export default {
     },
 
     async getFormsData () {
-      // TODO: Every set ( grave, taker and user ) need to have nrGrobu
-      // TODO: Remove imgFileName from graves => delete grave.imgFileName
-      // TODO: Send data to api db actions and update state
-      // TODO: Check if this show-form page is used to handle grave editing
-
       if (this.isValid) {
         if (this.flag === 'add') {
           this.checkOptionalGraveFields()
@@ -215,7 +210,7 @@ export default {
           }
 
           this.$notifyAlert('Dane zostały pomyślnie dodane do bazy.', 'ok')
-          // TODO: Clear form
+          this.resetForm()
         } else {
           this.checkOptionalGraveFields()
           if (this.graveData.imgFileName) delete this.graveData['imgFileName']
@@ -227,9 +222,24 @@ export default {
           }
 
           this.$notifyAlert('Dane zostały pomyślnie zaktualizowane.', 'ok')
+          setTimeout(() => {
+            this.$router.push(`/grave-show/${this.id}`)
+          }, 1500);
         }
       }
 
+    },
+    resetForm () {
+      this.graveID = ''
+      this.takerID = ''
+      this.graveData = {}
+      this.takerData = {}
+      this.userData = {}
+      this.usersData = []
+      this.cmFullName = ''
+      this.graveNumber = ''
+      this.$refs.graveForm.reset()
+      this.$refs.graveForm.resetValidation()
     },
     checkOptionalGraveFields () {
       const graveOptionalFields = [
