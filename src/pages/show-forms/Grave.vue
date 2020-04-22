@@ -50,7 +50,7 @@
               Dane osoby zmarłej:
               <template v-if="flag === 'edit'">
                 <q-btn
-                  :to="{ name: 'user-add-edit', params: { id: id, flag: 'add-new' } }"
+                  :to="{ name: 'user-add-edit', params: { id: id, flag: 'add-user' } }"
                   flat
                   icon="add"
                   class="q-ml-md"
@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import { date } from 'quasar'
 import { mapGetters, mapActions } from "vuex";
 import Grave from '../../components/Forms/Grave'
 import Taker from '../../components/Forms/Taker'
@@ -162,7 +163,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions("cm", ["ADD_GRAVE", "UPDATE_GRAVE", "ADD_TAKER", "UPDATE_TAKER", "ADD_USER", "UPDATE_USER"]),
+    ...mapActions("cm", ["ADD_GRAVE", "UPDATE_GRAVE", "ADD_TAKER", "UPDATE_TAKER", "ADD_USER"]),
+
+    getDateYear (myDate) {
+      return date.formatDate(myDate, "YYYY")
+    },
+
     async checkIsValid () {
       await this.$refs.graveForm.validate()
         .then(res => {
@@ -204,9 +210,11 @@ export default {
           this['ADD_TAKER'](this.takerData)
 
           if (Object.keys(this.userData).length > 0) {
+            if (this.userData.dtUrodzenia && this.userData.dtZgonu)
+              this.userData.wiek = this.getDateYear(this.userData.dtZgonu) - this.getDateYear(this.userData.dtUrodzenia)
             this.checkOptionalUserFields()
             this.userData.nrGrobu = this.graveData.nrGrobu
-            this['ADD_USER'](this.graveData)
+            this['ADD_USER'](this.userData)
           }
 
           this.$notifyAlert('Dane zostały pomyślnie dodane do bazy.', 'ok')
