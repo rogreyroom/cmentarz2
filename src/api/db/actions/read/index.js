@@ -62,3 +62,9 @@ export const GET_TAKERS_DATA = async () => {
 	const result = await takers;
 	return result;
 };
+
+export const GET_USERS_DATA = async () => {
+	const users = usersCall();
+	const result = await users;
+	return result;
+};
