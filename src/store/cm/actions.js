@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 import { date } from 'quasar';
 import { read, add, update, del } from '../../api';
-import { cmSchema, parcelaSchema, opiekunSchema } from '../../api/db/schema/schema';
+import { cmSchema, parcelaSchema, opiekunSchema, userSchema } from '../../api/db/schema/schema';
 import { validateDataAgainstSchema } from '../../api/db/schema/validator';
-const { GET_DB_DATA, GET_CEMETERY_DATA, GET_GRAVES_DATA, GET_TAKERS_DATA } = read;
-const { ADD_CEMETERY_DATA, ADD_GRAVE_DATA, ADD_TAKER_DATA } = add;
-const { UPDATE_CEMETERY_DATA, UPDATE_GRAVE_DATA, UPDATE_TAKER_DATA } = update;
+const { GET_DB_DATA, GET_CEMETERY_DATA, GET_GRAVES_DATA, GET_TAKERS_DATA, GET_USERS_DATA } = read;
+const { ADD_CEMETERY_DATA, ADD_GRAVE_DATA, ADD_TAKER_DATA, ADD_USER_DATA } = add;
+const { UPDATE_CEMETERY_DATA, UPDATE_GRAVE_DATA, UPDATE_TAKER_DATA, UPDATE_USER_DATA } = update;
 const { REMOVE_CEMETERY_DATA, REMOVE_GRAVE_DATA } = del;
 
 // HELPERS
@@ -30,10 +30,13 @@ export const FETCH_ALL = async ({ commit }) => {
 				const fileName = `${parcela.nrGrobu.replace(/\|/gi, '-')}`;
 				parcela.imgFileName = `${fileName}.${parcela.ext}`;
 			}
+			if (parcela.dtOplaty) parcela.dtOplaty = dateFormat(parcela.dtOplaty);
+		});
 
-			if (parcela.dtOplaty) {
-				parcela.dtOplaty = dateFormat(parcela.dtOplaty);
-			}
+		users.map(({ user }) => {
+			if (user.dtUrodzenia) user.dtUrodzenia = dateFormat(user.dtUrodzenia);
+			if (user.dtZgonu) user.dtZgonu = dateFormat(user.dtZgonu);
+			if (user.dtPochowku) user.dtPochowku = dateFormat(user.dtPochowku);
 		});
 
 		commit('SET_CEMETERIES', cemeteries);
@@ -132,3 +135,29 @@ export const UPDATE_TAKER = async ({ commit }, { id, takerData }) => {
 };
 
 // USER ACTIONS
+
+export const FETCH_USERS = async ({ commit }) => {
+	await GET_USERS_DATA({ commit }).then(result => {
+		commit('SET_USERS', result);
+	});
+};
+
+export const ADD_USER = async ({ dispatch }, userData) => {
+	console.log(userData);
+	const { value, error } = await validateDataAgainstSchema(userData, userSchema);
+
+	if (error) throw error;
+	await ADD_USER_DATA(value);
+	await dispatch('FETCH_USERS');
+};
+
+export const UPDATE_USER = async ({ commit }, { id, userData }) => {
+	const { value, error } = await validateDataAgainstSchema(userData, userSchema);
+
+	if (error) throw error;
+	await UPDATE_USER_DATA(id, value);
+	if (value.dtUrodzenia) value.dtUrodzenia = dateFormat(value.dtUrodzenia);
+	if (value.dtZgonu) value.dtZgonu = dateFormat(value.dtZgonu);
+	if (value.dtPochowku) value.dtPochowku = dateFormat(value.dtPochowku);
+	commit('SET_USER', { id: id, value: value });
+};
