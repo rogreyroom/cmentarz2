@@ -40,3 +40,9 @@ export function SET_TAKER(state, payload) {
 	const takerFound = state.takers.find(({ _id }) => _id === id);
 	takerFound.taker = value;
 }
+
+export function SET_USER(state, payload) {
+	const { id, value } = payload;
+	const userFound = state.users.find(({ _id }) => _id === id);
+	userFound.user = value;
+}
