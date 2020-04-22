@@ -5,7 +5,7 @@
   >
     <q-card-section class="row q-gutter-md fit">
       <q-btn
-        :to="{ name: 'user-add-edit', params: {id: id, user: user, flag: 'edit'} }"
+        :to="{ name: 'user-add-edit', params: {id: id, grave: grave, user: user, flag: 'edit-user'} }"
         flat
         icon="edit"
         class="q-ml-sm"
@@ -49,6 +49,10 @@ import { date } from 'quasar'
 export default {
   props: {
     id: {
+      type: String,
+      default: ''
+    },
+    grave: {
       type: String,
       default: ''
     },

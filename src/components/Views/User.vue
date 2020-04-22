@@ -4,7 +4,7 @@
       <h5>
         Dane osoby zmarłej
         <q-btn
-          :to="{ name: 'user-add-edit', params: { id: id, flag: 'add-new' } }"
+          :to="{ name: 'user-add-edit', params: { id: id, flag: 'add-user' } }"
           flat
           icon="add"
           class="q-ml-md"
@@ -18,7 +18,8 @@
       class="row q-pa-sm q-gutter-sm"
     >
       <single-user
-        :id="id"
+        :id="_id"
+        :grave="id"
         :user="user"
       />
     </div>
