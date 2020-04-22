@@ -44,3 +44,45 @@ export const UPDATE_TAKER_DATA = async (id, value) => {
 		}
 	);
 };
+
+export const UPDATE_USER_DATA = async (id, value) => {
+	const {
+		imie,
+		nazwisko,
+		nazwiskoRodowe,
+		wiek,
+		stanCywilny,
+		imieMatki,
+		nazwiskoMatki,
+		imieOjca,
+		nazwiskoOjca,
+		dtUrodzenia,
+		miejsceUrodzenia,
+		dtZgonu,
+		miejsceZgonu,
+		dtPochowku,
+		miejscePochowku
+	} = value;
+	return await db.asyncUpdate(
+		{ _id: id },
+		{
+			$set: {
+				'user.imie': imie,
+				'user.nazwisko': nazwisko,
+				'user.nazwiskoRodowe': nazwiskoRodowe,
+				'user.wiek': wiek,
+				'user.stanCywilny': stanCywilny,
+				'user.imieMatki': imieMatki,
+				'user.nazwiskoMatki': nazwiskoMatki,
+				'user.imieOjca': imieOjca,
+				'user.nazwiskoOjca': nazwiskoOjca,
+				'user.dtUrodzenia': dtUrodzenia,
+				'user.miejsceUrodzenia': miejsceUrodzenia,
+				'user.dtZgonu': dtZgonu,
+				'user.miejsceZgonu': miejsceZgonu,
+				'user.dtPochowku': dtPochowku,
+				'user.miejscePochowku': miejscePochowku
+			}
+		}
+	);
+};
