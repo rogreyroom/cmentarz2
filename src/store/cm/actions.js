@@ -6,7 +6,7 @@ import { validateDataAgainstSchema } from '../../api/db/schema/validator';
 const { GET_DB_DATA, GET_CEMETERY_DATA, GET_GRAVES_DATA, GET_TAKERS_DATA, GET_USERS_DATA } = read;
 const { ADD_CEMETERY_DATA, ADD_GRAVE_DATA, ADD_TAKER_DATA, ADD_USER_DATA } = add;
 const { UPDATE_CEMETERY_DATA, UPDATE_GRAVE_DATA, UPDATE_TAKER_DATA, UPDATE_USER_DATA } = update;
-const { REMOVE_CEMETERY_DATA, REMOVE_GRAVE_DATA } = del;
+const { REMOVE_CEMETERY_DATA, REMOVE_GRAVE_DATA, REMOVE_USER_DATA } = del;
 
 // HELPERS
 
@@ -143,7 +143,6 @@ export const FETCH_USERS = async ({ commit }) => {
 };
 
 export const ADD_USER = async ({ dispatch }, userData) => {
-	console.log(userData);
 	const { value, error } = await validateDataAgainstSchema(userData, userSchema);
 
 	if (error) throw error;
@@ -160,4 +159,9 @@ export const UPDATE_USER = async ({ commit }, { id, userData }) => {
 	if (value.dtZgonu) value.dtZgonu = dateFormat(value.dtZgonu);
 	if (value.dtPochowku) value.dtPochowku = dateFormat(value.dtPochowku);
 	commit('SET_USER', { id: id, value: value });
+};
+
+export const REMOVE_USER = async ({ dispatch }, id) => {
+	await REMOVE_USER_DATA(id);
+	await dispatch('FETCH_USERS');
 };
