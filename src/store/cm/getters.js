@@ -23,6 +23,18 @@ export function GET_GRAVE_USERS(state) {
 	};
 }
 
+export function GET_USERS_BY_NAME(state) {
+	return text => {
+		return state.users.filter(({ user }) => {
+			if (user.hasOwnProperty('nazwisko')) {
+				const { nazwisko } = user;
+				const textToBeFound = new RegExp('^' + text, 'gi');
+				return nazwisko.match(textToBeFound);
+			}
+		});
+	};
+}
+
 export function GET_PARCELA(state) {
 	return name => {
 		return state.cemeteries.find(({ thecm: { cName } }) => cName === name);
