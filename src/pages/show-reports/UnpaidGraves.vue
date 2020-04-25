@@ -13,10 +13,13 @@
           dense
           color="indigo-9"
           icon="print"
-          class="q-mr-xs"
+          class="q-mr-sm"
         />
       </div>
-      <div id="printMe">
+      <div
+        id="printMe"
+        class="q-mt-lg"
+      >
         <q-table
           :data="graves"
           :columns="columns"
