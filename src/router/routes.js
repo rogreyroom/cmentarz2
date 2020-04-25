@@ -83,6 +83,12 @@ const routes = [
 				name: 'user-add-edit',
 				component: () => import('pages/show-forms/User.vue'),
 				props: true
+			},
+			{
+				path: '/search-show/:query',
+				name: 'search-users',
+				component: () => import('pages/show-view/Search.vue'),
+				props: true
 			}
 		]
 	}
