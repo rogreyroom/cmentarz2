@@ -15,16 +15,8 @@
           Cmentarz
         </q-toolbar-title>
 
-        <q-input
-          v-model="search"
-          filled
-          type="search"
-          placeholder="Nazwisko"
-        >
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
+        <search-input />
+
       </q-toolbar>
     </q-header>
     <!--   flat dense round -->
@@ -138,14 +130,17 @@ const menuList = [
   }
 ];
 
+import Search from '../components/Forms/Search'
+
 export default {
   name: "MyLayout",
-
+  components: {
+    'search-input': Search
+  },
   data () {
     return {
       leftDrawerOpen: false,
       menuList,
-      search: ""
     };
   }
 };
