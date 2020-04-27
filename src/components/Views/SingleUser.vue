@@ -16,7 +16,7 @@
         icon="delete"
         class="q-ml-sm"
         text-color="light-blue-13"
-        @click="showNotif(id)"
+        @click="removeUser(id)"
       />
     </q-card-section>
     <q-card-section class="row q-gutter-md fit">
@@ -71,29 +71,29 @@ export default {
       return date.formatDate(myDate, "YYYY-MM-DD")
     },
 
-    showNotif (id) {
+    removeUser (id) {
       this.$q.notify({
         message: 'Czy na pewno chcesz usunąć zmarłego z tego grobu?',
         color: 'light-blue-14',
         position: 'center',
         icon: 'warning',
-        timeout: 3000,
+        timeout: 0,
         actions: [
-          { label: 'Tak', color: 'white', handler: () => { this.removeUser(id) } },
-          { label: 'Nie', color: 'yellow' }
+          {
+            label: 'Tak',
+            color: 'white',
+            handler: async () => {
+              await this['REMOVE_USER'](id)
+              await this.$emit('update-users')
+              this.$notifyAlert('Dane zostały pomyślnie usunięte z bazy.', 'ok', 1500)
+            }
+          },
+          {
+            label: 'Nie',
+            color: 'yellow'
+          }
         ]
       })
-    },
-
-    removeUser (id) {
-      this['REMOVE_USER'](id)
-        .then(this.$nextTick())
-        .then(() => {
-          this.$emit('update-users')
-        })
-        .then(() => {
-          this.$notifyAlert('Dane zostały pomyślnie usunięte z bazy.', 'ok', 1000)
-        })
     }
   }
 };
