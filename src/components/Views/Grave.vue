@@ -12,6 +12,13 @@
           text-color="light-blue-13"
         />
         <q-btn
+          flat
+          icon="delete"
+          class="q-ml-md"
+          text-color="light-blue-13"
+          @click="removeGrave"
+        />
+        <q-btn
           :to="{ name: 'cemetery-map', params: { id: id, flag:'show-grave', name: grave.parcela, grave: { cm: grave.parcela, r: grave.rzad, g: grave.grob } }}"
           flat
           icon="map"
@@ -63,6 +70,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 
 export default {
   props: {
@@ -97,9 +105,46 @@ export default {
     }
   },
   methods: {
+    ...mapActions("cm", ["REMOVE_GRAVE"]),
+
     createImageName () {
       return `${this.id.replace(/\|/gi, '-')}`;
     },
+
+    removeGrave () {
+      this.$q.notify({
+        message: 'Czy na pewno chcesz usunąć ten grób?',
+        color: 'light-blue-14',
+        position: 'center',
+        icon: 'warning',
+        timeout: 0,
+        actions: [
+          {
+            label: 'Tak',
+            color: 'white',
+            handler: async () => {
+              await this['REMOVE_GRAVE'](this.id)
+              if (this.grave.hasOwnProperty('ext')) {
+                await this.$axios
+                  .delete(`/images/remove/${this.createImageName()}.${this.grave.ext}`)
+                  .then(() => {
+                    true
+                  })
+                  .catch(() => {
+                    this.$notifyAlert('Nie udało się usunąć zdjęcia.', 'nagative', 1500)
+                  });
+              }
+              window.history.back()
+              this.$notifyAlert('Dane zostały pomyślnie usunięte z bazy.', 'ok', 1500)
+            }
+          },
+          {
+            label: 'Nie',
+            color: 'yellow'
+          }
+        ]
+      })
+    }
   },
 };
 </script>

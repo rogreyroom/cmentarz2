@@ -86,6 +86,7 @@ router.post('/images/upload/:name', function(req, res) {
 			.resize({ height: 500 })
 			.toFile(path.join(form.uploadDir, newFileName))
 			.then(() => {
+				console.log(file.path);
 				fs.remove(file.path, err => {
 					if (err) console.log(`Removing uploaded file error: ${err}`);
 				});
@@ -103,6 +104,18 @@ router.post('/images/upload/:name', function(req, res) {
 						"Nie udało się nadpisać istniejącego zdjęcia. Sprawdź czy istniejące zdjęcie nie zawiera atrybutu 'Tylko do odczytu'"
 					);
 			});
+	});
+});
+
+router.delete('/images/remove/:name', function(req, res) {
+	const folderName = path.join(app.getPath('documents'), '/cmentarz/db/images/');
+	fs.remove(path.join(folderName, req.params.name), err => {
+		if (err) {
+			console.log(`Removing uploaded file error: ${err}`);
+			res.status(500).send('Nie udało się usunąć zdjęcia grobu!');
+		}
+		console.log(`Zdjęcie ${req.params.name} zostało usunięte!`);
+		res.status(200).send('Usunięto zdjęcie');
 	});
 });
 
