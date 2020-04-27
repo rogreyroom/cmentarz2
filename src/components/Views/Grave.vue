@@ -1,9 +1,10 @@
 <template>
-  <section>
-    <div class="row q-pa-sm q-gutter-sm">
-      <h5>
+  <section class="q-pa-md">
+    <div class="row no-wrap items-center q-p-none">
+      <h5 class="q-headline col q-ma-xs">
         Dane grobu:
         <strong class="q-ml-sm">{{ id }}</strong>
+
         <q-btn
           :to="{ name: 'grave-add-edit', params: { id: id, flag: 'edit', cemetery: cemetery }}"
           flat
@@ -26,6 +27,27 @@
           text-color="light-blue-13"
         />
       </h5>
+      <div class="column col-1 items-end">
+        <q-btn
+          v-go-back.single=" '/' "
+          size="14px"
+          round
+          dense
+          color="indigo-9"
+          icon="arrow_back"
+          class="q-mr-sm"
+        >
+          <q-tooltip
+            anchor="top middle"
+            self="center middle"
+            transition-show="scale"
+            transition-hide="scale"
+            content-class="bg-blue-4"
+          >
+            Wróć
+          </q-tooltip>
+        </q-btn>
+      </div>
     </div>
     <hr>
     <div class="row q-pa-sm q-gutter-sm">
