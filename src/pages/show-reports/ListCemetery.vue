@@ -127,7 +127,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
   data () {
@@ -156,6 +156,12 @@ export default {
           align: "center",
           field: cemeteries => cemeteries.thecm.cmFullName,
           sortable: true
+        },
+        {
+          name: "gravesAmount",
+          label: "Ilość grobów",
+          align: "center",
+          field: cemeteries => this.allGravesCount(cemeteries.thecm.cName)
         },
         {
           name: "cemeteryEntrance",
@@ -206,6 +212,7 @@ export default {
   },
   computed: {
     ...mapState("cm", ["cemeteries"]),
+    ...mapGetters({ allGravesCount: "cm/GET_ALL_GRAVES_COUNT" }),
   },
   created: function () {
     if (this.cemeteries.length === 0) {
