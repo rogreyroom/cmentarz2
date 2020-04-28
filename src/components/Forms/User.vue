@@ -386,6 +386,7 @@ export default {
             this.$notifyAlert('Dane zostały pomyślnie dodane do bazy.', 'ok')
           }
           this.resetForm()
+          this.$scrollToTheTop()
         } else {
           if (!this.userData.wiek) {
             if (this.userData.dtUrodzenia && this.userData.dtZgonu)
