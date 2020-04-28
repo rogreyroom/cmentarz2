@@ -1,5 +1,6 @@
 <template>
   <section>
+    <pre>Id: {{ id }} - should be cemetery _id</pre>
     <div class="row q-gutter-sm">
       <q-tab-panel
         class="row full-width justify-center"
@@ -15,6 +16,13 @@
                 icon="edit"
                 class="q-ml-md"
                 text-color="light-blue-13"
+              />
+              <q-btn
+                flat
+                icon="delete"
+                class="q-ml-md"
+                text-color="light-blue-13"
+                @click="removeCemetery(id)"
               />
             </h5>
             <div class="row">
@@ -132,7 +140,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   props: {
@@ -187,6 +195,8 @@ export default {
     this.cemeteryRows = this.uniqueCemeteryRows(this.name)
   },
   methods: {
+    ...mapActions("cm", ["REMOVE_CEMETERY"]),
+
     setColor (status) {
       switch (status) {
         case 'Opłacony':
@@ -204,6 +214,12 @@ export default {
         case 'wejscieRight':
           return 'justify-end'
       }
+    },
+
+    async removeCemetery (id) {
+      await this.REMOVE_CEMETERY(id)
+      this.$notifyAlert('Dane zostały pomyślnie usunięte z bazy.', 'ok')
+      this.$router.push({ name: 'cemetery-full-list' })
     }
   }
 }
