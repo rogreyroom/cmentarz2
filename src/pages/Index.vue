@@ -49,7 +49,7 @@
               color="green"
               icon="edit"
               class="q-mr-sm"
-              :to="{ name: 'grave-add-edit', params: { id: props.row.parcela.nrGrobu } }"
+              :to="{ name: 'grave-add-edit', params: { id: props.row.parcela.nrGrobu, flag: 'edit' } }"
             >
               <q-tooltip
                 anchor="top middle"
@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
   name: "PageIndex",
@@ -178,16 +178,51 @@ export default {
     };
   },
   computed: {
-    ...mapState("cm", ["graves"])
+    ...mapState("cm", ["graves"]),
+    ...mapGetters({ getGrave: "cm/GET_GRAVE" }),
   },
   created () {
     this["FETCH_ALL"]()
   },
   methods: {
-    ...mapActions("cm", ["FETCH_ALL"]),
+    ...mapActions("cm", ["FETCH_ALL", "REMOVE_GRAVE"]),
+
     removeGrave (id) {
-      alert(`Chcesz usunąć grób ${id}?`)
-    }
+      this.$q.notify({
+        message: 'Czy na pewno chcesz usunąć ten grób?',
+        color: 'light-blue-14',
+        position: 'center',
+        icon: 'warning',
+        timeout: 0,
+        actions: [
+          {
+            label: 'Tak',
+            color: 'white',
+            handler: async () => {
+              const { parcela } = this.getGrave(id)[0]
+              const fileName = `${id.replace(/\|/gi, '-')}`;
+              await this['REMOVE_GRAVE'](id)
+              if (parcela.hasOwnProperty('ext')) {
+                await this.$axios
+                  .delete(`/images/remove/${fileName}.${parcela.ext}`)
+                  .then(() => {
+                    true
+                  })
+                  .catch(() => {
+                    this.$notifyAlert('Nie udało się usunąć zdjęcia.', 'nagative', 1500)
+                  });
+              }
+              this.$notifyAlert('Dane zostały pomyślnie usunięte z bazy.', 'ok', 1500)
+            }
+          },
+          {
+            label: 'Nie',
+            color: 'yellow'
+          }
+        ]
+      })
+    },
+
   }
 };
 </script>

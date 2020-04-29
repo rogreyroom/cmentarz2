@@ -28,3 +28,25 @@ export function SET_ALL(state, payload) {
 	});
 	state.gravesDetails = combineAll;
 }
+
+export function SET_GRAVE(state, payload) {
+	const { id, value } = payload;
+	const graveFound = state.graves.find(({ _id }) => _id === id);
+	graveFound.parcela = value;
+}
+
+export function SET_TAKER(state, payload) {
+	const { id, value } = payload;
+	const takerFound = state.takers.find(({ _id }) => _id === id);
+	takerFound.taker = value;
+}
+
+export function SET_USER(state, payload) {
+	const { id, value } = payload;
+	const userFound = state.users.find(({ _id }) => _id === id);
+	userFound.user = value;
+}
+
+export function SET_YEAR_TO_SEARCH(state, payload) {
+	state.yearToSearch = payload;
+}

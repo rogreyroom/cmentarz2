@@ -1,9 +1,10 @@
 <template>
-  <div class="q-pa-md">
+  <div>
     <q-page padding>
       <grave
         :id="id"
         :grave="graveData"
+        :cemetery="cmFullName"
       />
       <hr>
       <taker
@@ -14,6 +15,7 @@
       <user
         :id="id"
         :users="usersData"
+        @render-users="renderUsers"
       />
       <hr>
     </q-page>
@@ -42,22 +44,29 @@ export default {
     return {
       graveData: {},
       takerData: {},
-      usersData: []
+      usersData: [],
+      cmFullName: ''
     };
   },
   computed: {
-    ...mapGetters({ grave: "cm/GET_GRAVE" }),
-    ...mapGetters({ taker: "cm/GET_GRAVE_TAKER" }),
-    ...mapGetters({ users: "cm/GET_GRAVE_USERS" }),
+    ...mapGetters({ getGrave: "cm/GET_GRAVE" }),
+    ...mapGetters({ getTaker: "cm/GET_GRAVE_TAKER" }),
+    ...mapGetters({ getUsers: "cm/GET_GRAVE_USERS" }),
+    ...mapGetters({ getCemetery: "cm/GET_PARCELA" }),
   },
   mounted () {
-    const { parcela } = this.grave(this.id)[0]
+    const { parcela } = this.getGrave(this.id)[0]
     this.graveData = parcela
-
-    const { taker } = this.taker(this.id)[0]
+    const { thecm: { cmFullName } } = this.getCemetery(parcela.parcela)
+    this.cmFullName = cmFullName
+    const { taker } = this.getTaker(this.id)[0]
     this.takerData = taker
-
-    this.usersData = this.users(this.id)
-  }
+    this.usersData = this.getUsers(this.id)
+  },
+  methods: {
+    renderUsers () {
+      this.usersData = this.getUsers(this.id)
+    }
+  },
 };
 </script>

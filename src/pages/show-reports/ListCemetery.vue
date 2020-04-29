@@ -13,10 +13,13 @@
           dense
           color="indigo-9"
           icon="print"
-          class="q-mr-xs"
+          class="q-mr-sm"
         />
       </div>
-      <div id="printMe">
+      <div
+        id="printMe"
+        class="q-mt-lg"
+      >
         <q-table
           :data="cemeteries"
           :columns="columns"
@@ -75,7 +78,7 @@
                     color="green"
                     icon="edit"
                     class="q-mr-sm"
-                    :to="{ name: 'cemetery-add-edit', params: { id: props.row._id, cemetery: props.row } }"
+                    :to="{ name: 'cemetery-add-edit', params: { id: props.row._id, flag: 'edit', cemetery: props.row.thecm } }"
                   >
                     <q-tooltip
                       anchor="top middle"
@@ -124,7 +127,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
   data () {
@@ -153,6 +156,12 @@ export default {
           align: "center",
           field: cemeteries => cemeteries.thecm.cmFullName,
           sortable: true
+        },
+        {
+          name: "gravesAmount",
+          label: "Ilość grobów",
+          align: "center",
+          field: cemeteries => this.allGravesCount(cemeteries.thecm.cName)
         },
         {
           name: "cemeteryEntrance",
@@ -203,6 +212,7 @@ export default {
   },
   computed: {
     ...mapState("cm", ["cemeteries"]),
+    ...mapGetters({ allGravesCount: "cm/GET_ALL_GRAVES_COUNT" }),
   },
   created: function () {
     if (this.cemeteries.length === 0) {
@@ -211,13 +221,16 @@ export default {
   },
   methods: {
     ...mapActions("cm", ["FETCH_ALL"]),
+    ...mapActions("cm", ["REMOVE_CEMETERY"]),
     removeCemetery (id) {
-      // eslint-disable-next-line no-console
-      console.log(id);
+      this.REMOVE_CEMETERY(id)
+        .then(res => {
+          if (res && res.hasOwnProperty('error')) return this.$notifyAlert(res.error.message, 'error')
+          this.$notifyAlert('Dane zostały pomyślnie usunięte z bazy.', 'ok')
+        })
     }
   }
 }
-
 </script>
 
 <style lang="scss">

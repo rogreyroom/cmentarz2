@@ -5,7 +5,7 @@
   >
     <q-card-section class="row q-gutter-md fit">
       <q-btn
-        :to="{ name: 'user-add-edit', params: {id: id, user: user, flag: 'edit'} }"
+        :to="{ name: 'user-add-edit', params: {id: id, grave: grave, user: user, flag: 'edit-user'} }"
         flat
         icon="edit"
         class="q-ml-sm"
@@ -16,7 +16,7 @@
         icon="delete"
         class="q-ml-sm"
         text-color="light-blue-13"
-        @click="deleteUser(id)"
+        @click="removeUser(id)"
       />
     </q-card-section>
     <q-card-section class="row q-gutter-md fit">
@@ -45,10 +45,15 @@
 
 <script>
 import { date } from 'quasar'
+import { mapActions } from 'vuex'
 
 export default {
   props: {
     id: {
+      type: String,
+      default: ''
+    },
+    grave: {
       type: String,
       default: ''
     },
@@ -60,13 +65,36 @@ export default {
     }
   },
   methods: {
+    ...mapActions("cm", ["REMOVE_USER"]),
+
     dateFormat (myDate) {
       return date.formatDate(myDate, "YYYY-MM-DD")
     },
-    deleteUser (id) {
-      // eslint-disable-next-line no-console
-      console.log(id);
+
+    removeUser (id) {
+      this.$q.notify({
+        message: 'Czy na pewno chcesz usunąć zmarłego z tego grobu?',
+        color: 'light-blue-14',
+        position: 'center',
+        icon: 'warning',
+        timeout: 0,
+        actions: [
+          {
+            label: 'Tak',
+            color: 'white',
+            handler: async () => {
+              await this['REMOVE_USER'](id)
+              await this.$emit('update-users')
+              this.$notifyAlert('Dane zostały pomyślnie usunięte z bazy.', 'ok', 1500)
+            }
+          },
+          {
+            label: 'Nie',
+            color: 'yellow'
+          }
+        ]
+      })
     }
-  },
+  }
 };
 </script>

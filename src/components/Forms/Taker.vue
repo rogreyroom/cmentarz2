@@ -1,5 +1,4 @@
 <template>
-  <!--  q-pa-sm q-gutter-sm -->
   <div class="row q-pa-sm q-gutter-sm">
     <div class="row full-width">
       <div class="col q-ma-md">
@@ -10,12 +9,12 @@
           <q-input
             v-model="taker.imie"
             outlined
+            label="Imię opiekuna grobu"
             name="imie"
             class="full-width"
           />
         </div>
       </div>
-
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Nazwisko</strong></p>
@@ -24,12 +23,12 @@
           <q-input
             v-model="taker.nazwisko"
             outlined
+            label="Nazwisko opiekuna grobu"
             name="nazwisko"
             class="full-width"
           />
         </div>
       </div>
-
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Adres</strong></p>
@@ -39,13 +38,13 @@
             v-model="taker.adres"
             autogrow
             outlined
+            label="Adres opiekuna grobu"
             name="adres"
             class="full-width"
           />
         </div>
       </div>
     </div>
-
     <div class="row full-width">
       <div class="col q-ma-md">
         <div class="row">
@@ -53,14 +52,14 @@
         </div>
         <div class="row full-width">
           <q-input
-            v-model="taker.telefon"
+            v-model="taker.tel"
             outlined
-            name="telefon"
+            label="Telefon do opiekuna grobu"
+            name="tel"
             class="full-width"
           />
         </div>
       </div>
-
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Email</strong></p>
@@ -69,12 +68,13 @@
           <q-input
             v-model="taker.email"
             outlined
+            label="Email do opiekuna grobu"
             name="email"
             class="full-width"
+            :rules="[isValidEmail]"
           />
         </div>
       </div>
-
       <div class="col q-ma-md">
         <div class="row">
           <p><strong>Uwagi dodatkowe</strong></p>
@@ -82,31 +82,18 @@
         <div class="row full-width">
           <q-input
             v-model="taker.uwagi"
-            filled
             autogrow
             outlined
+            label="Wpisz ewentualne uwagi/notatki"
             name="uwagi"
             class="full-width"
           />
         </div>
       </div>
     </div>
-
-    <div class="row full-width">
-      <q-btn
-        unelevated
-        outline
-        label="Zmień"
-        size="md"
-        class="q-ml-md"
-        text-color="light-blue-13"
-        @click="updateTaker(1)"
-      />
-    </div>
   </div>
 </template>
 <script>
-// Flag determines if data is added as new or edited
 
 export default {
   components: {
@@ -127,24 +114,12 @@ export default {
       }
     }
   },
-  data () {
-    return {
-    };
-  },
-  computed: {
-  },
-  created () {
-    // eslint-disable-next-line no-console
-    // console.log('Taker Form:');
-    // eslint-disable-next-line no-console
-    // console.log(this.taker);
-  },
-  mounted () {
-  },
   methods: {
-    updateTaker (id) {
-      // eslint-disable-next-line no-console
-      console.log(id);
+    isValidEmail (val) {
+      if (val !== undefined && val !== '') {
+        const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+        return emailPattern.test(val) || 'Niewłaściwy adres email!';
+      }
     }
   },
 };

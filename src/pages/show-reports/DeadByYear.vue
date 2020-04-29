@@ -7,7 +7,7 @@
         </h5>
         <q-space />
         <q-input
-          v-model="filter"
+          v-model="inputYear"
           :debounce="600"
           type="search"
           placeholder="Rok"
@@ -18,17 +18,18 @@
           round
           dense
           input-class="text-center"
+          @change="setInputYear"
         >
           <template v-slot:append>
             <q-icon
-              v-if="filter === ''"
+              v-if="inputYear === ''"
               name="search"
             />
             <q-icon
               v-else
               name="clear"
               class="cursor-pointer"
-              @click="filter = ''"
+              @click="inputYear = ''"
             />
           </template>
         </q-input>
@@ -51,7 +52,7 @@
           :rows-per-page-options="[5, 10, 15, 20, 25, 30, 35, 50, 0]"
           :loading="loading"
           :pagination.sync="pagination"
-          :filter="filter"
+          :filter="inputYear"
           :filter-method="myFilter"
           dense
           flat
@@ -131,7 +132,7 @@
 
 <script>
 import { date } from 'quasar'
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
   data () {
@@ -189,9 +190,9 @@ export default {
           sortable: true
         }
       ],
-      filter: new Date().getFullYear().toString(),
+      inputYear: '',
       loading: false,
-      notPrinting: true
+      notPrinting: true,
     };
   },
   computed: {
@@ -201,23 +202,27 @@ export default {
     if (this.users.length === 0) {
       this["FETCH_ALL"]()
     }
-
+    this.inputYear = this.GET_YEAR_TO_SEARCH()
   },
   methods: {
     ...mapActions("cm", ["FETCH_ALL"]),
+    ...mapGetters("cm", ["GET_YEAR_TO_SEARCH"]),
+    ...mapMutations("cm", ["SET_YEAR_TO_SEARCH"]),
 
     dateFormat (myDate) {
       return date.formatDate(myDate, "YYYY-MM-DD")
     },
 
-    myFilter (rows, terms, cols, cellValue) {
+    setInputYear () {
+      this.SET_YEAR_TO_SEARCH(this.inputYear)
+    },
 
+    myFilter (rows, terms, cols, cellValue) {
       return rows.filter(
         row => cols.some(
           col => col.name === 'dataZgonu' ? date.formatDate(cellValue(col, row), "YYYY") === terms : null
         )
       )
-
     }
   }
 }

@@ -5,6 +5,6 @@ export default function() {
 		graves: [],
 		takers: [],
 		gravesDetails: [],
-		grave: []
+		yearToSearch: new Date().getFullYear().toString()
 	};
 }
