@@ -9,16 +9,37 @@
         <section>
           <header class="row q-pa-sm q-gutter-sm">
             <template v-if="flag === 'add'">
-              <h5>
+              <h5 class="col">
                 Dodaj grób:
               </h5>
             </template>
             <template v-else>
-              <h5>
+              <h5 class="col">
                 Edytuj grób:
                 <strong class="q-ml-sm">{{ id }}</strong>
                 ( {{ cmFullName }} )
               </h5>
+              <div class="col-1 items-end">
+                <q-btn
+                  v-go-back.single=" '/' "
+                  size="14px"
+                  round
+                  dense
+                  color="indigo-9"
+                  icon="arrow_back"
+                  class="q-mr-sm column col-1"
+                >
+                  <q-tooltip
+                    anchor="top middle"
+                    self="center middle"
+                    transition-show="scale"
+                    transition-hide="scale"
+                    content-class="bg-blue-4"
+                  >
+                    Wróć
+                  </q-tooltip>
+                </q-btn>
+              </div>
             </template>
             <hr>
           </header>
