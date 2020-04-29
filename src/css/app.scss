@@ -1,1 +1,20 @@
 // app global css in SCSS form
+
+.header-height {
+	height: 80px;
+}
+
+.q-table td {
+	white-space: pre-line;
+	word-break: break-word;
+	&::first-line {
+		height: 0;
+		line-height: 0;
+	}
+}
+
+@media print {
+	.q-table__bottom {
+		visibility: hidden;
+	}
+}

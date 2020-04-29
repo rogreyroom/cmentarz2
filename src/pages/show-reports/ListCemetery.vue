@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <q-page padding>
-      <div class="row no-wrap items-center q-p-none">
+      <div class="row no-wrap items-center q-p-none header-height">
         <h5 class="q-headline q-ma-xs text-bold text-indigo-9">
           Lista cmentarzy/parceli
         </h5>
@@ -234,17 +234,4 @@ export default {
 </script>
 
 <style lang="scss">
-.q-table td {
-  white-space: pre-line;
-  word-break: break-word;
-  &::first-line {
-    height: 0;
-    line-height: 0;
-  }
-}
-@media print {
-  .q-table__bottom {
-    visibility: hidden;
-  }
-}
 </style>
