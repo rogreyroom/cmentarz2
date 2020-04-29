@@ -93,3 +93,7 @@ export function GET_CEMETERY_ROW_GRAVES(state) {
 			});
 	};
 }
+
+export function GET_YEAR_TO_SEARCH(state) {
+	return state.yearToSearch;
+}

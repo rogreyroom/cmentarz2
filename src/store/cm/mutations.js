@@ -46,3 +46,7 @@ export function SET_USER(state, payload) {
 	const userFound = state.users.find(({ _id }) => _id === id);
 	userFound.user = value;
 }
+
+export function SET_YEAR_TO_SEARCH(state, payload) {
+	state.yearToSearch = payload;
+}
