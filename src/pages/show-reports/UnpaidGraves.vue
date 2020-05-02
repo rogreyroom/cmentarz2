@@ -140,15 +140,13 @@ export default {
           name: "numerGrobu",
           label: "Nr. parceli",
           align: "center",
-          field: graves => `${graves.parcela.parcela}${graves.parcela.rzad}${graves.parcela.grob}`,
+          field: graves => `${graves.parcela.parcela}|${graves.parcela.rzad}|${graves.parcela.grob}`,
           filter: true,
           sortable: true,
           sort: (valA, valB) => {
-            // slice(2) removes 'cm' from cemetery name
-            // TODO: sorting still not working as it should - R10 is after all cm's
-            let a = valA.slice(2),
-              b = valB.slice(2);
-            return isNaN(a - b) ? (a === b ? 0 : a < b ? -1 : 1) : a - b;
+            let a = valA.slice(2).split('|'),
+              b = valB.slice(2).split('|')
+            return +a[0] > +b[0] ? 1 : +b[0] > +a[0] ? -1 : +a[1] > +b[1] ? 1 : +b[1] > +a[1] ? -1 : a[2] > +b[2] ? 1 : +b[2] > +a[2] ? -1 : 0
           }
         },
         {
