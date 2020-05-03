@@ -82,11 +82,11 @@ export default {
   }
 }
 </script>
+
 <style lang="scss">
 .q-tab__icon {
   color: $light-blue-13;
 }
-
 .q-tabs__arrow {
   background: $light-blue-1;
 }

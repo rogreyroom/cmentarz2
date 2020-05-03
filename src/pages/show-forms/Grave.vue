@@ -162,23 +162,22 @@ export default {
     ...mapGetters({ users: "cm/GET_GRAVE_USERS" }),
     ...mapGetters({ getCemetery: "cm/GET_PARCELA" })
   },
-  created () {
-
-  },
   mounted () {
     if (this.flag === 'edit') {
       const { parcela, parcela: { parcela: cmName }, _id: graveId } = this.grave(this.id)[0]
       this.graveData = Object.assign({}, parcela)
       this.graveID = graveId
+      if (Object.keys(this.graveData).length > 0)
+        this.loadGrave = true
+
       const { thecm: { cmFullName } } = this.getCemetery(cmName)
       this.cmFullName = cmFullName
+
       const { taker, _id: takerId } = this.taker(this.id)[0]
       this.takerID = takerId
       this.takerData = Object.assign({}, taker)
-      this.usersData = this.users(this.id)
 
-      if (Object.keys(this.graveData).length > 0)
-        this.loadGrave = true
+      this.usersData = this.users(this.id)
     } else {
       this.loadGrave = true
     }
@@ -256,8 +255,8 @@ export default {
           }, 1500);
         }
       }
-
     },
+
     resetForm () {
       this.graveID = ''
       this.takerID = ''
@@ -270,6 +269,7 @@ export default {
       this.$refs.graveForm.reset()
       this.$refs.graveForm.resetValidation()
     },
+
     checkOptionalGraveFields () {
       const graveOptionalFields = [
         'okres',
@@ -282,6 +282,7 @@ export default {
         if (!this.graveData.hasOwnProperty(el)) this.graveData[el] = ''
       })
     },
+
     checkOptionalTakerFields () {
       const graveOptionalFields = [
         'imie',
@@ -295,6 +296,7 @@ export default {
         if (!this.takerData.hasOwnProperty(el)) this.takerData[el] = ''
       })
     },
+
     checkOptionalUserFields () {
       const graveOptionalFields = [
         'imie',
@@ -320,5 +322,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

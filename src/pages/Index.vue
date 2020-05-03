@@ -123,14 +123,13 @@
 import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "PageIndex",
   data () {
     return {
       pagination: {
         sortBy: "numerGrobu",
         descending: false,
         page: 1,
-        rowsPerPage: 10
+        rowsPerPage: 15
       },
       columns: [
         {
@@ -220,7 +219,6 @@ export default {
         ]
       })
     },
-
   }
 };
 </script>

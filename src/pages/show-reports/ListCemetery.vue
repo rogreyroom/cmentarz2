@@ -222,6 +222,7 @@ export default {
   methods: {
     ...mapActions("cm", ["FETCH_ALL"]),
     ...mapActions("cm", ["REMOVE_CEMETERY"]),
+
     removeCemetery (id) {
       this.REMOVE_CEMETERY(id)
         .then(res => {
@@ -232,6 +233,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-</style>

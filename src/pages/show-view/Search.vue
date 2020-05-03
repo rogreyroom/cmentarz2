@@ -11,7 +11,6 @@
 import { mapGetters } from "vuex";
 import Search from '../../components/Views/Search'
 
-
 export default {
   components: {
     'search-view': Search
@@ -41,6 +40,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

@@ -214,7 +214,6 @@ export default {
 
     toString (arr, option) {
       let newArr = arr.map((val) => {
-
         switch (option) {
           case 'userName':
             return !isUndefined(val.user.imie) && !isUndefined(val.user.nazwisko) ? `${val.user.imie} ${val.user.nazwisko}` : 'brak danych'
@@ -235,8 +234,4 @@ export default {
     }
   }
 }
-
 </script>
-
-<style lang="scss">
-</style>

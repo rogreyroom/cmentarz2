@@ -33,7 +33,6 @@
             />
           </template>
         </q-input>
-
         <q-space />
         <q-btn
           v-print="'#printMe'"
@@ -230,6 +229,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-</style>
