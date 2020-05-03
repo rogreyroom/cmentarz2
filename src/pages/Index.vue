@@ -129,7 +129,7 @@ export default {
         sortBy: "numerGrobu",
         descending: false,
         page: 1,
-        rowsPerPage: 15
+        rowsPerPage: 30
       },
       columns: [
         {
