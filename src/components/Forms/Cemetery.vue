@@ -187,6 +187,7 @@ export default {
   },
   methods: {
     ...mapActions("cm", ["ADD_CEMETERY", "UPDATE_CEMETERY"]),
+
     addUpdateCemetery () {
       this.$refs.cemeteryForm.validate()
         .then(success => {
@@ -229,6 +230,7 @@ export default {
           this.$notifyAlert(`Błąd formularza!\n ${err}`, 'error')
         })
     },
+
     resetForm () {
       this.cName = ''
       this.cmFullName = ''

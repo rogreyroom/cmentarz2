@@ -3,13 +3,6 @@
     <div class="row q-pa-sm q-gutter-sm">
       <h5>
         Dane opiekuna grobu
-        <q-btn
-          :to="{ name: 'taker-add-edit', params: { id: id, flag: 'edit', taker: taker } }"
-          flat
-          icon="edit"
-          class="q-ml-md"
-          text-color="light-blue-13"
-        />
       </h5>
     </div>
     <div class="row q-pa-sm q-gutter-sm">
@@ -28,7 +21,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     id: {

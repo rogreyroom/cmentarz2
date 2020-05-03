@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <q-page padding>
-      <div class="row no-wrap items-center q-p-none q-mb-md">
+      <div class="row no-wrap items-center q-p-none header-height">
         <h5 class="q-headline q-ma-xs text-bold text-indigo-9">
           Zmarli w roku
         </h5>
@@ -33,7 +33,6 @@
             />
           </template>
         </q-input>
-
         <q-space />
         <q-btn
           v-print="'#printMe'"
@@ -42,10 +41,13 @@
           dense
           color="indigo-9"
           icon="print"
-          class="q-mr-xs"
+          class="q-mr-sm"
         />
       </div>
-      <div id="printMe">
+      <div
+        id="printMe"
+        class="q-mt-lg"
+      >
         <q-table
           :data="users"
           :columns="columns"
@@ -227,11 +229,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@media print {
-  .q-table__bottom {
-    visibility: hidden;
-  }
-}
-</style>

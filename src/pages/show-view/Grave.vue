@@ -57,10 +57,13 @@ export default {
   mounted () {
     const { parcela } = this.getGrave(this.id)[0]
     this.graveData = parcela
+
     const { thecm: { cmFullName } } = this.getCemetery(parcela.parcela)
     this.cmFullName = cmFullName
+
     const { taker } = this.getTaker(this.id)[0]
     this.takerData = taker
+
     this.usersData = this.getUsers(this.id)
   },
   methods: {

@@ -8,39 +8,41 @@
       >
         <section>
           <header class="row q-pa-sm q-gutter-sm">
-            <template v-if="flag === 'add'">
-              <h5 class="col">
-                Dodaj grób:
-              </h5>
-            </template>
-            <template v-else>
-              <h5 class="col">
-                Edytuj grób:
-                <strong class="q-ml-sm">{{ id }}</strong>
-                ( {{ cmFullName }} )
-              </h5>
-              <div class="col-1 items-end">
-                <q-btn
-                  v-go-back.single=" '/' "
-                  size="14px"
-                  round
-                  dense
-                  color="indigo-9"
-                  icon="arrow_back"
-                  class="q-mr-sm column col-1"
+            <h5
+              v-if="flag === 'add'"
+              class="col"
+            >
+              Dodaj grób:
+            </h5>
+            <h5
+              v-else
+              class="col"
+            >
+              Edytuj grób:
+              <strong class="q-ml-sm">{{ id }}</strong>
+              ( {{ cmFullName }} )
+            </h5>
+            <div class="col-1 items-end">
+              <q-btn
+                v-go-back.single=" '/' "
+                size="14px"
+                round
+                dense
+                color="indigo-9"
+                icon="arrow_back"
+                class="q-mr-sm column col-1"
+              >
+                <q-tooltip
+                  anchor="top middle"
+                  self="center middle"
+                  transition-show="scale"
+                  transition-hide="scale"
+                  content-class="bg-blue-4"
                 >
-                  <q-tooltip
-                    anchor="top middle"
-                    self="center middle"
-                    transition-show="scale"
-                    transition-hide="scale"
-                    content-class="bg-blue-4"
-                  >
-                    Wróć
-                  </q-tooltip>
-                </q-btn>
-              </div>
-            </template>
+                  Wróć
+                </q-tooltip>
+              </q-btn>
+            </div>
             <hr>
           </header>
           <grave-form
@@ -162,23 +164,22 @@ export default {
     ...mapGetters({ users: "cm/GET_GRAVE_USERS" }),
     ...mapGetters({ getCemetery: "cm/GET_PARCELA" })
   },
-  created () {
-
-  },
   mounted () {
     if (this.flag === 'edit') {
       const { parcela, parcela: { parcela: cmName }, _id: graveId } = this.grave(this.id)[0]
       this.graveData = Object.assign({}, parcela)
       this.graveID = graveId
+      if (Object.keys(this.graveData).length > 0)
+        this.loadGrave = true
+
       const { thecm: { cmFullName } } = this.getCemetery(cmName)
       this.cmFullName = cmFullName
+
       const { taker, _id: takerId } = this.taker(this.id)[0]
       this.takerID = takerId
       this.takerData = Object.assign({}, taker)
-      this.usersData = this.users(this.id)
 
-      if (Object.keys(this.graveData).length > 0)
-        this.loadGrave = true
+      this.usersData = this.users(this.id)
     } else {
       this.loadGrave = true
     }
@@ -256,8 +257,8 @@ export default {
           }, 1500);
         }
       }
-
     },
+
     resetForm () {
       this.graveID = ''
       this.takerID = ''
@@ -270,6 +271,7 @@ export default {
       this.$refs.graveForm.reset()
       this.$refs.graveForm.resetValidation()
     },
+
     checkOptionalGraveFields () {
       const graveOptionalFields = [
         'okres',
@@ -282,6 +284,7 @@ export default {
         if (!this.graveData.hasOwnProperty(el)) this.graveData[el] = ''
       })
     },
+
     checkOptionalTakerFields () {
       const graveOptionalFields = [
         'imie',
@@ -295,6 +298,7 @@ export default {
         if (!this.takerData.hasOwnProperty(el)) this.takerData[el] = ''
       })
     },
+
     checkOptionalUserFields () {
       const graveOptionalFields = [
         'imie',
@@ -320,5 +324,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

@@ -73,12 +73,6 @@ const routes = [
 				props: true
 			},
 			{
-				path: '/taker-change/:id',
-				name: 'taker-add-edit',
-				component: () => import('pages/show-forms/Taker.vue'),
-				props: true
-			},
-			{
 				path: '/user-change/:id',
 				name: 'user-add-edit',
 				component: () => import('pages/show-forms/User.vue'),

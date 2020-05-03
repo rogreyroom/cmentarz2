@@ -269,6 +269,7 @@ export default {
   computed: {
     ...mapState("cm", ["cemeteries"]),
     ...mapGetters({ getGrave: "cm/GET_GRAVE" }),
+
     isValidDate () {
       return this.grave.dtOplaty === this.dateFormat(this.grave.dtOplaty)
     },
@@ -306,7 +307,6 @@ export default {
             ? `${this.url}${this.createImageName()}.${this.grave.ext}?${+ Date.now()}`
             : ''
       }
-
     },
 
     uploadUrl (file) {

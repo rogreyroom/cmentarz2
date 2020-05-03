@@ -1,6 +1,5 @@
 <template>
   <section>
-    <pre>Id: {{ id }} - should be cemetery _id</pre>
     <div class="row q-gutter-sm">
       <q-tab-panel
         class="row full-width justify-center"
@@ -207,6 +206,7 @@ export default {
           return 'red-9'
       }
     },
+
     graveYardEntrance () {
       switch (this.entrance) {
         case 'wejscieLeft':

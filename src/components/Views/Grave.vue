@@ -4,7 +4,6 @@
       <h5 class="q-headline col q-ma-xs">
         Dane grobu:
         <strong class="q-ml-sm">{{ id }}</strong>
-
         <q-btn
           :to="{ name: 'grave-add-edit', params: { id: id, flag: 'edit', cemetery: cemetery }}"
           flat
@@ -63,7 +62,6 @@
           <p><strong>Uwagi:</strong> {{ grave.uwagi }}</p>
         </div>
       </div>
-
       <div class="col">
         <div class="row q-ma-md">
           <p><strong>Parcela:</strong> {{ cemetery }}</p>
