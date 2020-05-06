@@ -57,6 +57,7 @@
                   icon="visibility"
                   class="q-mr-xs"
                   :to="{ name: 'grave-show', params: { id: props.row.parcela.nrGrobu } }"
+                  print-hide
                 >
                   <q-tooltip
                     anchor="top middle"
