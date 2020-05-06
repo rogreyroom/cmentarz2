@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import Vue from "vue";
-import Vuex from "vuex";
-import Print from 'vue-print-qj'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import Print from 'vue-print-nb';
 
 // import example from './module-example'
-import cm from "./cm";
+import cm from './cm';
 
 Vue.use(Print);
 Vue.use(Vuex);
@@ -19,15 +19,15 @@ Vue.use(Vuex);
  */
 
 export default function(/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules: {
-      cm
-    },
+	const Store = new Vuex.Store({
+		modules: {
+			cm
+		},
 
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: process.env.DEV
-  });
+		// enable strict mode (adds overhead!)
+		// for dev mode only
+		strict: process.env.DEV
+	});
 
-  return Store;
+	return Store;
 }
