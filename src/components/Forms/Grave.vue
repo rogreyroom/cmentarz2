@@ -323,7 +323,7 @@ export default {
       } else if (this.flag === 'edit') {
         if (this.grave.ext) {
           return this.grave.imgFileName
-            ? `${this.url}${this.grave.imgFileName}`
+            ? `${this.url}upload/${this.grave.imgFileName}`
             : this.grave.ext
               ? `${this.url}upload/${this.createImageName()}.${this.grave.ext}`
               : ''
