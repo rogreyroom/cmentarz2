@@ -82,31 +82,6 @@ router.post('/images/upload/:name', function(req, res) {
 		const uploadedFileExtension = filename.split('.').pop();
 		const newFileName = `${graveFilename}.${uploadedFileExtension}`;
 
-		// return sharp(file.path)
-		// 	.resize({ height: 500 })
-		// 	.toFile(path.join(form.uploadDir, newFileName))
-		// 	.then(() => {
-		// 		console.log(file.path);
-		// 		fs.remove(file.path, err => {
-		// 			if (err) console.log(`Removing uploaded file error: ${err}`);
-		// 		});
-		// 		console.log(`Image processing is ready. New filename ${newFileName}`);
-		// 		res.status(200).send('Thank you');
-		// 	})
-		// 	.catch(err => {
-		// 		fs.remove(file.path, err => {
-		// 			if (err) console.log(`Removing uploaded file error: ${err}`);
-		// 		});
-		// 		console.error(`Error when processing the file: ${err}`);
-		// 		res
-		// 			.status(500)
-		// 			.send(
-		// 				"Nie udało się nadpisać istniejącego zdjęcia. Sprawdź czy istniejące zdjęcie nie zawiera atrybutu 'Tylko do odczytu'"
-		// 			);
-		//   });
-
-		console.log('File Path: ', file.path);
-
 		return Jimp.read(file.path)
 			.then(lenna => {
 				return lenna
