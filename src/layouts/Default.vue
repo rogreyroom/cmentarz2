@@ -1,6 +1,9 @@
 /* eslint-disable prettier/prettier */
 <template>
-  <q-layout view="hHh Lpr lFf">
+  <q-layout
+    class="bg-white"
+    view="hHh Lpr lFf"
+  >
     <q-header class="bg-grey-10">
       <q-toolbar>
         <q-btn
@@ -10,17 +13,12 @@
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
-
         <q-toolbar-title>
           Cmentarz
         </q-toolbar-title>
-
         <search-input />
-
       </q-toolbar>
     </q-header>
-    <!--   flat dense round -->
-
     <q-drawer
       v-model="leftDrawerOpen"
       bordered
@@ -28,7 +26,6 @@
       :breakpoint="500"
       content-class="bg-grey-2"
     >
-      <!-- <q-scroll-area class="fit"> -->
       <q-list
         v-for="(menuItem, index) in menuList"
         :key="index"
@@ -50,12 +47,20 @@
             <span :class="menuItem.class">{{ menuItem.label }}</span>
           </q-item-section>
         </q-item>
-
         <q-separator v-if="menuItem.separator" />
       </q-list>
-      <!-- </q-scroll-area> -->
+      <div class="drower-footer text-center">
+        <p class="drower-footer__dsc text-center">
+          autor:
+        </p>
+        <a
+          class="text-center drower-footer__link"
+          href="mailto:contact@adamczewski.me?subject=Cmentarz - informacje"
+        >
+          Robert Adamczewski
+        </a>
+      </div>
     </q-drawer>
-
     <q-page-container id="scrollTop">
       <router-view />
     </q-page-container>
@@ -147,15 +152,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.blue {
-  color: $indigo-9;
-}
+.drower-footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  font-weight: 300;
 
-.green {
-  color: $green;
-}
+  &__dsc {
+    margin: 0;
+    color: $blue-grey-6;
+  }
 
-.purple {
-  color: $deep-purple-9;
+  &__link {
+    text-decoration: none;
+    color: $blue-grey-10;
+
+    &:hover {
+      color: $indigo-10;
+    }
+  }
 }
 </style>
