@@ -4,6 +4,12 @@
       v-if="foundUsers.length > 0"
       :result="foundUsers"
     />
+    <h1
+      v-else
+      class="absolute-center text-center search-info"
+    >
+      Nie znaleziono wyników wyszukiwania!
+    </h1>
   </div>
 </template>
 
@@ -40,3 +46,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.search-info {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bolder;
+  color: $blue-grey-10;
+}
+</style>
