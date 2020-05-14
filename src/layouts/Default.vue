@@ -13,7 +13,69 @@
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
-        <q-toolbar-title>
+        <q-toolbar-title class="logo">
+          <svg
+            class="app-icon"
+            width="100%"
+            height="100%"
+            viewBox="0 0 450 400"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xml:space="preserve"
+            xmlns:serif="http://www.serif.com/"
+            style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;"
+          >
+            <g transform="matrix(1,0,0,1,-25,-50)">
+              <path
+                class="app-icon__path"
+                d="M32.5,442.5L467.5,442.5"
+                style="fill:none;fill-rule:nonzero;stroke-width:12px;"
+              />
+              <path
+                class="app-icon__path"
+                d="M382.5,190L382.5,442.5L117.5,442.5L117.5,190C117.5,116.822 176.822,57.5 250,57.5C323.178,57.5 382.5,116.822 382.5,190ZM370.5,430.5L370.5,190C370.5,123.449 316.551,69.5 250,69.5C183.449,69.5 129.5,123.449 129.5,190L129.5,430.5L370.5,430.5Z"
+              />
+              <path
+                class="app-icon__path"
+                d="M315,173.043L185,173.043"
+                style="fill:none;fill-rule:nonzero;stroke-width:12px;"
+              />
+              <path
+                class="app-icon__path"
+                d="M253,96.957L253,326.957"
+                style="fill:none;fill-rule:nonzero;stroke-width:12px;"
+              />
+              <g transform="matrix(0.436997,-0.899463,0.867277,0.497826,387,447.203)">
+                <path
+                  class="app-icon__path"
+                  d="M7.5,-7.5L152.79,-7.5"
+                  style="fill:none;fill-rule:nonzero;stroke-width:12.44px;"
+                />
+              </g>
+              <g transform="matrix(0.787512,-0.6163,0.552227,0.833694,390,445.374)">
+                <path
+                  class="app-icon__path"
+                  d="M7.5,-7.5L74.941,-7.5"
+                  style="fill:none;fill-rule:nonzero;stroke-width:12.5px;"
+                />
+              </g>
+              <g transform="matrix(-0.787512,-0.6163,-0.552227,0.833694,109.923,447.548)">
+                <path
+                  class="app-icon__path"
+                  d="M7.5,-7.5L74.941,-7.5"
+                  style="fill:none;fill-rule:nonzero;stroke-width:12.5px;"
+                />
+              </g>
+              <g transform="matrix(-0.436997,-0.899463,-0.867277,0.497826,114.93,447.435)">
+                <path
+                  class="app-icon__path"
+                  d="M7.5,-7.5L152.79,-6.48"
+                  style="fill:none;fill-rule:nonzero;stroke-width:12.44px;"
+                />
+              </g>
+            </g>
+          </svg>
           Cmentarz
         </q-toolbar-title>
         <search-input />
@@ -50,9 +112,6 @@
         <q-separator v-if="menuItem.separator" />
       </q-list>
       <div class="drower-footer text-center">
-        <p class="drower-footer__dsc text-center">
-          autor:
-        </p>
         <a
           class="text-center drower-footer__link"
           href="mailto:contact@adamczewski.me?subject=Cmentarz - informacje"
@@ -152,6 +211,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.logo {
+  display: flex;
+}
+.app-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 1rem;
+
+  &__path {
+    fill: white;
+    stroke: white;
+  }
+}
 .drower-footer {
   width: 100%;
   position: absolute;
@@ -161,14 +233,9 @@ export default {
   padding: 4px;
   font-weight: 300;
 
-  &__dsc {
-    margin: 0;
-    color: $blue-grey-6;
-  }
-
   &__link {
     text-decoration: none;
-    color: $blue-grey-10;
+    color: $grey-6;
 
     &:hover {
       color: $indigo-10;
