@@ -1,6 +1,6 @@
 {
 	"name": "cm",
-	"version": "0.1.0",
+	"version": "2.0.0",
 	"description": "Aplikacja do obsługi cmentarza.",
 	"productName": "Cmentarz",
 	"cordovaId": "org.cordova.quasar.app",
