@@ -22,14 +22,14 @@
           key="opcje"
           :props="props"
         >
-          <div class="row items-center justify-between no-wrap">
+          <div class="row items-center justify-center no-wrap">
             <q-btn
               size="sm"
               round
               dense
               color="blue"
               icon="visibility"
-              class="q-mr-xs"
+              class="q-mr-md"
               :to="{ name: 'grave-show', params: { id: props.row.parcela.nrGrobu } }"
             >
               <q-tooltip
@@ -48,7 +48,7 @@
               dense
               color="green"
               icon="edit"
-              class="q-mr-sm"
+              class="q-mr-md"
               :to="{ name: 'grave-add-edit', params: { id: props.row.parcela.nrGrobu, flag: 'edit' } }"
             >
               <q-tooltip
@@ -67,7 +67,6 @@
               dense
               color="red"
               icon="remove"
-              class="q-mr-xs"
               @click="removeGrave(props.row.parcela.nrGrobu)"
             >
               <q-tooltip
