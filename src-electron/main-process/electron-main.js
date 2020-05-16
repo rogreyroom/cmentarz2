@@ -71,6 +71,9 @@ router.get('/images/:name', function(req, res) {
 router.post('/images/upload/:name', function(req, res) {
 	const form = new formidable.IncomingForm({ keepExtensions: true });
 	const folder = path.join(app.getPath('documents'), '/cmentarz/db/images/');
+	if (!fs.existsSync(folder)) {
+		fs.mkdirSync(folder);
+	}
 	form.uploadDir = folder;
 	const graveFilename = req.params.name.split('.')[0].toString();
 
