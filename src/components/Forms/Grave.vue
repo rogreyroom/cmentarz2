@@ -45,6 +45,7 @@
             spinner-size="64px"
             style="height: 300px;"
             class="full-width"
+            contain
           />
         </div>
       </template>

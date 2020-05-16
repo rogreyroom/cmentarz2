@@ -56,6 +56,7 @@
             :src="getUrl"
             style="height: 300px;"
             class="full-width"
+            contain
           />
         </div>
         <div class="row q-ma-md">
