@@ -26,8 +26,8 @@ function createWindow() {
    * Initial window options
    */
 	mainWindow = new BrowserWindow({
-		width: 1366,
-		height: 768,
+		width: 1360,
+		height: 760,
 		useContentSize: true,
 		webPreferences: {
 			// keep in sync with /quasar.conf.js > electron > nodeIntegration
@@ -38,6 +38,7 @@ function createWindow() {
 		}
 	});
 
+	mainWindow.removeMenu();
 	mainWindow.loadURL(process.env.APP_URL);
 
 	mainWindow.on('closed', () => {
