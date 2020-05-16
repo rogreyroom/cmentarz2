@@ -218,7 +218,7 @@ export default {
 <style lang="scss" scoped>
 .logo {
   display: flex;
-  cursor: none;
+  cursor: pointer;
 }
 .app-icon {
   width: 32px;
