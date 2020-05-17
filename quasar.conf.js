@@ -170,7 +170,10 @@ module.exports = function(ctx) {
 			builder: {
 				// https://www.electron.build/configuration/configuration
 
-				appId: 'cm'
+				appId: 'cm',
+				win: {
+					icon: 'src-electron/icons/icon.ico'
+				}
 			},
 
 			// keep in sync with /src-electron/main-process/electron-main
