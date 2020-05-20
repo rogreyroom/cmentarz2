@@ -90,9 +90,12 @@
                   </div>
                 </div>
                 <div class="col">
-                  <div class="row bg-grey-2 q-mb-xs">
+                  <div
+                    class="row bg-grey-2 q-mb-xs"
+                    :class="entrance === 'wejscieRight' ? 'justify-end' : 'justify-start'"
+                  >
                     <div
-                      v-for="{parcela: { nrGrobu, grob, status }} in gravesOfTheRow(name, cmRow)"
+                      v-for="{parcela: { nrGrobu, grob, status }} in getGravesOfTheRow(name, cmRow)"
                       :key="nrGrobu"
                     >
                       <template v-if="flag === 'show-grave' && cmRow === grave.r && grob === grave.g && name === grave.cm">
@@ -192,6 +195,8 @@ export default {
     this.firstGraveRow = rzad
     this.firstGrav = grob
     this.cemeteryRows = this.uniqueCemeteryRows(this.name)
+
+    if (rzad === 'rzadBottom') this.cemeteryRows.reverse()
   },
   methods: {
     ...mapActions("cm", ["REMOVE_CEMETERY"]),
@@ -214,6 +219,12 @@ export default {
         case 'wejscieRight':
           return 'justify-end'
       }
+    },
+
+    getGravesOfTheRow (name, cmRow) {
+      const gravesOfRow = this.gravesOfTheRow(name, cmRow)
+      if (this.firstGrav === 'grobRightBottom' || this.firstGrav === 'grobRightTop') gravesOfRow.reverse()
+      return gravesOfRow
     },
 
     async removeCemetery (id) {
