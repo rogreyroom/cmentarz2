@@ -102,16 +102,18 @@
                         <q-btn
                           :to="{ name: 'grave-show', params: { id: nrGrobu } }"
                           :label="grob"
-                          class="q-ma-xs"
+                          class="grave"
                           color="light-blue-13"
+                          dense
                         />
                       </template>
                       <template v-else>
                         <q-btn
                           :to="{ name: 'grave-show', params: { id: nrGrobu } }"
                           :label="grob"
-                          class="q-ma-xs"
+                          class="grave"
                           :color="setColor(status)"
+                          dense
                         />
                       </template>
                     </div>
@@ -239,5 +241,10 @@ export default {
 <style lang="scss" scoped>
 hr {
   width: 100%;
+}
+.grave {
+  padding: 0 3px;
+  font-size: 12px;
+  margin: 2px 3px;
 }
 </style>
