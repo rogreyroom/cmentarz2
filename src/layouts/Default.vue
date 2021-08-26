@@ -78,7 +78,8 @@
           </svg>
           Cmentarz
         </q-toolbar-title>
-        <search-input />
+        <!-- <search-input /> -->
+        <autocomplete-input />
       </q-toolbar>
     </q-header>
     <q-drawer
@@ -199,12 +200,14 @@ const menuList = [
   }
 ];
 
-import Search from '../components/Forms/Search'
+// import Search from '../components/Forms/Search'
+import Autocomplete from '../components/Forms/Autocomplete'
 
 export default {
   name: "MyLayout",
   components: {
-    'search-input': Search
+    // 'search-input': Search,
+    'autocomplete-input': Autocomplete
   },
   data () {
     return {
