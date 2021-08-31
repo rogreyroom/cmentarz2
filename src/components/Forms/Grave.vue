@@ -1,41 +1,22 @@
-
 <template>
   <div class="row q-pa-sm q-gutter-sm">
     <div class="col">
       <template v-if="flag === 'add' && grave.parcela && grave.rzad && grave.grob">
         <div class="row q-ma-md">
-          <q-uploader
-            ref="uploader"
-            label="Dodaj zdjęcie"
-            auto-upload
-            :url="uploadUrl"
-            class="full-width"
-            flat
-            color="light-blue-13"
-            @failed="noUpload"
+          <photo-upload
+            :width="300"
+            :height="300"
+            @saved-image="savedImage"
           />
         </div>
       </template>
       <template v-else-if="flag === 'edit'">
         <div class="row q-ma-md">
-          <q-uploader
-            ref="uploader"
-            label="Zmień zdjęcie"
-            auto-upload
-            :url="uploadUrl"
-            class="full-width"
-            flat
-            color="light-blue-13"
-            @uploaded="reloadUrl"
+          <photo-upload
+            :width="300"
+            :height="300"
+            @saved-image="savedImage"
           />
-          <q-tooltip
-            anchor="top middle"
-            self="bottom middle"
-            :offset="[10, 10]"
-            content-class="bg-warning text-black"
-          >
-            Zmiana zdjęcia powoduje automatyczne zapisanie go.
-          </q-tooltip>
         </div>
         <div class="row q-ma-md">
           <q-img
@@ -68,13 +49,22 @@
     <div class="col q-ml-lg">
       <template v-if="flag === 'edit'">
         <div class="row q-ma-md">
-          <p><strong>Parcela:</strong> {{ cemetery }}</p>
+          <p>
+            <strong>Parcela:</strong>
+            {{ cemetery }}
+          </p>
         </div>
         <div class="row q-ma-md">
-          <p><strong>Rząd:</strong> {{ grave.rzad }}</p>
+          <p>
+            <strong>Rząd:</strong>
+            {{ grave.rzad }}
+          </p>
         </div>
         <div class="row q-ma-md">
-          <p><strong>Numer grobu:</strong> {{ grave.grob }}</p>
+          <p>
+            <strong>Numer grobu:</strong>
+            {{ grave.grob }}
+          </p>
         </div>
       </template>
       <template v-else>
@@ -179,9 +169,7 @@
             name="okres"
             label="Podaj okres na jaki grób jest opłacony"
             class="full-width"
-            :rules="[
-              val => val > 0 || (val === undefined || val === '') || 'Okres opłaty powinien być większy od zera!'
-            ]"
+            :rules="[val => val > 0 || val === undefined || val === '' || 'Okres opłaty powinien być większy od zera!']"
           />
         </div>
       </div>
@@ -227,125 +215,137 @@
 </template>
 
 <script>
-import { date } from 'quasar'
-import { mapState, mapGetters } from "vuex"
+import { date } from "quasar";
+import { mapState, mapGetters } from "vuex";
+import Photo from "./Photo.vue";
 
 export default {
   components: {
+    "photo-upload": Photo
   },
   props: {
     id: {
       type: String,
-      default: ''
+      default: ""
     },
     flag: {
       type: String,
-      default: 'add'
+      default: "add"
     },
     grave: {
       type: Object,
-      default: function () {
-        return {}
+      default: function() {
+        return {};
       }
     },
     cemetery: {
       type: String,
-      default: ''
+      default: ""
     }
   },
-  data () {
+  data() {
     return {
-      graveOptions: [
-        'Zwykły', 'Murowany', 'Rodzinny', 'Katakumba', 'Głębinowy'
-      ],
-      graveStatus: [
-        'Nie opłacony', 'Opłacony', 'Puste'
-      ],
+      graveOptions: ["Zwykły", "Murowany", "Rodzinny", "Katakumba", "Głębinowy"],
+      graveStatus: ["Nie opłacony", "Opłacony", "Puste"],
       cemeteriesList: [],
-      url: 'http://localhost:8000/images/',
-      newGrave: '',
-      imgSrc: ''
+      url: "http://localhost:8000/images/",
+      newGrave: "",
+      imgSrc: ""
     };
   },
   computed: {
     ...mapState("cm", ["cemeteries"]),
     ...mapGetters({ getGrave: "cm/GET_GRAVE" }),
 
-    isValidDate () {
-      return this.grave.dtOplaty === this.dateFormat(this.grave.dtOplaty)
-    },
-  },
-  created () {
-    this.cemeteriesList = this.cemeteries.map(({ thecm }) => thecm)
-    if (!this.grave.ext && this.flag === 'edit') {
-      this.graveImageFileName = `${this.grave.nrGrobu.replace(/\|/gi, '-')}`;
+    isValidDate() {
+      return this.grave.dtOplaty === this.dateFormat(this.grave.dtOplaty);
     }
-    if (this.flag === 'edit')
-      this.imgSrc = this.getUrl()
+  },
+  created() {
+    this.cemeteriesList = this.cemeteries.map(({ thecm }) => thecm);
+    if (!this.grave.ext && this.flag === "edit") {
+      this.graveImageFileName = `${this.grave.nrGrobu.replace(/\|/gi, "-")}`;
+    }
+    if (this.flag === "edit") this.imgSrc = this.getUrl();
   },
   methods: {
-    dateFormat (myDate) {
-      return date.formatDate(myDate, "YYYY-MM-DD")
+    dateFormat(myDate) {
+      return date.formatDate(myDate, "YYYY-MM-DD");
     },
 
-    createImageName () {
-      return `${this.grave.nrGrobu.replace(/\|/gi, '-')}`;
+    createImageName() {
+      return `${this.grave.nrGrobu.replace(/\|/gi, "-")}`;
     },
 
-    getUrl () {
+    getUrl() {
       return this.grave.imgFileName
-        ? `${this.url}${this.grave.imgFileName}?${+ Date.now()}`
+        ? `${this.url}${this.grave.imgFileName}?${+Date.now()}`
         : this.grave.ext
-          ? `${this.url}${this.createImageName()}.${this.grave.ext}?${+ Date.now()}`
-          : ''
+        ? `${this.url}${this.createImageName()}.${this.grave.ext}?${+Date.now()}`
+        : "";
     },
 
-    reloadUrl (info) {
+    reloadUrl(info) {
       if (info.xhr.status === 200) {
         this.imgSrc = this.grave.imgFileName
-          ? `${this.url}${this.grave.imgFileName}?${+ Date.now()}`
+          ? `${this.url}${this.grave.imgFileName}?${+Date.now()}`
           : this.grave.ext
-            ? `${this.url}${this.createImageName()}.${this.grave.ext}?${+ Date.now()}`
-            : ''
+          ? `${this.url}${this.createImageName()}.${this.grave.ext}?${+Date.now()}`
+          : "";
       }
     },
 
-    uploadUrl (file) {
-      const ext = file[file.length - 1].name.split('.').slice(-1).toString()
-      if (this.flag === 'add') {
-        this.grave.ext = ext
-        this.grave.nrGrobu = `P${this.grave.parcela}|R${this.grave.rzad}|G${this.grave.grob}`
-        const graveExists = this.getGrave(this.grave.nrGrobu).length > 0 ? true : false
+    savedImage(file) {
+      this.uploadUrl(file);
+    },
 
-        if (graveExists)
-          return this.$notifyAlert('Grób o tym numerze już istnieje!', 'error')
-        return `${this.url}upload/${this.newGrave}.${ext}`
+    async uploadUrl(file) {
+      const ext = file.name
+        .split(".")
+        .slice(-1)
+        .toString()
+        .toLowerCase();
+      // const ext = file[file.length - 1].name.split('.').slice(-1).toString()
+      if (this.flag === "add") {
+        this.grave.ext = ext;
+        this.grave.nrGrobu = `P${this.grave.parcela}|R${this.grave.rzad}|G${this.grave.grob}`;
+        const graveExists = this.getGrave(this.grave.nrGrobu).length > 0 ? true : false;
 
-      } else if (this.flag === 'edit') {
+        if (graveExists) return this.$notifyAlert("Grób o tym numerze już istnieje!", "error");
+
+        return await this.sendPhoto(`${this.newGrave}.${ext}`, file);
+      } else if (this.flag === "edit") {
         if (this.grave.ext) {
           return this.grave.imgFileName
-            ? `${this.url}upload/${this.grave.imgFileName}`
+            ? await this.sendPhoto(`${this.grave.imgFileName}`, file)
             : this.grave.ext
-              ? `${this.url}upload/${this.createImageName()}.${this.grave.ext}`
-              : ''
+            ? await this.sendPhoto(`${this.createImageName()}.${this.grave.ext}`, file)
+            : "";
         } else {
-          this.grave.ext = ext
-          return `${this.url}upload/${this.createImageName()}.${ext}`
+          this.grave.ext = ext;
+          return await this.sendPhoto(`${this.createImageName()}.${ext}`, file);
         }
       }
     },
 
-    noUpload (info) {
-      if (info.xhr.status === 500)
-        this.$notifyAlert(info.xhr.response, 'error', 5000)
-      this.$refs.uploader.reset()
+    async sendPhoto(filename, file) {
+      const fd = new FormData();
+      fd.append(filename, file);
+      const res = await fetch(`${this.url}upload/${filename}`, {
+        method: "POST",
+        body: fd
+      });
+
+      if (res.status !== 200) return this.$notifyAlert("Zdjęcie nie zostało dodane!");
+
+      return this.$notifyAlert("Zdjęcie zostało dodane!");
     },
 
-    createGraveName () {
+    createGraveName() {
       if (this.grave.parcela && this.grave.rzad && this.grave.grob) {
-        this.newGrave = `P${this.grave.parcela}-R${this.grave.rzad}-G${this.grave.grob}`
+        this.newGrave = `P${this.grave.parcela}-R${this.grave.rzad}-G${this.grave.grob}`;
       }
     }
-  },
+  }
 };
 </script>
