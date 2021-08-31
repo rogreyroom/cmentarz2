@@ -9,6 +9,16 @@ Dane te można przenieść na inny komputer do tego samego katalogu i uruchomić
 
 ![Cmentarz 2.0](src/statics/cover.png)
 
+## New components
+
+- Autocomplete
+
+![Search autocomplete](src/statics/screenshots/autocomplete.gif)
+
+- Photo manipulation
+
+![Photo manipulation](src/statics/screenshots/photo.gif)
+
 ## App screenshots
 
 ![Main window](src/statics/screenshots/main.png)
