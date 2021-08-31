@@ -89,8 +89,8 @@ router.post('/images/upload/:name', function(req, res) {
 		return Jimp.read(file.path)
 			.then(lenna => {
 				return lenna
-					.resize(Jimp.AUTO, 500) // resize
-					.quality(70) // set JPEG quality
+					// .resize(Jimp.AUTO, 500) // resize
+					.quality(100) // set JPEG quality
 					.write(path.join(form.uploadDir, newFileName)); // save
 			})
 			.then(() => {
